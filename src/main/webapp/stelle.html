@@ -31,33 +31,35 @@
 			
 
 		</div>
-		<div ng-if="fase=='P'">
+		<div ng-if="fase=='P' || fase=='G'">
 			<table>
-				<tr><td>zone colori</td><td><input type=text ng-model="zone"></input></td></tr>
+				<tr ng-if="fase=='P'"><td>zone colori</td><td><input type=text ng-model="zone"></input></td></tr>
 				<tr><td>stelle</td><td><input type=text ng-model="stellePerZona"></input></td></tr>
 				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
 			</table>
 
 			<table border >
 				<tr ng-repeat="righe in getRange(board.length)">
-					  <td ng-click="cambiaValoreCella(righe,colonne)" ng-style="{'background-color':coloraSfondo(righe,colonne),
-					  'color':coloraSfondo(righe,colonne), 'width': '30px', 'height': '30px', 'font-size': '1px'}" 
-					  ng-repeat="colonne in getRange(board[righe].length)">{{board[righe][colonne]}}</td>
+					  <td ng-click="clickCella(righe,colonne)" ng-style="{'background-color':coloraSfondo(righe,colonne),
+					  'color':coloraFontCella(righe,colonne), 'width': '30px', 'height': '30px', 'font-size': sizeFont(),
+					   'text-align': 'center', 'vertical-align': 'middle' }" 
+					  ng-repeat="colonne in getRange(board[righe].length)">{{scriviCella(righe,colonne)}}</td>
 				</tr>
 			</table>
 
-			<table border >
-				<tr>
-					  <td ng-click="impostaValoreCella()" ng-style="{'background-color':coloraCella(colora),
-					  'color':coloraCella(colora), 'width': '30px', 'height': '30px', 'font-size': '1px'}">{{colora}}</td>
-				</tr>
-			</table>
-			
-			<input ng-hide="id" type=button ng-click="inserisci(nome, stellePerZona, zone)" value="INSERISCI"></input>
-			<input ng-if="id" type=button ng-click="aggiorna(id, nome, stellePerZona, zone)" value="AGGIORNA"></input>
-			<input type=button ng-click="inizializza()" value="INDIETRO"></input>
-		</div>
-		<div ng-if="fase=='S'">
+			<div ng-if="fase=='P'">			
+				<table border >
+					<tr>
+						  <td ng-click="impostaValoreCella()" ng-style="{'background-color':coloraCella(colora),
+						  'color':coloraCella(colora), 'width': '30px', 'height': '30px', 'font-size': '1px'}">{{colora}}</td>
+					</tr>
+				</table>
+			</div>
+			<div ng-if="fase=='P'">			
+				<input ng-hide="id" type=button ng-click="inserisci(nome, stellePerZona, zone)" value="INSERISCI"></input>
+				<input ng-if="id" type=button ng-click="aggiorna(id, nome, stellePerZona, zone)" value="AGGIORNA"></input>
+			</div>
+			<input type=button ng-click="inizializza()" value="RICOMINCIA"></input>
 		</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
     <script src="app.js"></script>
