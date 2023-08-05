@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("logika")
 public class LogikaController {
-
+	
+	public LogikaController() {
+	}
+	
 	@GetMapping("/all")
 	public ResponseEntity<List<String>> all() {
-		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		List<String> ret = new ArrayList<>();
@@ -26,10 +28,6 @@ public class LogikaController {
 				.ok()
 				.headers(headers)
 				.body(ret);
-		
-		
 	}
-
-
-
+	
 }

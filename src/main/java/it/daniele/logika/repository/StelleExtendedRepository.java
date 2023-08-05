@@ -1,6 +1,6 @@
 package it.daniele.logika.repository;
 
-public interface LogikaExtendedRepository {
+public interface StelleExtendedRepository {
 
 //	public List<Object[]> cercaTutti();
 

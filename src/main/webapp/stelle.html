@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>logika</title>
+	<link href="./logika.css" rel="stylesheet" type="text/css">
+</head>
+<body ng-controller="JSStelle">
+		<div ng-if="fase=='I'">
+			<table>
+				<tr><td>colonne</td><td><input type=text ng-model="colonne"></input></td></tr>
+				<tr><td>righe</td><td><input type=text ng-model="righe"></input></td></tr>
+				<tr><td>zone colori</td><td><input type=text ng-model="zone"></input></td></tr>
+				<tr><td>stelle</td><td><input type=text ng-model="stellePerZona"></input></td></tr>
+				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
+			</table>
+			<input type=button ng-click="progetta(righe, colonne, stellePerZona, zone, nome)" value="PROGETTA"></input>
+			
+
+			<div>
+			  <select ng-model="stelleSelezionata" ng-options="opzione.nome for opzione in stelleSalvate track by opzione.id">
+			    <option value="">Carica un gioco</option>
+			  </select>
+			
+				  <div ng-if="stelleSalvate[stelleSelezionata.prog]">
+					  <p>Opzione selezionata: {{ stelleSalvate[stelleSelezionata.prog] }}</p>
+		    	      <input type=button ng-click="carica(stelleSalvate[stelleSelezionata.prog])" value="CARICA"></input>
+				</div>
+			</div>
+
+			
+
+		</div>
+		<div ng-if="fase=='P'">
+			<table>
+				<tr><td>zone colori</td><td><input type=text ng-model="zone"></input></td></tr>
+				<tr><td>stelle</td><td><input type=text ng-model="stellePerZona"></input></td></tr>
+				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
+			</table>
+
+			<table border >
+				<tr ng-repeat="righe in getRange(board.length)">
+					  <td ng-click="cambiaValoreCella(righe,colonne)" ng-style="{'background-color':coloraSfondo(righe,colonne),
+					  'color':coloraSfondo(righe,colonne), 'width': '30px', 'height': '30px', 'font-size': '1px'}" 
+					  ng-repeat="colonne in getRange(board[righe].length)">{{board[righe][colonne]}}</td>
+				</tr>
+			</table>
+
+			<table border >
+				<tr>
+					  <td ng-click="impostaValoreCella()" ng-style="{'background-color':coloraCella(colora),
+					  'color':coloraCella(colora), 'width': '30px', 'height': '30px', 'font-size': '1px'}">{{colora}}</td>
+				</tr>
+			</table>
+			
+			<input ng-hide="id" type=button ng-click="inserisci(nome, stellePerZona, zone)" value="INSERISCI"></input>
+			<input ng-if="id" type=button ng-click="aggiorna(id, nome, stellePerZona, zone)" value="AGGIORNA"></input>
+			<input type=button ng-click="inizializza()" value="INDIETRO"></input>
+		</div>
+		<div ng-if="fase=='S'">
+		</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

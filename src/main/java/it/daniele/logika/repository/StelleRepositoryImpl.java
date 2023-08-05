@@ -3,7 +3,7 @@ package it.daniele.logika.repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class LogikaRepositoryImpl implements LogikaExtendedRepository{
+public class StelleRepositoryImpl implements StelleExtendedRepository{
 
 	@PersistenceContext
 	EntityManager em;
