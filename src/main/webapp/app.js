@@ -19,7 +19,7 @@ angular.module('myApp', [])
 		$scope.coloriZona=[];
 		$scope.coloriZona.push('white');
 		$scope.coloriZona.push('#DCDCDC');
-		$scope.coloriZona.push('#C0C0C0');
+		$scope.coloriZona.push('#A9A9A9');
 		$scope.coloriZona.push('#E0FFFF');
 		$scope.coloriZona.push('#00FFFF');
 		$scope.coloriZona.push('lightgreen');
