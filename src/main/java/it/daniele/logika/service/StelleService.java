@@ -39,6 +39,12 @@ public class StelleService {
 		stelle = stelleRepository.save(stelle);
 		return stelleFactory.toResource(stelle);
 	}
+
+	
+	@Transactional
+	public void cancella(Long id) {
+		stelleRepository.deleteById(id);
+	}
 	
 	public List<StelleResource> allStelle() {
 		List<Stelle> stelle = stelleRepository.findAll();

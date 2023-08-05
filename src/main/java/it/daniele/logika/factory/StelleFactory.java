@@ -17,9 +17,12 @@ import it.daniele.logika.util.Utility;
 public interface StelleFactory {
 
 	@Mapping(source = "board", target = "board", qualifiedByName = "boardToJson")
+	@Mapping(source = "boardGioco", target = "boardGioco", qualifiedByName = "boardToJson")
 	Stelle toModel(StelleDto stelleDTO);
 
+	
 	@Mapping(source = "board", target = "board", qualifiedByName = "jsonToboard")
+	@Mapping(source = "boardGioco", target = "boardGioco", qualifiedByName = "jsonToboard")
 	StelleResource toResource(Stelle stelle);
 
 	List<StelleResource> toResource(List<Stelle> stelle);
@@ -32,6 +35,7 @@ public interface StelleFactory {
 
 	@Named("jsonToboard")
 	default List jsonToboard(String json) {
+		if(json == null || json.isEmpty()) return new ArrayList<>();
 		return Utility.fromJson(json, List.class);
 	}
 	

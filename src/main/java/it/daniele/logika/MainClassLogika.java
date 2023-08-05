@@ -6,10 +6,10 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
-public class MainClass {
+public class MainClassLogika {
 
 	public static void main(String[] args) {
-		ConfigurableApplicationContext ctx = SpringApplication.run(MainClass.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(MainClassLogika.class, args);
 		
 	}
 

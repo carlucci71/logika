@@ -9,48 +9,51 @@ angular.module('myApp', [])
           	return result;
           };		    
 	})
-    .controller('JSStelle', ['$scope','$rootScope', '$http', function($scope, $rootScope, $http) {
-       	$scope.loading=true;
+    .controller('JSStelle', ['$scope', '$http', function($scope, $http) {
         $scope.nome='Aprile 23 - 1';
         $scope.colonne=7;
         $scope.righe=7;
         $scope.stellePerZona=1;
-        $scope.zone=4;
+        $scope.zoneColore=4;
         $scope.fase='I';//I -> inizializza P -> progetta F -> gioca
 		$scope.coloriZona=[];
-		$scope.coloriZona[0]='white';
-		$scope.coloriZona[1]='grey';
-		$scope.coloriZona[2]='lightgrey';
-		$scope.coloriZona[3]='cyan';
-		$scope.coloriZona[4]='lightcyan';
-		$scope.coloriZona[5]='green';
-		$scope.coloriZona[6]='lightgreen';
-		$scope.coloriZona[7]='yellow';
-		$scope.coloriZona[8]='maroon';
-		$scope.coloriZona[9]='orange';
-		$scope.coloriZona[10]='black';
+		$scope.coloriZona.push('white');
+		$scope.coloriZona.push('#DCDCDC');
+		$scope.coloriZona.push('#C0C0C0');
+		$scope.coloriZona.push('#E0FFFF');
+		$scope.coloriZona.push('#00FFFF');
+		$scope.coloriZona.push('lightgreen');
+		$scope.coloriZona.push('yellow');
+		$scope.coloriZona.push('orange');
+		$scope.coloriZona.push('cyan');
+		$scope.coloriZona.push('green');
+		$scope.coloriZona.push('maroon');
 
-    	$http.get("/logika/stelle").then(function(response) {
-		  $scope.stelleSalvate = [];
-          	for (var i=0; i < response.data.length; i++) {
-				el={ 
-					prog: i, 
-					id: response.data[i].id, 
-					zone: response.data[i].zone, 
-					nome: response.data[i].nome,
-					stellePerZona: response.data[i].stellePerZona,
-					board: response.data[i].board,
-				 };
-            	$scope.stelleSalvate.push(el);
-          	}
-		  
-        	$scope.loading=false;
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
-		
-        $scope.stelleSelezionata = null;
+		$scope.leggiListaStelle= function(){
+            $scope.stelleSalvate = [];
+	    	$http.get("/logika/stelle").then(function(response) {
+	          	for (var i=0; i < response.data.length; i++) {
+					el={ 
+						prog: i, 
+						id: response.data[i].id, 
+						zone: response.data[i].zone, 
+						nome: response.data[i].nome,
+						stellePerZona: response.data[i].stellePerZona,
+						board: response.data[i].board,
+						boardGioco: response.data[i].boardGioco,
+					 };
+	            	$scope.stelleSalvate.push(el);
+	          	}
+		        $scope.stelleSelezionata = null;
+			  
+	        })
+	        .catch(function(error) {
+	            console.log(error);
+	        });
+		}
+
+
+		$scope.leggiListaStelle();
 
 		$scope.carica= function(daCaricare){
 	        $scope.id=daCaricare.id;
@@ -58,18 +61,24 @@ angular.module('myApp', [])
 	        $scope.righe=0;
 	        $scope.colonne=0;
 	        $scope.stellePerZona=daCaricare.stellePerZona;
-			$scope.zone=daCaricare.zone;
+			$scope.zoneColore=daCaricare.zone;
 			$scope.colora=1;
 			$scope.board=daCaricare.board;
+			$scope.boardGioco=daCaricare.boardGioco;
         	$scope.fase='P';
 		}
 
-		$scope.progetta= function(righe,colonne,stelle,zone,nome){
-	        $scope.nome=nome;
-	        $scope.righe=righe;
-	        $scope.colonne=colonne;
-	        $scope.stellePerZona=stelle;
-			$scope.zone=zone;
+
+		$scope.cancella= function(id){
+        	$http.delete("/logika/stelle/" + id).then(function() {
+				$scope.leggiListaStelle();
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+		}
+
+		$scope.progetta= function(){
 			$scope.colora=1;
 			$scope.board=[];
 			for (var r=0; r < $scope.righe; r++) {
@@ -80,9 +89,9 @@ angular.module('myApp', [])
 			}
         	$scope.fase='P';
 		}
-		$scope.impostaValoreCella= function(cella){
+		$scope.impostaValoreCella= function(){
         	$scope.colora=$scope.colora+1;
-        	if ($scope.colora == $scope.zone +1){
+        	if ($scope.colora == $scope.zoneColore +1){
 				$scope.colora =1; 		
 			}
 		}
@@ -95,6 +104,8 @@ angular.module('myApp', [])
 					$scope.boardGioco[righe][colonne]="-";
 				} else if ($scope.boardGioco[righe][colonne]=='-') {
 					$scope.boardGioco[righe][colonne]="*";
+				} else if ($scope.boardGioco[righe][colonne]=='*') {
+					$scope.boardGioco[righe][colonne]="?";
 				} else {
 					$scope.boardGioco[righe][colonne]=" ";
 				}
@@ -120,7 +131,7 @@ angular.module('myApp', [])
         	if ($scope.fase=='P'){
 				return '1px';
 			} else {
-				return '12px';
+				return '20px';
 			}
 		}
 		$scope.coloraFontCella=function(righe,colonne){
@@ -133,37 +144,36 @@ angular.module('myApp', [])
 		$scope.coloraSfondo=function(righe,colonne){
 			return $scope.coloraCella($scope.board[righe][colonne]);
 		}
-		$scope.inizializza= function(){
+		$scope.ricomincia= function(){
         	$scope.fase='I';
+			$scope.leggiListaStelle();
 		}
-		$scope.inserisci= function(nome, stellePerZona, zone){
-	        $scope.loading=false;
+		$scope.inserisci= function(){
 	        var body={
-				zone: zone,
-				nome: nome,
+				zone: $scope.zoneColore,
+				nome: $scope.nome,
 				board: $scope.board,
-				stellePerZona: stellePerZona
+				stellePerZona: $scope.stellePerZona
 			};
         	$http.post("/logika/stelle",body).then(function(response) {
-	        	$scope.loading=true;
 	        	$scope.avviaGioco();
+	        	$scope.id=response.data.id;
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
                 console.log(error);
             });
 		}
-		$scope.aggiorna= function(id, nome, stellePerZona, zone){
-	        $scope.loading=false;
+		$scope.aggiorna= function(){
 	        var body={
-				zone: zone,
-				nome: nome,
+				zone: $scope.zoneColore,
+				nome: $scope.nome,
 				board: $scope.board,
-				stellePerZona: stellePerZona
+				boardGioco: $scope.boardGioco,
+				stellePerZona: $scope.stellePerZona
 			};
-        	$http.put("/logika/stelle/"+id, body).then(function(response) {
-	        	$scope.loading=true;
-	        	$scope.avviaGioco();
+        	$http.put("/logika/stelle/"+$scope.id, body).then(function(response) {
+	        	$scope.fase='G';
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
@@ -186,12 +196,10 @@ angular.module('myApp', [])
 					
 		$scope.init= function(){
 	        $scope.inizio='OK';
-	        $scope.loading=true;
 		}
 
 		$scope.vai=function(){
         	$http.get("/logika/all").then(function(response) {
-	        	$scope.loading=false;
 				$scope.timeAttuale=response.headers('Time-Attuale');
 	            $scope.retVai=response.data;
             })

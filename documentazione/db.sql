@@ -5,5 +5,6 @@ create table stelle (
         zone numeric,
         stelle_per_zona VARCHAR(400),
         board VARCHAR(4000),
+        board_gioco VARCHAR(4000),
         data_ora timestamp DEFAULT CURRENT_TIMESTAMP
 );

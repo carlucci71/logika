@@ -27,5 +27,7 @@ public class Stelle	 {
      private int zone;
 	 @Column(columnDefinition = "TEXT")
 	 private String board;
+	 @Column(columnDefinition = "TEXT")
+	 private String boardGioco;
 	
 }

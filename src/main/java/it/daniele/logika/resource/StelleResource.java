@@ -10,6 +10,7 @@ public class StelleResource {
 	private String stellePerZona;
 	private String nome;
 	private List board;
+	private List boardGioco;
 	private int zone;
 	
 }

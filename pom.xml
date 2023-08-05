@@ -67,7 +67,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-			        <mainClass>it.daniele.logika.MainClass</mainClass>
+			        <mainClass>it.daniele.logika.MainClassLogika</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
