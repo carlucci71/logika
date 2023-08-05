@@ -67,7 +67,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-			        <mainClass>it.reactive.quiz.MainClassQuiz</mainClass>
+			        <mainClass>it.daniele.logika.MainClass</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
