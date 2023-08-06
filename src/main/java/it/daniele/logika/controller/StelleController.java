@@ -70,8 +70,6 @@ public class StelleController {
 		List<StelleResource> stelle = stelleService.allStelle();
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
-		List<String> ret = new ArrayList<>();
-		ret.add("ciao");
 		return ResponseEntity
 				.ok()
 				.headers(headers)

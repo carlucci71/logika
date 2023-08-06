@@ -22,9 +22,9 @@ public class Stelle	 {
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private Long id;	
-	 private String stellePerZona;
+	 private Integer stellePerZona;
 	 private String nome;
-     private int zone;
+     private Integer zone;
 	 @Column(columnDefinition = "TEXT")
 	 private String board;
 	 @Column(columnDefinition = "TEXT")

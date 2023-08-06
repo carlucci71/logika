@@ -7,11 +7,12 @@
 </head>
 <body ng-controller="JSStelle">
 		<div ng-show="fase=='I'">
+			<label style="font-size: 20px;font-weight: bold;">Inizia</label>
 			<table>
-				<tr><td>colonne</td><td><input type=text ng-model="colonne"></input></td></tr>
-				<tr><td>righe</td><td><input type=text ng-model="righe"></input></td></tr>
-				<tr><td>zone colori</td><td><input type=text ng-model="zoneColore"></input></td></tr>
-				<tr><td>stelle</td><td><input type=text ng-model="stellePerZona"></input></td></tr>
+				<tr><td>colonne</td><td><input type=number ng-model="colonne"></input></td></tr>
+				<tr><td>righe</td><td><input type=number ng-model="righe"></input></td></tr>
+				<tr><td>zone colori</td><td><input type=number ng-model="zoneColore"></input></td></tr>
+				<tr><td>stelle</td><td><input type=number ng-model="stellePerZona"></input></td></tr>
 				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
 			</table>
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
@@ -28,16 +29,18 @@
 				</div>
 			</div>
 
-			
+			<img src="/img/stelle.png"></img>
 
 		</div>
 		<div ng-show="fase=='P' || fase=='G'">
+			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='P'">Inserisci le zone colorate</label>
+			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='G'">Gioca</label>
 			<table>
-				<tr ng-show="fase=='P'"><td>zone colori</td><td><input type=text ng-model="zoneColore"></input></td></tr>
-				<tr><td>stelle</td><td><input type=text ng-model="stellePerZona"></input></td></tr>
+				<tr ng-show="fase=='P'"><td>zone colori</td><td><input type=number ng-model="zoneColore"></input></td></tr>
+				<tr><td>stelle</td><td><input type=number ng-model="stellePerZona"></input></td></tr>
 				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
 			</table>
-			<table border >
+			<table border style=" user-select: none;" >
 				<tr ng-repeat="righe in getRange(board.length)">
 					  <td ng-click="clickCella(righe,colonne)" ng-style="{'background-color':coloraSfondo(righe,colonne),
 					  'color':coloraFontCella(righe,colonne), 'width': '30px', 'height': '30px', 'font-size': sizeFont(),
@@ -45,18 +48,23 @@
 					  ng-repeat="colonne in getRange(board[righe].length)">{{scriviCella(righe,colonne)}}</td>
 				</tr>
 			</table>
-
-			<div ng-show="fase=='P'">			
-				<table border >
+			<br>
+			<div>			
+				<table border style=" user-select: none;" >
 					<tr>
 						  <td ng-click="impostaValoreCella()" ng-style="{'background-color':coloraCella(colora),
-						  'color':coloraCella(colora), 'width': '30px', 'height': '30px', 'font-size': '1px'}">{{colora}}</td>
+						  'color':coloraFontCella(), 'width': '30px', 'height': '30px', 'font-size': sizeFont(),
+	                      'text-align': 'center', 'vertical-align': 'middle' }">{{getValColora()}}</td>
 					</tr>
 				</table>
+				<label ng-show="fase=='P'">Scegli il colore da inserire e poi clicca sulla tabella.</label>
+				<label ng-show="fase=='G'">Scegli il valore da inserire e poi clicca sulla tabella. 
+				Se la cella contiene un valore dubbio questo verrà aggiunto, altrimenti rimosso solo se non è l'unico.</label>
 			</div>
 			<div ng-show="fase=='P'">			
 				<input ng-hide="id" type=button ng-click="inserisci()" value="INSERISCI"></input>
 			</div>
+			<br>
 			<input type=button ng-click="ricomincia()" value="RICOMINCIA"></input>
 			<input ng-show="id" type=button ng-click="aggiorna()" value="AGGIORNA"></input>
 		</div>

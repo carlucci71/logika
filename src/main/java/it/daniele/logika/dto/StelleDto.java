@@ -6,10 +6,10 @@ import lombok.Data;
 
 @Data
 public class StelleDto {
-	private String stellePerZona;
+	private Integer stellePerZona;
 	private String nome;
 	private List board;
 	private List boardGioco;
-	private int zone;
+	private Integer zone;
 	
 }

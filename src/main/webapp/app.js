@@ -10,12 +10,6 @@ angular.module('myApp', [])
           };		    
 	})
     .controller('JSStelle', ['$scope', '$http', function($scope, $http) {
-        $scope.nome='Aprile 23 - 1';
-        $scope.colonne=7;
-        $scope.righe=7;
-        $scope.stellePerZona=1;
-        $scope.zoneColore=4;
-        $scope.fase='I';//I -> inizializza P -> progetta F -> gioca
 		$scope.coloriZona=[];
 		$scope.coloriZona.push('white');
 		$scope.coloriZona.push('#DCDCDC');
@@ -29,7 +23,13 @@ angular.module('myApp', [])
 		$scope.coloriZona.push('green');
 		$scope.coloriZona.push('maroon');
 
-		$scope.leggiListaStelle= function(){
+		$scope.iniz= function(){
+	        $scope.nome='Aprile 23 - 1';
+	        $scope.colonne=7;
+	        $scope.righe=7;
+	        $scope.stellePerZona=1;
+	        $scope.zoneColore=4;
+	        $scope.fase='I';//I -> iniz P -> progetta F -> gioca
             $scope.stelleSalvate = [];
 	    	$http.get("/logika/stelle").then(function(response) {
 	          	for (var i=0; i < response.data.length; i++) {
@@ -53,7 +53,7 @@ angular.module('myApp', [])
 		}
 
 
-		$scope.leggiListaStelle();
+		$scope.iniz();
 
 		$scope.carica= function(daCaricare){
 	        $scope.id=daCaricare.id;
@@ -71,7 +71,7 @@ angular.module('myApp', [])
 
 		$scope.cancella= function(id){
         	$http.delete("/logika/stelle/" + id).then(function() {
-				$scope.leggiListaStelle();
+				$scope.iniz();
             })
             .catch(function(error) {
                 console.log(error);
@@ -90,9 +90,24 @@ angular.module('myApp', [])
         	$scope.fase='P';
 		}
 		$scope.impostaValoreCella= function(){
-        	$scope.colora=$scope.colora+1;
-        	if ($scope.colora == $scope.zoneColore +1){
-				$scope.colora =1; 		
+			if ($scope.fase=='P'){
+	        	$scope.colora=$scope.colora+1;
+	        	if ($scope.colora == $scope.zoneColore +1){
+					$scope.colora =1; 		
+				}
+			} else {
+	        	if ($scope.cosaScrivo==' ') {
+					$scope.cosaScrivo="-";
+				} else if ($scope.cosaScrivo=='-') {
+					$scope.cosaScrivo="*";
+				} else if ($scope.cosaScrivo=='*') {
+					$scope.cosaScrivo='A';
+				} else {
+		        	$scope.cosaScrivo=String.fromCharCode($scope.cosaScrivo.charCodeAt(0)+1);
+		        	if ($scope.cosaScrivo=='F'){
+						$scope.cosaScrivo=' ';
+					}
+				}
 			}
 		}
 
@@ -100,14 +115,20 @@ angular.module('myApp', [])
         	if ($scope.fase=='P'){
 				$scope.cambiaValoreCella(righe,colonne);
 			} else {
-	        	if ($scope.boardGioco[righe][colonne]==' ') {
-					$scope.boardGioco[righe][colonne]="-";
-				} else if ($scope.boardGioco[righe][colonne]=='-') {
-					$scope.boardGioco[righe][colonne]="*";
-				} else if ($scope.boardGioco[righe][colonne]=='*') {
-					$scope.boardGioco[righe][colonne]="?";
-				} else {
-					$scope.boardGioco[righe][colonne]=" ";
+				var attuale=$scope.boardGioco[righe][colonne];
+				if ($scope.cosaScrivo == ' ' || $scope.cosaScrivo == '-' || $scope.cosaScrivo == '*'){
+					$scope.boardGioco[righe][colonne]=$scope.cosaScrivo;
+				}
+				else {
+					if (attuale==' ' || attuale=='-' || attuale=='*'){
+						$scope.boardGioco[righe][colonne]=$scope.cosaScrivo;
+					} else if (attuale != $scope.cosaScrivo){
+						var indexToRemove=attuale.indexOf($scope.cosaScrivo); 
+						if (indexToRemove==-1){
+							$scope.boardGioco[righe][colonne]=attuale + $scope.cosaScrivo;
+						} else {
+ 							$scope.boardGioco[righe][colonne]= attuale.substring(0, indexToRemove) + attuale.substring(indexToRemove + 1);						}
+					}
 				}
 			}
 		}
@@ -123,7 +144,14 @@ angular.module('myApp', [])
 		$scope.cambiaValoreCella= function(righe,colonne){
         	$scope.board[righe][colonne]=$scope.colora;
 		}
-		
+		$scope.getValColora= function(){
+        	if ($scope.fase=='P'){
+				return $scope.colora;
+			} else{
+				return $scope.cosaScrivo;
+			} 
+	
+		}
 		$scope.coloraCella=function(cella){
 			return $scope.coloriZona[cella];
 		}
@@ -135,7 +163,7 @@ angular.module('myApp', [])
 			}
 		}
 		$scope.coloraFontCella=function(righe,colonne){
-        	if ($scope.fase=='P'){
+        	if ($scope.fase=='P' && righe && colonne){
 				return $scope.coloraSfondo(righe,colonne);
 			} else {
 				return 'black';
@@ -145,8 +173,7 @@ angular.module('myApp', [])
 			return $scope.coloraCella($scope.board[righe][colonne]);
 		}
 		$scope.ricomincia= function(){
-        	$scope.fase='I';
-			$scope.leggiListaStelle();
+			$scope.iniz();
 		}
 		$scope.inserisci= function(){
 	        var body={
@@ -156,7 +183,7 @@ angular.module('myApp', [])
 				stellePerZona: $scope.stellePerZona
 			};
         	$http.post("/logika/stelle",body).then(function(response) {
-	        	$scope.avviaGioco();
+	        	$scope.avviaGioco("I");
 	        	$scope.id=response.data.id;
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
@@ -173,22 +200,28 @@ angular.module('myApp', [])
 				stellePerZona: $scope.stellePerZona
 			};
         	$http.put("/logika/stelle/"+$scope.id, body).then(function(response) {
-	        	$scope.fase='G';
+				if ($scope.fase=='P'){
+	        		$scope.avviaGioco("A");
+				}
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
                 console.log(error);
             });
 		}
-		$scope.avviaGioco= function(){
-			$scope.boardGioco=[];
-			for (var r=0; r < $scope.board.length; r++) {
-			  $scope.boardGioco[r]=[];
-			  for (var c=0; c < $scope.board[r].length; c++) {
-			    $scope.boardGioco[r][c]=' ';
-			  }
+		$scope.avviaGioco=function(modalitaSaltavaggio){
+			if (modalitaSaltavaggio=='I'){
+				$scope.boardGioco=[];
+				for (var r=0; r < $scope.board.length; r++) {
+				  $scope.boardGioco[r]=[];
+				  for (var c=0; c < $scope.board[r].length; c++) {
+				    $scope.boardGioco[r][c]=' ';
+				  }
+				}
 			}
         	$scope.fase='G';
+        	$scope.colora=0;
+        	$scope.cosaScrivo='-';
 		}
 
 		}])
