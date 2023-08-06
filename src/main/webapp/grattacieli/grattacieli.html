@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <title>grattacieli</title>
 	<link href="../logika.css" rel="stylesheet" type="text/css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body ng-controller="JSGrattacieli">
 		<a href="../index.html">HOME</a>
 		<div ng-show="fase=='I'">
 			<label style="font-size: 20px;font-weight: bold;">Inizia</label>
 			<table>
-				<tr><td>piani</td><td><input type=number ng-model="piani"></input></td></tr>
+				<tr><td>piani</td><td><input type="number" ng-model="piani"></input></td></tr>
 				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
 			</table>
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
@@ -37,8 +39,9 @@
 				<tr ng-repeat="righe in getRange(piani+2)">
 					  <td ng-style="{'width': '30px', 'height': '30px', 'text-align': 'center', 'vertical-align': 'middle' }" 
 					  ng-repeat="colonne in getRange(piani+2)" ng-click="clickCella(righe,colonne)">
-						<input ng-disabled="fase=='G'" style="width:30px; text-align:center" type=number ng-show="{{visInput(righe,colonne)}}" ng-model="board[righe][colonne]" ></input>
-					  	<label  ng-show="visInputGioca(righe,colonne)" style="width:30px; text-align:center" type=number>{{board[righe][colonne]}}</label>
+						<input ng-disabled="fase=='G'" style="width:30px; text-align:center" type="number" ng-click="addValInCols(righe,colonne)" 
+							ng-show="{{visInput(righe,colonne)}}" ng-model="board[righe][colonne]" ></input>
+					  	<label  ng-show="visInputGioca(righe,colonne)" style="width:30px; text-align:center" type="number">{{board[righe][colonne]}}</label>
 					  </td>
 				</tr>
 			</table>
@@ -47,8 +50,12 @@
 			<div ng-show="fase=='G'">			
 				<table border style=" user-select: none;" >
 					<tr>
-						  <td ng-click="impostaValoreCella()" ng-style="{'width': '30px', 'height': '30px', 
+						  <td  colspan={{piani+1}} ng-click="impostaValoreCella()" ng-style="{'width': '30px', 'height': '30px', 
 	                      'text-align': 'center', 'vertical-align': 'middle' }">{{getCosaScrivo()}}</td>
+					</tr>
+					<tr>
+						  <td ng-repeat="index in getRange(piani+1)" ng-click="defaultValoreCella(index)" ng-style="{'width': '30px', 'height': '30px', 
+	                      'text-align': 'center', 'vertical-align': 'middle' }">{{index}}</td>
 					</tr>
 				</table>
 				<label ng-show="fase=='G'">Scegli il valore da inserire e poi clicca sulla tabella. 

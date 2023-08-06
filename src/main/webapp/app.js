@@ -132,7 +132,15 @@ angular.module('myApp', [])
 				}
 			}
 		}
-		
+		$scope.addValInCols=function(righe,colonne){
+			$scope.board[righe][colonne]=$scope.board[righe][colonne]+1;
+			if ($scope.board[righe][colonne]==$scope.piani+1){
+				$scope.board[righe][colonne]=1;
+			}
+		}
+		$scope.defaultValoreCella=function(valore){
+			$scope.cosaScrivo=valore;
+		}
 		$scope.visInputGioca= function(righe,colonne){
 			if ($scope.fase!='G') return false;
 			if (righe==0 && colonne==0) return false;
