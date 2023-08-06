@@ -1,9 +1,9 @@
-package it.daniele.logika.repository;
+package it.daniele.logika.repository.stelle;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.daniele.logika.model.Stelle;
+import it.daniele.logika.model.stelle.Stelle;
 
 @Repository
 public interface StelleRepository extends JpaRepository<Stelle, Long>,StelleExtendedRepository{

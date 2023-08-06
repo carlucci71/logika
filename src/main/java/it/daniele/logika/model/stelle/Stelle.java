@@ -1,6 +1,4 @@
-package it.daniele.logika.model;
-
-import java.util.List;
+package it.daniele.logika.model.stelle;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

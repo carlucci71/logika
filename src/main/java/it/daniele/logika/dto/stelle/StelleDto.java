@@ -1,12 +1,11 @@
-package it.daniele.logika.resource;
+package it.daniele.logika.dto.stelle;
 
 import java.util.List;
 
 import lombok.Data;
 
 @Data
-public class StelleResource {
-	private Long id;
+public class StelleDto {
 	private Integer stellePerZona;
 	private String nome;
 	private List board;

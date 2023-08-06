@@ -9,6 +9,151 @@ angular.module('myApp', [])
           	return result;
           };		    
 	})
+    .controller('JSGrattacieli', ['$scope', '$http', function($scope, $http) {
+		$scope.inizializza= function(){
+	        $scope.id=null;
+	        $scope.nome='Aprile 23 - 1';
+	        $scope.piani=4;
+	        $scope.fase='I';//I -> iniz P -> progetta F -> gioca
+			$scope.progetta= function(){
+				$scope.board=[];
+				for (var r=0; r < $scope.piani+2; r++) {
+				  $scope.board[r]=[];
+				  for (var c=0; c < $scope.piani+2; c++) {
+					if (r==0 || r==$scope.piani+1 || c==0 || c==$scope.piani+1){
+				    	$scope.board[r][c]=1;
+				    } else {
+				    	$scope.board[r][c]=0;
+					}
+				  }
+				}
+	        	$scope.fase='P';
+			}
+            $scope.grattacieliSalvate = [];
+	    	$http.get("/logika/grattacieli").then(function(response) {
+	          	for (var i=0; i < response.data.length; i++) {
+					el={ 
+						prog: i, 
+						id: response.data[i].id, 
+						piani: response.data[i].piani, 
+						nome: response.data[i].nome,
+						board: response.data[i].board
+					 };
+	            	$scope.grattacieliSalvate.push(el);
+	          	}
+		        $scope.grattacieliSelezionata = null;
+			  
+	        })
+	        .catch(function(error) {
+	            console.log(error);
+	        });
+		}
+		$scope.inizializza();
+		$scope.ricomincia= function(){
+			$scope.inizializza();
+		}
+		$scope.inserisci= function(){
+	        var body={
+				nome: $scope.nome,
+				board: $scope.board,
+				piani: $scope.piani
+			};
+        	$http.post("/logika/grattacieli",body).then(function(response) {
+	        	$scope.avviaGioco("I");
+	        	$scope.id=response.data.id;
+				$scope.timeAttuale=response.headers('Time-Attuale');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+		}
+		$scope.aggiorna= function(){
+	        var body={
+				nome: $scope.nome,
+				board: $scope.board,
+				piani: $scope.piani
+			};
+        	$http.put("/logika/grattacieli/"+$scope.id, body).then(function(response) {
+				if ($scope.fase=='P'){
+	        		$scope.avviaGioco("A");
+				}
+				$scope.timeAttuale=response.headers('Time-Attuale');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+		}
+		$scope.cancella= function(id){
+        	$http.delete("/logika/grattacieli/" + id).then(function() {
+				$scope.inizializza();
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+		}
+		$scope.carica= function(daCaricare){
+	        $scope.id=daCaricare.id;
+	        $scope.nome=daCaricare.nome;
+	        $scope.piani=daCaricare.piani;
+			$scope.board=daCaricare.board;
+        	$scope.fase='P';
+		}
+		$scope.avviaGioco=function(){
+        	$scope.fase='G';
+        	$scope.cosaScrivo=0;
+		}
+		$scope.getCosaScrivo=function(){
+        	if ($scope.cosaScrivo==0) return "";
+        	return $scope.cosaScrivo;
+		}
+		$scope.impostaValoreCella= function(){
+			$scope.cosaScrivo=$scope.cosaScrivo+1;
+			if ($scope.cosaScrivo==$scope.piani+1){
+				$scope.cosaScrivo=0;
+			}
+		}
+		$scope.clickCella= function(righe,colonne){
+			if ($scope.fase=='G'){
+				if ($scope.cosaScrivo==0){
+					$scope.board[righe][colonne]=0;
+				} else {
+					var attuale=$scope.board[righe][colonne];
+					if (attuale==0){
+						$scope.board[righe][colonne]=$scope.cosaScrivo;
+					} else {
+						attuale=""+attuale;
+						var indexToRemove=attuale.indexOf($scope.cosaScrivo); 
+						if (indexToRemove==-1){
+							$scope.board[righe][colonne]=attuale + $scope.cosaScrivo;
+						} else {
+							$scope.board[righe][colonne]= attuale.substring(0, indexToRemove) + attuale.substring(indexToRemove + 1);						
+						}
+					}
+				}
+			}
+		}
+		
+		$scope.visInputGioca= function(righe,colonne){
+			if ($scope.fase!='G') return false;
+			if (righe==0 && colonne==0) return false;
+			if (righe==0 && colonne==$scope.piani+1) return false;
+			if (righe==$scope.piani+1 && colonne==0) return false;
+			if (righe==$scope.piani+1 && colonne==$scope.piani+1) return false;
+			if ($scope.board[righe][colonne]==0) return "";
+			return !$scope.visInput(righe,colonne);
+		}
+		$scope.visInput= function(righe,colonne){
+			if (righe==0 && colonne==0) return false;
+			if (righe==0 && colonne==$scope.piani+1) return false;
+			if (righe==$scope.piani+1 && colonne==0) return false;
+			if (righe==$scope.piani+1 && colonne==$scope.piani+1) return false;
+			if (righe==0 || righe==$scope.piani+1 || colonne==0 || colonne==$scope.piani+1){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		}])
     .controller('JSStelle', ['$scope', '$http', function($scope, $http) {
 		$scope.coloriZona=[];
 		$scope.coloriZona.push('white');
@@ -23,7 +168,8 @@ angular.module('myApp', [])
 		$scope.coloriZona.push('green');
 		$scope.coloriZona.push('maroon');
 
-		$scope.iniz= function(){
+		$scope.inizializza= function(){
+	        $scope.id=null;
 	        $scope.nome='Aprile 23 - 1';
 	        $scope.colonne=7;
 	        $scope.righe=7;
@@ -53,7 +199,7 @@ angular.module('myApp', [])
 		}
 
 
-		$scope.iniz();
+		$scope.inizializza();
 
 		$scope.carica= function(daCaricare){
 	        $scope.id=daCaricare.id;
@@ -71,7 +217,7 @@ angular.module('myApp', [])
 
 		$scope.cancella= function(id){
         	$http.delete("/logika/stelle/" + id).then(function() {
-				$scope.iniz();
+				$scope.inizializza();
             })
             .catch(function(error) {
                 console.log(error);
@@ -127,7 +273,8 @@ angular.module('myApp', [])
 						if (indexToRemove==-1){
 							$scope.boardGioco[righe][colonne]=attuale + $scope.cosaScrivo;
 						} else {
- 							$scope.boardGioco[righe][colonne]= attuale.substring(0, indexToRemove) + attuale.substring(indexToRemove + 1);						}
+ 							$scope.boardGioco[righe][colonne]= attuale.substring(0, indexToRemove) + attuale.substring(indexToRemove + 1);						
+ 						}
 					}
 				}
 			}
@@ -173,7 +320,7 @@ angular.module('myApp', [])
 			return $scope.coloraCella($scope.board[righe][colonne]);
 		}
 		$scope.ricomincia= function(){
-			$scope.iniz();
+			$scope.inizializza();
 		}
 		$scope.inserisci= function(){
 	        var body={

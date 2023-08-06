@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>grattacieli</title>
+	<link href="../logika.css" rel="stylesheet" type="text/css">
+</head>
+<body ng-controller="JSGrattacieli">
+		<a href="../index.html">HOME</a>
+		<div ng-show="fase=='I'">
+			<label style="font-size: 20px;font-weight: bold;">Inizia</label>
+			<table>
+				<tr><td>piani</td><td><input type=number ng-model="piani"></input></td></tr>
+				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
+			</table>
+			<input type=button ng-click="progetta()" value="PROGETTA"></input>
+			<br><br>
+			<div>
+			  <select ng-model="grattacieliSelezionata" ng-options="opzione.nome for opzione in grattacieliSalvate track by opzione.id">
+			    <option value="">Carica un gioco</option>
+			  </select>
+				<br><br>
+				  <div ng-show="grattacieliSalvate[grattacieliSelezionata.prog]">
+		    	      <input type=button ng-click="carica(grattacieliSalvate[grattacieliSelezionata.prog])" value="CARICA"></input>
+		    	      <input type=button ng-click="cancella(grattacieliSalvate[grattacieliSelezionata.prog].id)" value="CANCELLA"></input>
+				</div>
+			</div>
+			<img src="./grattacieli.png"></img>
+		</div>
+		<div ng-show="fase=='P' || fase=='G'">
+			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='P'">Inserisci i piani visibili in tutti i lati</label>
+			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='G'">Gioca</label>
+			<table>
+				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
+			</table>
+			<table border style=" user-select: none;" >
+				<tr ng-repeat="righe in getRange(piani+2)">
+					  <td ng-style="{'width': '30px', 'height': '30px', 'text-align': 'center', 'vertical-align': 'middle' }" 
+					  ng-repeat="colonne in getRange(piani+2)" ng-click="clickCella(righe,colonne)">
+						<input ng-disabled="fase=='G'" style="width:30px; text-align:center" type=number ng-show="{{visInput(righe,colonne)}}" ng-model="board[righe][colonne]" ></input>
+					  	<label  ng-show="visInputGioca(righe,colonne)" style="width:30px; text-align:center" type=number>{{board[righe][colonne]}}</label>
+					  </td>
+				</tr>
+			</table>
+
+			<br>
+			<div ng-show="fase=='G'">			
+				<table border style=" user-select: none;" >
+					<tr>
+						  <td ng-click="impostaValoreCella()" ng-style="{'width': '30px', 'height': '30px', 
+	                      'text-align': 'center', 'vertical-align': 'middle' }">{{getCosaScrivo()}}</td>
+					</tr>
+				</table>
+				<label ng-show="fase=='G'">Scegli il valore da inserire e poi clicca sulla tabella. 
+				Se la cella contiene il valore verrà rimosso altrimenti verrà aggiunto.</label>
+			</div>
+
+
+			</div>
+			<div ng-show="fase=='P'">			
+				<input ng-hide="id" type=button ng-click="inserisci()" value="INSERISCI"></input>
+			</div>
+			<br>
+			<input type=button ng-click="ricomincia()" value="RICOMINCIA"></input>
+			<input ng-show="id" type=button ng-click="aggiorna()" value="AGGIORNA"></input>
+		</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>

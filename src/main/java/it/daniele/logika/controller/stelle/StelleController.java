@@ -1,7 +1,6 @@
-package it.daniele.logika.controller;
+package it.daniele.logika.controller.stelle;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpHeaders;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.daniele.logika.dto.StelleDto;
-import it.daniele.logika.resource.StelleResource;
-import it.daniele.logika.service.StelleService;
+import it.daniele.logika.dto.stelle.StelleDto;
+import it.daniele.logika.resource.stelle.StelleResource;
+import it.daniele.logika.service.stelle.StelleService;
 
 
 @RestController

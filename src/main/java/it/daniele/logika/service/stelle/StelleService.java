@@ -1,4 +1,4 @@
-package it.daniele.logika.service;
+package it.daniele.logika.service.stelle;
 
 import java.util.List;
 
@@ -6,11 +6,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import it.daniele.logika.dto.StelleDto;
-import it.daniele.logika.factory.StelleFactory;
-import it.daniele.logika.model.Stelle;
-import it.daniele.logika.repository.StelleRepository;
-import it.daniele.logika.resource.StelleResource;
+import it.daniele.logika.dto.stelle.StelleDto;
+import it.daniele.logika.factory.stelle.StelleFactory;
+import it.daniele.logika.model.stelle.Stelle;
+import it.daniele.logika.repository.stelle.StelleRepository;
+import it.daniele.logika.resource.stelle.StelleResource;
 
 
 

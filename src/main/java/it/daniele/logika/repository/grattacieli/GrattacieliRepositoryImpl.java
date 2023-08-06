@@ -1,9 +1,9 @@
-package it.daniele.logika.repository;
+package it.daniele.logika.repository.grattacieli;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-public class StelleRepositoryImpl implements StelleExtendedRepository{
+public class GrattacieliRepositoryImpl implements GrattacieliExtendedRepository{
 
 	@PersistenceContext
 	EntityManager em;

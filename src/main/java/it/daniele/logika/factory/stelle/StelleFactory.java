@@ -1,4 +1,4 @@
-package it.daniele.logika.factory;
+package it.daniele.logika.factory.stelle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +7,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import it.daniele.logika.dto.StelleDto;
-import it.daniele.logika.model.Stelle;
-import it.daniele.logika.resource.StelleResource;
+import it.daniele.logika.dto.stelle.StelleDto;
+import it.daniele.logika.model.stelle.Stelle;
+import it.daniele.logika.resource.stelle.StelleResource;
 import it.daniele.logika.util.Utility;
 
 

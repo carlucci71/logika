@@ -1,4 +1,4 @@
-package it.daniele.logika.repository;
+package it.daniele.logika.repository.stelle;
 
 public interface StelleExtendedRepository {
 
