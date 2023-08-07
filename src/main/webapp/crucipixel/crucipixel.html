@@ -23,46 +23,55 @@
 		<div ng-show="fase=='P' || fase=='G'">
 			<table class="boardIndicazioni">
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 				</tr>
 				<tr>
+					<td></td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
 					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
@@ -71,7 +80,7 @@
 			<table class="board">
 				<tr ng-repeat="righe in getRange(righe)">
 					  <td 
-					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne) }"  
+					  	ng-style="{'Xcolor': getColor(righe,colonne), 'Xbackground-color': getBgColor(righe,colonne) }"  
 					  	ng-repeat="colonne in getRange(colonne+1)" >
 								{{getCellaBoard(righe,colonne)}}
 					  </td>

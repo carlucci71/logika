@@ -46,7 +46,7 @@ angular.module('myApp', [])
         	$scope.fase='P';
 		}
 		$scope.getColor= function(righe,colonne){
-			if (colonne>$scope.colonne-1) return 'black';
+			if (colonne==0) return 'black';
 			return $scope.getBgColor(righe,colonne);
 		}
 		$scope.getBgColor= function(righe,colonne){
@@ -55,8 +55,8 @@ angular.module('myApp', [])
 		}
 		$scope.getCellaBoard= function(righe, colonne){
 			if ($scope.board){
-				if (colonne<$scope.colonne){
-					 return $scope.board[righe][colonne];
+				if (colonne>0){
+					 return $scope.board[righe][colonne-1];
 				}
 				return 'xxxxxxxxxxxxx';
 			}

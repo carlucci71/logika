@@ -15,7 +15,7 @@ table.board th, table.board td {
 table.board tr:nth-child(5n) td {
   border-bottom: 3px solid black;
 }
-table.board tr td:nth-child(5n) {
+table.board tr td:nth-child(5n+1) {
   border-right: 3px solid black;
 }
 table.board tr:first-child th,
@@ -23,7 +23,11 @@ table.board tr:first-child td {
   border-top: 3px solid black;
 }
 table.board tr td:first-child {
-  border-left: 3px solid black;
+  border-left: none;
+}
+table.board td:first-child {
+  width: 400px; 
+  text-align: right;
 }
 
 table.boardIndicazioni {
@@ -38,13 +42,14 @@ table.boardIndicazioni th, table.boardIndicazioni td {
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
-table.boardIndicazioni tr:nth-child(5n) td {
-}
-table.boardIndicazioni tr td:nth-child(5n) {
+table.boardIndicazioni tr td:nth-child(5n+1) {
   border-right: 3px solid black;
 }
 table.boardIndicazioni tr td:first-child {
-  border-left: 3px solid black;
+  border-left: none;
+}
+table.boardIndicazioni td:first-child {
+  width: 400px; 
 }
 
 
