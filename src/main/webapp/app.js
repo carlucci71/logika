@@ -1,4 +1,4 @@
-angular.module('myApp', [])
+angular.module('myApp', ['ngSanitize'])
 
 	.run(function($rootScope) {
 		$rootScope.getRange=function (numElements) {
@@ -9,7 +9,7 @@ angular.module('myApp', [])
           	return result;
           };		    
 	})
-    .controller('JSCrucipixel', ['$scope', '$http', function($scope, $http) {
+    .controller('JSCrucipixel', ['$scope', '$sce', function($scope, $sce) {
 		$scope.inizializza= function(){
 	        $scope.id=null;
 	        $scope.nome='Aprile 23 - 1';
@@ -61,7 +61,13 @@ angular.module('myApp', [])
 				return 'xxxxxxxxxxxxx';
 			}
 		}
-		
+		$scope.getIntestazioneBoard= function(colonna){
+			if (colonna==0) {
+				return '';
+			} else {
+				return  $sce.trustAsHtml(colonna+"<br>"+colonna);
+			}
+		}
 		$scope.initBoard= function(){
 			$scope.board=[];
 			for (var r=0; r < $scope.righe; r++) {

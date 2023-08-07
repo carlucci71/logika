@@ -23,64 +23,13 @@
 		<div ng-show="fase=='P' || fase=='G'">
 			<table class="boardIndicazioni">
 				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
-					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				  <td ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 				</tr>
 			</table>
 			<table class="board">
 				<tr ng-repeat="righe in getRange(righe)">
 					  <td 
-					  	ng-style="{'Xcolor': getColor(righe,colonne), 'Xbackground-color': getBgColor(righe,colonne) }"  
+					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne) }"  
 					  	ng-repeat="colonne in getRange(colonne+1)" >
 								{{getCellaBoard(righe,colonne)}}
 					  </td>
@@ -88,7 +37,8 @@
 			</table>
 		</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.8.2/angular-sanitize.min.js"></script>
     <script src="../app.js"></script>
 </body>
 </html>
