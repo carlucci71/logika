@@ -9,6 +9,69 @@ angular.module('myApp', [])
           	return result;
           };		    
 	})
+    .controller('JSCrucipixel', ['$scope', '$http', function($scope, $http) {
+		$scope.inizializza= function(){
+	        $scope.id=null;
+	        $scope.nome='Aprile 23 - 1';
+	        $scope.maxIndicazioni=5;
+	        $scope.colonne=15;
+	        $scope.righe=10;
+	        $scope.fase='I';//I -> iniz P -> progetta F -> gioca
+	        /*
+            $scope.stelleSalvate = [];
+	    	$http.get("/logika/stelle").then(function(response) {
+	          	for (var i=0; i < response.data.length; i++) {
+					el={ 
+						prog: i, 
+						id: response.data[i].id, 
+						zone: response.data[i].zone, 
+						nome: response.data[i].nome,
+						stellePerZona: response.data[i].stellePerZona,
+						board: response.data[i].board,
+						boardGioco: response.data[i].boardGioco,
+					 };
+	            	$scope.stelleSalvate.push(el);
+	          	}
+		        $scope.stelleSelezionata = null;
+			  
+	        })
+	        .catch(function(error) {
+	            console.log(error);
+	        });
+	        */
+		}
+		$scope.inizializza();
+		$scope.progetta= function(){
+			$scope.initBoard();				
+        	$scope.fase='P';
+		}
+		$scope.getColor= function(righe,colonne){
+			if (colonne>$scope.colonne-1) return 'black';
+			return $scope.getBgColor(righe,colonne);
+		}
+		$scope.getBgColor= function(righe,colonne){
+			if (righe==1 && colonne==1) return 'red';
+			return 'white';
+		}
+		$scope.getCellaBoard= function(righe, colonne){
+			if ($scope.board){
+				if (colonne<$scope.colonne){
+					 return $scope.board[righe][colonne];
+				}
+				return 'xxxxxxxxxxxxx';
+			}
+		}
+		
+		$scope.initBoard= function(){
+			$scope.board=[];
+			for (var r=0; r < $scope.righe; r++) {
+			  $scope.board[r]=[];
+			  for (var c=0; c < $scope.colonne; c++) {
+		    	$scope.board[r][c]=0;
+			  }
+			}
+		}
+		}])
     .controller('JSGrattacieli', ['$scope', '$http', function($scope, $http) {
 		$scope.inizializza= function(){
 	        $scope.id=null;
@@ -133,6 +196,9 @@ angular.module('myApp', [])
 			if ($scope.cosaScrivo==$scope.piani+1){
 				$scope.cosaScrivo=0;
 			}
+		}
+		$scope.getChar= function(index){
+			return String.fromCharCode(65+index);
 		}
 		$scope.clickCella= function(righe,colonne){
 			if ($scope.fase=='G'){

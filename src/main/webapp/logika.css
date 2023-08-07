@@ -1,4 +1,50 @@
 body {
-	font-size: 18px;
+  font-size: 18px;
 }
+table.board {
+  border-collapse: collapse;
+  user-select: none;
+}
+table.board th, table.board td {
+  border: 1px solid black;
+  width: 30px; 
+  height: 30px; 
+  text-align: center;
+  vertical-align: middle; 
+}
+table.board tr:nth-child(5n) td {
+  border-bottom: 3px solid black;
+}
+table.board tr td:nth-child(5n) {
+  border-right: 3px solid black;
+}
+table.board tr:first-child th,
+table.board tr:first-child td {
+  border-top: 3px solid black;
+}
+table.board tr td:first-child {
+  border-left: 3px solid black;
+}
+
+table.boardIndicazioni {
+  border-collapse: collapse;
+  user-select: none;
+}
+table.boardIndicazioni th, table.boardIndicazioni td {
+  width: 30px; 
+  height: 30px; 
+  text-align: center;
+  vertical-align: middle; 
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+table.boardIndicazioni tr:nth-child(5n) td {
+}
+table.boardIndicazioni tr td:nth-child(5n) {
+  border-right: 3px solid black;
+}
+table.boardIndicazioni tr td:first-child {
+  border-left: 3px solid black;
+}
+
 

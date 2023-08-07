@@ -54,8 +54,24 @@
 	                      'text-align': 'center', 'vertical-align': 'middle' }">{{getCosaScrivo()}}</td>
 					</tr>
 					<tr>
-						  <td ng-repeat="index in getRange(piani+1)" ng-click="defaultValoreCella(index)" ng-style="{'width': '30px', 'height': '30px', 
-	                      'text-align': 'center', 'vertical-align': 'middle' }">{{index}}</td>
+						  <td ng-repeat="index in getRange(piani+1)" ng-click="defaultValoreCella(index)" 
+						  ng-style="{'width': '30px', 'height': '30px',  'text-align': 'center', 'vertical-align': 'middle' }">
+						  {{index}}</td>
+					</tr>
+					<tr>
+						  <td ng-repeat="index in getRange(piani+1)" ng-click="defaultValoreCella(getChar(index))" 
+						  ng-style="{'width': '30px', 'height': '30px', 'text-align': 'center', 'vertical-align': 'middle' }">
+						  {{getChar(index)}}</td>
+					</tr>
+					<tr>
+						  <td  colspan={{piani+1}}  ng-click="defaultValoreCella('!')" 
+						  ng-style="{'width': '30px', 'height': '30px', 'text-align': 'center', 'vertical-align': 'middle' }">
+						  !</td>
+					</tr>
+					<tr>
+						  <td  colspan={{piani+1}}  ng-click="defaultValoreCella('?')" 
+						  ng-style="{'width': '30px', 'height': '30px', 'text-align': 'center', 'vertical-align': 'middle' }">
+						  ?</td>
 					</tr>
 				</table>
 				<label ng-show="fase=='G'">Scegli il valore da inserire e poi clicca sulla tabella. 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>crucipixel</title>
+	<link href="../logika.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body ng-controller="JSCrucipixel">
+		<a href="../index.html">HOME</a>
+		<div ng-show="fase=='I'">
+			<label style="font-size: 20px;font-weight: bold;">Inizia</label>
+			<table>
+				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
+				<tr><td>righe</td><td><input type=text ng-model="righe"></input></td></tr>
+				<tr><td>colonne</td><td><input type=text ng-model="colonne"></input></td></tr>
+				<tr><td>max indicazioni</td><td><input type=text ng-model="maxIndicazioni"></input></td></tr>
+			</table>
+			<input type=button ng-click="progetta()" value="PROGETTA"></input>
+		</div>
+		<div ng-show="fase=='P' || fase=='G'">
+			<table class="boardIndicazioni">
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+				<tr>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+					<td>x</td><td>x</td><td>x</td><td>x</td><td>x</td>
+				</tr>
+			</table>
+			<table class="board">
+				<tr ng-repeat="righe in getRange(righe)">
+					  <td 
+					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne) }"  
+					  	ng-repeat="colonne in getRange(colonne+1)" >
+								{{getCellaBoard(righe,colonne)}}
+					  </td>
+				</tr>
+			</table>
+		</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+    <script src="../app.js"></script>
+</body>
+</html>
