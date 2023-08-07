@@ -15,18 +15,21 @@ angular.module('myApp', [])
 	        $scope.nome='Aprile 23 - 1';
 	        $scope.piani=4;
 	        $scope.fase='I';//I -> iniz P -> progetta F -> gioca
-			$scope.progetta= function(){
+			$scope.initBoard= function(){
 				$scope.board=[];
 				for (var r=0; r < $scope.piani+2; r++) {
 				  $scope.board[r]=[];
 				  for (var c=0; c < $scope.piani+2; c++) {
 					if (r==0 || r==$scope.piani+1 || c==0 || c==$scope.piani+1){
-				    	$scope.board[r][c]=1;
+				    	$scope.board[r][c]=0;
 				    } else {
 				    	$scope.board[r][c]=0;
 					}
 				  }
 				}
+			}
+			$scope.progetta= function(){
+				$scope.initBoard();				
 	        	$scope.fase='P';
 			}
             $scope.grattacieliSalvate = [];
@@ -49,6 +52,25 @@ angular.module('myApp', [])
 	        });
 		}
 		$scope.inizializza();
+		$scope.sfondoCella= function(righe,colonne){
+			if (righe==0 && colonne==0){
+				return 'white';
+			}
+			if (righe==0 && colonne==$scope.piani+1){
+				return 'white';
+			}
+			if (righe==$scope.piani+1 && colonne==0){
+				return 'white';
+			}
+			if (righe==$scope.piani+1 && colonne==$scope.piani+1){
+				return 'white';
+			}
+			if (righe==0 || colonne==0 || righe==$scope.piani+1 || colonne==$scope.piani+1){
+				return 'beige';
+			} else {
+				return 'white';
+			}
+		}
 		$scope.ricomincia= function(){
 			$scope.inizializza();
 		}
@@ -98,9 +120,9 @@ angular.module('myApp', [])
 			$scope.board=daCaricare.board;
         	$scope.fase='P';
 		}
-		$scope.avviaGioco=function(){
+		$scope.avviaGioco=function(modalitaSaltavaggio){
         	$scope.fase='G';
-        	$scope.cosaScrivo=0;
+        	$scope.cosaScrivo=1;
 		}
 		$scope.getCosaScrivo=function(){
         	if ($scope.cosaScrivo==0) return "";
@@ -114,6 +136,7 @@ angular.module('myApp', [])
 		}
 		$scope.clickCella= function(righe,colonne){
 			if ($scope.fase=='G'){
+				if (righe==0 || colonne==0 || righe==$scope.piani+1 || colonne==$scope.piani+1) return;
 				if ($scope.cosaScrivo==0){
 					$scope.board[righe][colonne]=0;
 				} else {
@@ -130,27 +153,35 @@ angular.module('myApp', [])
 						}
 					}
 				}
-			}
-		}
-		$scope.addValInCols=function(righe,colonne){
-			$scope.board[righe][colonne]=$scope.board[righe][colonne]+1;
-			if ($scope.board[righe][colonne]==$scope.piani+1){
-				$scope.board[righe][colonne]=1;
+			} else if ($scope.fase=='P'){
+				$scope.board[righe][colonne]=$scope.board[righe][colonne]+1;
+				if ($scope.board[righe][colonne]==$scope.piani+1){
+					$scope.board[righe][colonne]=0;
+				}
 			}
 		}
 		$scope.defaultValoreCella=function(valore){
 			$scope.cosaScrivo=valore;
 		}
-		$scope.visInputGioca= function(righe,colonne){
-			if ($scope.fase!='G') return false;
-			if (righe==0 && colonne==0) return false;
-			if (righe==0 && colonne==$scope.piani+1) return false;
-			if (righe==$scope.piani+1 && colonne==0) return false;
-			if (righe==$scope.piani+1 && colonne==$scope.piani+1) return false;
-			if ($scope.board[righe][colonne]==0) return "";
-			return !$scope.visInput(righe,colonne);
+		$scope.colorVisInput= function(righe,colonne){
+			if ($scope.board){
+				if ($scope.colorCellCornice(righe,colonne)){
+					if ($scope.board[righe][colonne]==0) {
+						return 'beige';
+					} else {
+						return 'red';
+					}
+				} 
+				if (righe==0 && colonne==0) return 'white';
+				if (righe==0 && colonne==$scope.piani+1) return 'white';
+				if (righe==$scope.piani+1 && colonne==0) return 'white';
+				if (righe==$scope.piani+1 && colonne==$scope.piani+1) return 'white';
+				if ($scope.fase=='P') return 'white';
+				if ($scope.board[righe][colonne]==0) return 'white';
+				return 'black';
+			}
 		}
-		$scope.visInput= function(righe,colonne){
+		$scope.colorCellCornice= function(righe,colonne){
 			if (righe==0 && colonne==0) return false;
 			if (righe==0 && colonne==$scope.piani+1) return false;
 			if (righe==$scope.piani+1 && colonne==0) return false;
@@ -220,6 +251,7 @@ angular.module('myApp', [])
 			$scope.board=daCaricare.board;
 			$scope.boardGioco=daCaricare.boardGioco;
         	$scope.fase='P';
+        	$scope.piani=daCaricare.board.length;
 		}
 
 
