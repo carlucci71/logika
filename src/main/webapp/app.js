@@ -43,29 +43,121 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.inizializza();
 		$scope.progetta= function(){
 			$scope.initBoard();				
+			$scope.cosaScrivo=[];
+			$scope.cosaScrivo[0]=1;				
         	$scope.fase='P';
 		}
 		$scope.getColor= function(righe,colonne){
 			if (colonne==0) return 'black';
 			return $scope.getBgColor(righe,colonne);
 		}
-		$scope.getBgColor= function(righe,colonne){
-			if (righe==1 && colonne==1) return 'red';
+		$scope.getColori= function(valore){
+			if (valore>0) return 'red';
 			return 'white';
+		}
+		$scope.getBgColor= function(righe,colonne){
+			if ($scope.board){
+				return $scope.getColori($scope.board[righe][colonne-1]);
+			}
+		}
+		$scope.cliccaCella= function(tipo, righe, colonne){
+			if ($scope.fase=='P'){
+				if (tipo=='IND' && colonne >0){
+					$scope.datiColonnaBoard[colonne-1]=[];
+					for (var i=0;i<$scope.cosaScrivo.length;i++){
+						$scope.datiColonnaBoard[colonne-1].push($scope.cosaScrivo[i]);
+					}
+				}
+				if (tipo=='BOARD' && colonne==0){
+					$scope.datiRigaBoard[righe]=[];
+					for (var i=0;i<$scope.cosaScrivo.length;i++){
+						$scope.datiRigaBoard[righe].push($scope.cosaScrivo[i]);
+					}
+				}
+			}
+			if ($scope.fase=='G' && tipo=='BOARD' && colonne>0 ){
+				$scope.board[righe][colonne-1]=$scope.mossa;
+			}
+		}
+		$scope.getIntestazioneBoard= function(righe, colonne){
+			if (righe <0) return;
+			if (colonne==0) {
+				return '';
+			} else {
+				if ($scope.datiColonnaBoard){
+					var att=$scope.datiColonnaBoard[colonne-1];
+					var ret="";
+					for (var i=0; i < att.length; i++) {
+						ret=ret + "<br>"+ att[i];
+					}
+					return  $sce.trustAsHtml(ret);
+				}
+			}
 		}
 		$scope.getCellaBoard= function(righe, colonne){
 			if ($scope.board){
 				if (colonne>0){
 					 return $scope.board[righe][colonne-1];
+				} else {
+					if ($scope.datiRigaBoard){
+						var att=$scope.datiRigaBoard[righe];
+						var ret="";
+						for (var i=0; i < att.length; i++) {
+							ret=ret + '&nbsp;&nbsp;' + att[i];
+						}
+						return  $sce.trustAsHtml(ret);
+					}
 				}
-				return 'xxxxxxxxxxxxx';
 			}
 		}
-		$scope.getIntestazioneBoard= function(colonna){
-			if (colonna==0) {
-				return '';
-			} else {
-				return  $sce.trustAsHtml(colonna+"<br>"+colonna);
+		$scope.charCosaScrivo= function(carattere){
+			if ($scope.cosaScrivo){
+				if (carattere==$scope.cosaScrivo.length){
+					return "+";
+				}
+				return $scope.cosaScrivo[carattere];
+			}
+		}
+		
+		$scope.pushCharCosaScrivo= function(){
+			$scope.cosaScrivo.push(1);
+		}
+
+
+		$scope.plusCharCosaScrivo= function(carattere){
+			$scope.cosaScrivo[carattere]=$scope.cosaScrivo[carattere]+1;
+		}
+
+		$scope.minusCharCosaScrivo= function(carattere){
+			$scope.cosaScrivo[carattere]=$scope.cosaScrivo[carattere]-1;
+			if ($scope.cosaScrivo[carattere]==0){
+				$scope.cosaScrivo.splice(carattere,1);
+			}
+		}
+		$scope.inserisci= function(){
+        	$scope.avviaGioco("I");
+			/*
+	        var body={
+				nome: $scope.nome
+			};
+        	$http.post("/logika/grattacieli",body).then(function(response) {
+	        	$scope.avviaGioco("I");
+	        	$scope.id=response.data.id;
+				$scope.timeAttuale=response.headers('Time-Attuale');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+            */
+		}
+		$scope.avviaGioco=function(modalitaSaltavaggio){
+        	$scope.fase='G';
+        	$scope.mossa=0;
+		}
+		$scope.impostaValoreMossa=function(){
+        	$scope.mossa=$scope.mossa+1;
+        	if ($scope.mossa==2){
+				$scope.mossa=0;
 			}
 		}
 		$scope.initBoard= function(){
@@ -76,6 +168,21 @@ angular.module('myApp', ['ngSanitize'])
 		    	$scope.board[r][c]=0;
 			  }
 			}
+			$scope.intestazioneBoard=[];
+			  for (var c=0; c < $scope.colonne; c++) {
+				$scope.intestazioneBoard.push(0);		
+			}
+			$scope.datiColonnaBoard=[];
+            for (var c=0; c < $scope.colonne; c++) {
+	            $scope.datiColonnaBoard[c]=[];
+				$scope.datiColonnaBoard[c].push('?');
+			}
+			$scope.datiRigaBoard=[];
+			for (var r=0; r < $scope.righe; r++) {
+	            $scope.datiRigaBoard[r]=[];
+				$scope.datiRigaBoard[r].push('?');		
+			}
+			
 		}
 		}])
     .controller('JSGrattacieli', ['$scope', '$http', function($scope, $http) {
@@ -98,7 +205,7 @@ angular.module('myApp', ['ngSanitize'])
 				}
 			}
 			$scope.progetta= function(){
-				$scope.initBoard();				
+				$scope.initBoard();
 	        	$scope.fase='P';
 			}
             $scope.grattacieliSalvate = [];

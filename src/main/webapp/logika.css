@@ -38,7 +38,7 @@ table.boardIndicazioni th, table.boardIndicazioni td {
   width: 30px; 
   height: 30px; 
   text-align: center;
-  vertical-align: middle; 
+  xvertical-align: middle; 
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
@@ -51,5 +51,7 @@ table.boardIndicazioni tr td:first-child {
 table.boardIndicazioni td:first-child {
   width: 400px; 
 }
-
+table.boardIndicazioni tr:first-child {
+  vertical-align: bottom
+}
 

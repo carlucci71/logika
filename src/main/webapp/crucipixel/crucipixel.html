@@ -23,18 +23,50 @@
 		<div ng-show="fase=='P' || fase=='G'">
 			<table class="boardIndicazioni">
 				<tr>
-				  <td ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
+				  <td ng-click="cliccaCella('IND', 0,colonne)" ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
 				</tr>
 			</table>
 			<table class="board">
 				<tr ng-repeat="righe in getRange(righe)">
-					  <td 
+					  <td ng-click="cliccaCella('BOARD',righe,colonne)"
 					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne) }"  
-					  	ng-repeat="colonne in getRange(colonne+1)" >
-								{{getCellaBoard(righe,colonne)}}
+					  	ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getCellaBoard(righe,colonne)">
 					  </td>
 				</tr>
 			</table>
+			<br>
+			<div ng-show="fase=='P'">			
+				<table  style=" user-select: none;text-align:center; border-collapse: collapse;" >
+					<tr>
+						<td style="border:1px solid black; height: 40px;" ng-repeat="caratteri in getRange(cosaScrivo.length)" ng-click="plusCharCosaScrivo(caratteri)">+</td>
+					</tr>
+					<tr>
+						  <td ng-repeat="caratteri in getRange(cosaScrivo.length+1)" ng-click="pushCharCosaScrivo()" 
+						  ng-style="{'border':'1px solid black', 'width': '100px', 'height': '40px', 'text-align': 'center', 
+						  'margin-right': '10px','vertical-align': 'middle' }">
+						  {{charCosaScrivo(caratteri)}}
+						  </td>
+					</tr>
+					<tr>
+						<td style="border:1px solid black; height: 40px;" ng-repeat="caratteri in getRange(cosaScrivo.length)" ng-click="minusCharCosaScrivo(caratteri)">-</td>
+					</tr>
+				</table>
+				<label ng-show="fase=='P'">Componi la combinazione e poi clicca sull'intestazione di riga o colonna. <br>
+				Se la singola occorrenza arriva a 0 viene rimossa. <br>
+				Per aggiungere una singola occorrenza cliccare sul +</label>
+			</div>
+			<div ng-show="fase=='G'">
+				<table border style=" user-select: none;" >
+					<tr>
+						  <td ng-click="impostaValoreMossa()" 
+						  ng-style="{'width': '30px', 'height': '30px', 'text-align': 'center', 'vertical-align': 'middle',
+							'background-color': getColori(mossa), 'color':getColori(mossa)}">{{mossa}}</td>
+					</tr>
+				</table>			
+			</div>
+			<div ng-show="fase=='P'">			
+				<input ng-hide="id" type=button ng-click="inserisci()" value="INSERISCI"></input>
+			</div>
 		</div>
 
     <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
