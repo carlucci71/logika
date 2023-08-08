@@ -1,5 +1,5 @@
 // Comando Bash da eseguire
-def bashCommand = "echo 'Hello from Bash'"
+def bashCommand = "bash /home/daniele/githubrepository/logika/lancia.sh"
 
 // Esecuzione del comando Bash
 def process = bashCommand.execute()
