@@ -30,5 +30,5 @@ if (gitDir.exists()) {
     launchReader.lines().forEach { println it }
     launchScript.waitFor()
 } else {
-    println "La directory git non esiste: ${gitDir.absolutePath}"
+    println "La directory git non esiste: ${/home/daniele/githubrepository/logika/}"
 }
