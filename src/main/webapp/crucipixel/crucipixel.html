@@ -35,13 +35,14 @@
 
 			<table class="boardIndicazioni">
 				<tr>
-				  <td ng-click="cliccaCella('IND', 0,colonne)" ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
+				  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'width': getCellaWidth(colonne)}" 
+				  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
 				</tr>
 			</table>
 			<table class="board">
 				<tr ng-repeat="righe in getRange(righe)">
 					  <td ng-click="cliccaCella('BOARD',righe,colonne)"
-					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne) }"  
+					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne),'width': getCellaWidth(colonne) }"  
 					  	ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getCellaBoard(righe,colonne)">
 					  </td>
 				</tr>
