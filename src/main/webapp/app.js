@@ -13,9 +13,8 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.inizializza= function(){
 	        $scope.id=null;
 	        $scope.nome='Aprile 23 - 1';
-	        $scope.maxIndicazioni=5;
-	        $scope.colonne=15;
-	        $scope.righe=10;
+	        $scope.colonne=25;
+	        $scope.righe=25;
 	        $scope.fase='I';//I -> iniz P -> progetta F -> gioca
 	        /*
             $scope.stelleSalvate = [];
@@ -52,11 +51,12 @@ angular.module('myApp', ['ngSanitize'])
 			return $scope.getBgColor(righe,colonne);
 		}
 		$scope.getColori= function(valore){
-			if (valore>0) return 'red';
+			if (valore>1) return 'red';
+			if (valore>0) return 'black';
 			return 'white';
 		}
 		$scope.getBgColor= function(righe,colonne){
-			if ($scope.board){
+			if ($scope.board && colonne>0 ){
 				return $scope.getColori($scope.board[righe][colonne-1]);
 			}
 		}
@@ -97,7 +97,7 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.getCellaBoard= function(righe, colonne){
 			if ($scope.board){
 				if (colonne>0){
-					 return $scope.board[righe][colonne-1];
+                	return $scope.board[righe][colonne-1];
 				} else {
 					if ($scope.datiRigaBoard){
 						var att=$scope.datiRigaBoard[righe];
@@ -151,12 +151,17 @@ angular.module('myApp', ['ngSanitize'])
             */
 		}
 		$scope.avviaGioco=function(modalitaSaltavaggio){
+			$scope.board=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+			$scope.righe=$scope.board.length;
+			$scope.colonne=$scope.board[0].length;
+			$scope.datiColonnaBoard=[[1,2],[1,2,3],[2,7],[1,9,1,2],[14,4],[3,4,2,4,6],[25],[2,14,6],[5,6,3,4],[1,13,2],[2,3,5],[1,2,2,1,6],[1,3,1,1,1],[2,6],[14,1,1,1,1],[14,1,1,1],[2,1,5,1,1],[2,1,1,1,6],[2,1,1,1,1,1],[14,1,1,5],[2,1,1,6,1,1],[2,1,1,1,1,1,1],[2,1,1,1,5],[2,1,6,1,1],[14,5]];
+			$scope.datiRigaBoard=[[1,11],[2,11],[4,2,1,1],[2,2,2,1,1],[5,2,1,1],[2,4,2,1,1],[7,2,1,1],[5,3,2,3,1],[8,2,1,1],[10,2,1,1],[2,6,2,1,1],[11,2,1,1],[9,2,1,1],[5,5,11],[6,3],[12,8],[3,7,2,1,1,1],[15,8],[1,1,1,1],[7,7,1,1],[7,1,1,1,6],[5,7,1,1,1],[5,1,1,1,6],[3,1,1,1,1,1,1],[3,14]];
         	$scope.fase='G';
-        	$scope.mossa=0;
+        	$scope.mossa=1;
 		}
 		$scope.impostaValoreMossa=function(){
         	$scope.mossa=$scope.mossa+1;
-        	if ($scope.mossa==2){
+        	if ($scope.mossa==3){
 				$scope.mossa=0;
 			}
 		}
@@ -167,10 +172,6 @@ angular.module('myApp', ['ngSanitize'])
 			  for (var c=0; c < $scope.colonne; c++) {
 		    	$scope.board[r][c]=0;
 			  }
-			}
-			$scope.intestazioneBoard=[];
-			  for (var c=0; c < $scope.colonne; c++) {
-				$scope.intestazioneBoard.push(0);		
 			}
 			$scope.datiColonnaBoard=[];
             for (var c=0; c < $scope.colonne; c++) {

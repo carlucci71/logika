@@ -14,9 +14,8 @@
 			<label style="font-size: 20px;font-weight: bold;">Inizia</label>
 			<table>
 				<tr><td>nome</td><td><input type=text ng-model="nome"></input></td></tr>
-				<tr><td>righe</td><td><input type=text ng-model="righe"></input></td></tr>
-				<tr><td>colonne</td><td><input type=text ng-model="colonne"></input></td></tr>
-				<tr><td>max indicazioni</td><td><input type=text ng-model="maxIndicazioni"></input></td></tr>
+				<tr><td>righe</td><td><input type=number ng-model="righe"></input></td></tr>
+				<tr><td>colonne</td><td><input type=number ng-model="colonne"></input></td></tr>
 			</table>
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
 		</div>
@@ -68,7 +67,15 @@
 				<input ng-hide="id" type=button ng-click="inserisci()" value="INSERISCI"></input>
 			</div>
 		</div>
+	<br>
+	<textarea rows=10 cols=80>{{board}}</textarea><br>
+	<textarea rows=10 cols=80>{{datiColonnaBoard}}</textarea><br>
+	<textarea rows=10 cols=80>{{datiRigaBoard}}</textarea><br>
+	r:{{righe}}
+	c:{{colonne}}
 
+	
+	
     <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-sanitize.min.js"></script>
     <script src="../app.js"></script>
