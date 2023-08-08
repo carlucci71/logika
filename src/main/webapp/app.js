@@ -180,12 +180,12 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.datiColonnaBoard=[];
             for (var c=0; c < $scope.colonne; c++) {
 	            $scope.datiColonnaBoard[c]=[];
-				$scope.datiColonnaBoard[c].push('400');
+				$scope.datiColonnaBoard[c].push('?');
 			}
 			$scope.datiRigaBoard=[];
 			for (var r=0; r < $scope.righe; r++) {
 	            $scope.datiRigaBoard[r]=[];
-				$scope.datiRigaBoard[r].push('400');		
+				$scope.datiRigaBoard[r].push('15 15 15 15 15 15 15 1');		
 			}
 			
 		}
