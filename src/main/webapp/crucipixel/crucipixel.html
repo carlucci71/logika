@@ -26,7 +26,7 @@
 					<tr>
 						  <td style="width: 200px">Seleziona la mossa</td> 
 						  <td ng-click="impostaValoreMossa()" 
-						  ng-style="{'width': '30px', 'height': '30px', 'text-align': 'center', 'vertical-align': 'middle',
+						  ng-style="{'width': '40px', 'height': '40px', 'text-align': 'center', 'vertical-align': 'middle',
 							'background-color': getColori(mossa), 'color':getColori(mossa)}">{{mossa}}</td>
 					</tr>
 				</table>			
@@ -35,14 +35,15 @@
 
 			<table class="boardIndicazioni">
 				<tr>
-				  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'width': getCellaWidth(colonne)}" 
+				  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'height':'40px','width': getCellaWidth(colonne)}" 
 				  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
 				</tr>
 			</table>
 			<table class="board">
 				<tr ng-repeat="righe in getRange(righe)">
 					  <td ng-click="cliccaCella('BOARD',righe,colonne)"
-					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne),'width': getCellaWidth(colonne) }"  
+					  	ng-style="{'color': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne),
+					  	'height':'40px', 'width': getCellaWidth(colonne) }"  
 					  	ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getCellaBoard(righe,colonne)">
 					  </td>
 				</tr>
