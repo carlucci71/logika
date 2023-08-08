@@ -12,7 +12,8 @@ else
     echo "Terminazione del processo Java con PID: $java_pid"
     kill "$java_pid"
 fi
-mvn spring-boot:run -f /home/daniele/githubrepository/logika/pom.xml &
+cd /home/daniele/githubrepository/logika/
+mvn spring-boot:run  &
         '''
     }
 }
