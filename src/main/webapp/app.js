@@ -151,7 +151,7 @@ angular.module('myApp', ['ngSanitize'])
             */
 		}
 		$scope.getCellaWidth=function(colonne){
-			if (colonne==0) return '400px';
+			if (colonne==0) return '800px';
 			return '40px';
 		}
 		$scope.avviaGioco=function(modalitaSaltavaggio){
