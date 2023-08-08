@@ -18,7 +18,7 @@ if (!javaPid) {
     processKill.waitFor()
 }
 
-def gitDir = new File("githubrepository/logika/")
+def gitDir = new File("/home/daniele/githubrepository/logika/")
 if (gitDir.exists()) {
     def gitPull = new ProcessBuilder("git", "pull").directory(gitDir).redirectErrorStream(true).start()
     def pullReader = new BufferedReader(new InputStreamReader(gitPull.getInputStream()))
