@@ -3,7 +3,7 @@ node {
         sh '''
 #!/bin/bash
 
-/home/daniele/aggiornaLogika.sh/var/lib/jenkins/workspace/logika/go.sh &
+/home/daniele/aggiornaLogika.sh &
         '''
     }
 }
