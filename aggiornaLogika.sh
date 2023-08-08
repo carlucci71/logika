@@ -12,8 +12,7 @@ else
     echo "Terminazione del processo Java con PID: $java_pid"
     kill "$java_pid"
 fi
-cd /home/daniele/githubrepository/logika/
-mvn spring-boot:run  &
+/var/lib/jenkins/workspace/logika/go.sh &
         '''
     }
 }
