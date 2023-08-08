@@ -24,34 +24,61 @@
 			<div ng-show="fase=='G'">
 				<table border style=" user-select: none;" >
 					<tr>
-						  <td style="width: 200px">Seleziona la mossa</td> 
+						  <td style="width: 200px; font-size:20px">Seleziona la mossa</td> 
 						  <td ng-click="impostaValoreMossa()" 
 						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
 							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
 						  <td ng-click="impostaTestoMossa()" 
 						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
 							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
+						  <td ng-click="undo()" 
+						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">UNDO</td>
+					</tr>
+				</table>			
+			</div>
+
+			<div>
+				<table class="boardIndicazioni">
+					<tr>
+					  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'height':'30px','width': getCellaWidth(colonne)}" 
+					  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
+					</tr>
+				</table>
+				<table class="board">
+					<tr ng-repeat="righe in getRange(righe)">
+						  <td ng-click="cliccaCella('BOARD',righe,colonne)"
+						  	ng-style="{'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
+						  	'height':'30px' }"  
+						  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
+						  </td>
+					</tr>
+				</table>
+				<table class="boardIndicazioni">
+					<tr>
+					  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'height':'30px','width': getCellaWidth(colonne)}" 
+					  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
+					</tr>
+				</table>
+			</div>
+			<div ng-show="fase=='G'">
+				<table border style=" user-select: none;" >
+					<tr>
+						  <td style="width: 200px; font-size:20px">Seleziona la mossa</td> 
+						  <td ng-click="impostaValoreMossa()" 
+						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
+							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
+						  <td ng-click="impostaTestoMossa()" 
+						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
+							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
+						  <td ng-click="undo()" 
+						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">UNDO</td>
 					</tr>
 				</table>			
 			</div>
 
 
-			<table class="boardIndicazioni">
-				<tr>
-				  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'height':'30px','width': getCellaWidth(colonne)}" 
-				  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
-				</tr>
-			</table>
-			<table class="board">
-				<tr ng-repeat="righe in getRange(righe)">
-					  <td ng-click="cliccaCella('BOARD',righe,colonne)"
-					  	ng-style="{'colorX': getColor(righe,colonne), 'background-color': getBgColor(righe,colonne),
-					  	'height':'30px', 'width': getCellaWidth(colonne) }"  
-					  	ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getCellaBoard(righe,colonne)">
-					  </td>
-				</tr>
-			</table>
-			<br>
 			<div ng-show="fase=='P'">			
 				<table  style=" user-select: none;text-align:center; border-collapse: collapse;" >
 					<tr>
@@ -78,13 +105,14 @@
 		</div>
 	<br>
 
+	<!--
 	<textarea rows=10 cols=80>{{board}}</textarea><br>
 	<textarea rows=10 cols=80>{{testoBoard}}</textarea><br>
 	<textarea rows=10 cols=80>{{datiColonnaBoard}}</textarea><br>
 	<textarea rows=10 cols=80>{{datiRigaBoard}}</textarea><br>
 	r:{{righe}}
 	c:{{colonne}}
-
+	-->
 	
 	
     <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>

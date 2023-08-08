@@ -26,6 +26,9 @@ table.board tr:first-child td {
 table.board tr td:first-child {
   border-left: none;
 }
+table.board tr td:last-child {
+  border-right: none;
+}
 table.board td:first-child {
   text-align: right;
 }
