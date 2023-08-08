@@ -26,7 +26,7 @@ table.board tr td:first-child {
   border-left: none;
 }
 table.board td:first-child {
-  width: 400px; 
+  width: 500px; 
   text-align: right;
 }
 
@@ -38,7 +38,6 @@ table.boardIndicazioni th, table.boardIndicazioni td {
   width: 30px; 
   height: 30px; 
   text-align: center;
-  xvertical-align: middle; 
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
@@ -49,7 +48,7 @@ table.boardIndicazioni tr td:first-child {
   border-left: none;
 }
 table.boardIndicazioni td:first-child {
-  width: 400px; 
+  width: 500px; 
 }
 table.boardIndicazioni tr:first-child {
   vertical-align: bottom
