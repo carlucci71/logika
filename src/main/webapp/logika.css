@@ -1,6 +1,6 @@
 body {
   font-size: 12px;
-  background-color: yellow;
+  background-color: beige;
 }
 table.board {
   border-collapse: collapse;
@@ -27,7 +27,6 @@ table.board tr td:first-child {
   border-left: none;
 }
 table.board td:first-child {
-  Xwidth: 400px; 
   text-align: right;
 }
 
@@ -47,9 +46,6 @@ table.boardIndicazioni tr td:nth-child(5n+1) {
 }
 table.boardIndicazioni tr td:first-child {
   border-left: none;
-}
-table.boardIndicazioni td:first-child {
-  Xwidth: 400px; 
 }
 table.boardIndicazioni tr:first-child {
   vertical-align: bottom
