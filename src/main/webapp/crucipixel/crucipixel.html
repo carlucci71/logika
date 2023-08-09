@@ -102,6 +102,11 @@
 							  	'height':'20px' }"  
 							  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
 							  </td>
+							  <td NOWRAP ng-show="fase=='P'">
+							  	<input style="width: 100px" type=text ng-keypress="$event.keyCode === 13 && okValCosaScrivoRiga(righe)"
+							  	ng-model="valDatiRigaBoard[righe]">
+								<input ng-attr-tabindex="{{20000 + righe}}" type=button ng-click="okValCosaScrivoRiga(righe)" value="OK"></input>
+							  </td>
 						</tr>
 					</table>
 					<table class="boardIndicazioni">
@@ -110,6 +115,16 @@
 						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
 						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'30px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
+						  <tr  ng-show="fase=='P'">
+						  	  <td style="width: 100px"></td>
+							  <td style="width: 50px" ng-repeat="colonne in getRange(colonne)">
+								  	<input style="width: 30px" type=text ng-keypress="$event.keyCode === 13 && okValCosaScrivoColonna(colonne)" 
+								  	ng-model="valDatiColonnaBoard[colonne]">
+								  	<br>
+									<input ng-attr-tabindex="{{10000 + colonne}}" type=button ng-click="okValCosaScrivoColonna(colonne)" value="OK"></input>
+							  </td>
+						  	  <td style="width: 100px"></td>
+						  </tr>
 						</tr>
 					</table>
 			</div>

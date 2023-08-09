@@ -44,6 +44,8 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.cosaScrivo=[];
 			$scope.cosaScrivo[0]=1;				
 			$scope.valCosaScrivo=1;
+			$scope.valDatiRigaBoard=[];
+			$scope.valDatiColonnaBoard=[];
 			$scope.verifica=false;
 			$scope.linea=false;
         	$scope.fase='P';
@@ -204,18 +206,23 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.pushCharCosaScrivo= function(){
 			$scope.cosaScrivo.push(1);
 		}
+		$scope.okValCosaScrivoColonna=function(colonna){
+			$scope.datiColonnaBoard[colonna]=$scope.stringToArray($scope.valDatiColonnaBoard[colonna]);
+		}
+		$scope.okValCosaScrivoRiga=function(riga){
+			$scope.datiRigaBoard[riga]=$scope.stringToArray($scope.valDatiRigaBoard[riga]);
+		}
 		$scope.okValCosaScrivo= function(){
-			$scope.cosaScrivo=[];
-			
-			var numbersArray = $scope.valCosaScrivo.split(' ');
+			$scope.valCosaScrivo=$scope.stringToArray($scope.valCosaScrivo);
+		}
+		$scope.stringToArray=function(valore){
+			if (!valore) return [];
+			var numbersArray = valore.split(' ');
 		    numbersArray = numbersArray.map(function(numString) {
 		      return parseInt(numString); // Converte ogni stringa in un numero intero
 		    });
-			$scope.cosaScrivo=numbersArray;
-			
+			return  numbersArray;
 		}
-
-
 		$scope.plusCharCosaScrivo= function(carattere){
 			$scope.cosaScrivo[carattere]=$scope.cosaScrivo[carattere]+1;
 		}
@@ -287,6 +294,8 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.cosaScrivo=[];
 			$scope.cosaScrivo[0]=1;				
 			$scope.valCosaScrivo=1;
+			$scope.valDatiRigaBoard=[];
+			$scope.valDatiColonnaBoard=[];
 			$scope.verifica=false;
 			$scope.linea=false;
         	$scope.fase='P';
@@ -321,6 +330,7 @@ angular.module('myApp', ['ngSanitize'])
 		}
 		$scope.getCellaWidth=function(colonne){
 			if (colonne==0 || colonne==$scope.colonne+1) return '100px';
+			if ($scope.fase=='P')  return '50px';
 			return '20px';
 		}
 		$scope.impostaTestoMossa=function(){
