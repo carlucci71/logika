@@ -44,6 +44,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.cosaScrivo[0]=1;				
 			$scope.valCosaScrivo=1;
 			$scope.verifica=false;
+			$scope.linea=false;
         	$scope.fase='P';
 		}
 		$scope.getColor= function(righe,colonne){
@@ -101,10 +102,17 @@ angular.module('myApp', ['ngSanitize'])
 					testoBoard: $scope.clona($scope.testoBoard)
 				}
 				$scope.historyBoard.push(history);
-				console.log(history.board[0][0]);
-				$scope.board[righe][colonne-1]=$scope.mossa;
-				console.log(history.board[0][0]);
-				$scope.testoBoard[righe][colonne-1]=$scope.testoMossa;
+				if ($scope.linea){
+					for (var i=0; i < $scope.righe; i++) {
+						if ($scope.board[i][colonne-1]==0){
+							$scope.board[i][colonne-1]=$scope.mossa;
+							$scope.testoBoard[i][colonne-1]=$scope.testoMossa;
+						}
+					}
+				} else {
+					$scope.board[righe][colonne-1]=$scope.mossa;
+					$scope.testoBoard[righe][colonne-1]=$scope.testoMossa;
+				}
 			}
 		}
 		$scope.undo= function(){
@@ -118,6 +126,9 @@ angular.module('myApp', ['ngSanitize'])
 		}
 		$scope.verificami= function(){
 				$scope.verifica=!$scope.verifica;
+		}
+		$scope.allLine= function(){
+				$scope.linea=!$scope.linea;
 		}
 		$scope.getIntestazioneBoard= function(colonne){
 			if (colonne==0) {
@@ -267,6 +278,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.cosaScrivo[0]=1;				
 			$scope.valCosaScrivo=1;
 			$scope.verifica=false;
+			$scope.linea=false;
         	$scope.fase='P';
 		}
 		$scope.avviaGioco=function(){
