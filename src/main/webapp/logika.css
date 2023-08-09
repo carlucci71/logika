@@ -12,7 +12,7 @@ table.board th, table.board td {
   height: 30px; 
   text-align: center;
   vertical-align: middle; 
-}
+} 
 table.board tr:nth-child(5n) td {
   border-bottom: 3px solid black;
 }

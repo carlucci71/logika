@@ -40,10 +40,10 @@
 			</table>
 			<br><br>
 			<!-- RIPETERE INIZIO -->
-			<div ng-show="fase=='G'">
+			<div ng-show="fase=='G'" style="width: 50%; margin: 0 auto;">
 				<table style=" user-select: none;" >
 					<tr>
-						<td style="width: 200px; font-size:20px;text-align:right">
+						<td style="width: 200px; font-size:20px;text-align:left">
 						Seleziona la mossa
 						</td> 
 						<td ng-click="impostaValoreMossa(index)"
@@ -54,7 +54,7 @@
 						</td>
 						</tr>
 						<tr>
-						<td style="width: 200px; font-size:20px;text-align:right">
+						<td style="width: 200px; font-size:20px;text-align:left">
 						Comandi
 						</td> 
 						<td ng-click="undo()" 
@@ -85,10 +85,7 @@
 			</div>
 			<!-- RIPETERE FINE -->
 			<br><br>
-			<div>
-				<table style="width:100%; " class="boardIndicazioni">
-					<tr><td></td>
-					<td>
+			<div style="width: 50%; margin: 0 auto;">
 					<table class="boardIndicazioni">
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
@@ -115,15 +112,13 @@
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 						</tr>
 					</table>
-					</td></tr>
-				</table>
 			</div>
 			<br><br>
 			<!-- RIPETERE INIZIO -->
-			<div ng-show="fase=='G'">
+			<div ng-show="fase=='G'" style="width: 50%; margin: 0 auto;">
 				<table style=" user-select: none;" >
 					<tr>
-						<td style="width: 200px; font-size:20px;text-align:right">
+						<td style="width: 200px; font-size:20px;text-align:left">
 						Seleziona la mossa
 						</td> 
 						<td ng-click="impostaValoreMossa(index)"
@@ -134,7 +129,7 @@
 						</td>
 						</tr>
 						<tr>
-						<td style="width: 200px; font-size:20px;text-align:right">
+						<td style="width: 200px; font-size:20px;text-align:left">
 						Comandi
 						</td> 
 						<td ng-click="undo()" 
