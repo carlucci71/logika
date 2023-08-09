@@ -29,5 +29,7 @@ public class Crucipixel	 {
 	 private String datiColonnaBoard;
 	 @Column(columnDefinition = "TEXT")
 	 private String datiRigaBoard;
+	 @Column(columnDefinition = "TEXT")
+	 private String historyBoard;
 	
 }

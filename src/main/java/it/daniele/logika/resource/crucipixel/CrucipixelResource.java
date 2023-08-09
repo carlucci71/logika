@@ -12,5 +12,6 @@ public class CrucipixelResource {
 	private List testoBoard;
 	private List datiColonnaBoard;
 	private List datiRigaBoard;
+	private List historyBoard;
 	
 }

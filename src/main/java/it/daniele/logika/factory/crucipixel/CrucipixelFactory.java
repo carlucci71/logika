@@ -23,6 +23,7 @@ public interface CrucipixelFactory {
 	@Mapping(source = "testoBoard", target = "testoBoard", qualifiedByName = "boardToJson")
 	@Mapping(source = "datiColonnaBoard", target = "datiColonnaBoard", qualifiedByName = "boardToJson")
 	@Mapping(source = "datiRigaBoard", target = "datiRigaBoard", qualifiedByName = "boardToJson")
+	@Mapping(source = "historyBoard", target = "historyBoard", qualifiedByName = "boardToJson")
 	Crucipixel toModel(CrucipixelDto crucipixelDTO);
 
 	
@@ -30,6 +31,7 @@ public interface CrucipixelFactory {
 	@Mapping(source = "testoBoard", target = "testoBoard", qualifiedByName = "jsonToboard")
 	@Mapping(source = "datiColonnaBoard", target = "datiColonnaBoard", qualifiedByName = "jsonToboard")
 	@Mapping(source = "datiRigaBoard", target = "datiRigaBoard", qualifiedByName = "jsonToboard")
+	@Mapping(source = "historyBoard", target = "historyBoard", qualifiedByName = "jsonToboard")
 	CrucipixelResource toResource(Crucipixel crucipixel);
 
 	List<CrucipixelResource> toResource(List<Crucipixel> crucipixel);

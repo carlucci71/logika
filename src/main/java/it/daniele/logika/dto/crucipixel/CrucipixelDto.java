@@ -13,4 +13,5 @@ public class CrucipixelDto {
 	private List testoBoard;
 	private List datiColonnaBoard;
 	private List datiRigaBoard;
+	private List historyBoard;
 }
