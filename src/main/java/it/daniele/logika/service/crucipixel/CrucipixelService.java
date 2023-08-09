@@ -1,0 +1,54 @@
+package it.daniele.logika.service.crucipixel;
+
+import java.util.List;
+
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.Service;
+
+import it.daniele.logika.dto.crucipixel.CrucipixelDto;
+import it.daniele.logika.factory.crucipixel.CrucipixelFactory;
+import it.daniele.logika.model.crucipixel.Crucipixel;
+import it.daniele.logika.repository.crucipixel.CrucipixelRepository;
+import it.daniele.logika.resource.crucipixel.CrucipixelResource;
+
+
+
+@Service
+public class CrucipixelService {
+
+	private final CrucipixelFactory crucipixelFactory;
+	private final CrucipixelRepository crucipixelRepository;
+	
+	public CrucipixelService(CrucipixelFactory crucipixelFactory, CrucipixelRepository crucipixelRepository) {
+		this.crucipixelFactory=crucipixelFactory;
+		this.crucipixelRepository=crucipixelRepository;
+	}
+	
+	@Transactional
+	public CrucipixelResource salva(CrucipixelDto crucipixelDto) {
+		Crucipixel crucipixel = crucipixelFactory.toModel(crucipixelDto);
+		crucipixel = crucipixelRepository.save(crucipixel);
+		return crucipixelFactory.toResource(crucipixel);
+	}
+
+	@Transactional
+	public CrucipixelResource aggiorna(CrucipixelDto crucipixelDto, Long id) {
+		Crucipixel crucipixel = crucipixelFactory.toModel(crucipixelDto);
+		crucipixel.setId(id);
+		crucipixel = crucipixelRepository.save(crucipixel);
+		return crucipixelFactory.toResource(crucipixel);
+	}
+
+	
+	@Transactional
+	public void cancella(Long id) {
+		crucipixelRepository.deleteById(id);
+	}
+	
+	public List<CrucipixelResource> allCrucipixel() {
+		List<Crucipixel> crucipixel = crucipixelRepository.findAll();
+		return crucipixelFactory.toResource(crucipixel);
+	}
+	
+}

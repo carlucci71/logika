@@ -1,4 +1,5 @@
 drop  TABLE if exists stelle;
+drop  TABLE if exists crucipixel;
 drop  TABLE if exists grattacieli;
 create table stelle (
         id serial primary key,
@@ -14,5 +15,14 @@ create table grattacieli (
         nome VARCHAR(400),
         piani numeric,
         board VARCHAR(4000),
+        data_ora timestamp DEFAULT CURRENT_TIMESTAMP
+);
+create table crucipixel (
+        id serial primary key,
+        nome VARCHAR(400),
+        board VARCHAR(4000),
+        testo_board VARCHAR(4000),
+        dati_colonna_board VARCHAR(4000),
+        dati_riga_board VARCHAR(4000),
         data_ora timestamp DEFAULT CURRENT_TIMESTAMP
 );

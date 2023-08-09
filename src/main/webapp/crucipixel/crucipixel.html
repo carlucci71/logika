@@ -18,9 +18,26 @@
 				<tr><td>colonne</td><td><input type=number ng-model="colonne"></input></td></tr>
 			</table>
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
+			<br><br>
+			<div>
+			  <select ng-model="crucipixelSelezionata" ng-options="opzione.nome for opzione in crucipixelSalvate track by opzione.id">
+			    <option value="">Carica un gioco</option>
+			  </select>
+				<br><br>
+				  <div ng-show="crucipixelSalvate[crucipixelSelezionata.prog]">
+		    	      <input type=button ng-click="carica(crucipixelSalvate[crucipixelSelezionata.prog])" value="CARICA"></input>
+		    	      <input type=button ng-click="cancella(crucipixelSalvate[crucipixelSelezionata.prog].id)" value="CANCELLA"></input>
+				</div>
+			</div>
+
+			<img src="./crucipixel.png"></img>
 		</div>
 		<div ng-show="fase=='P' || fase=='G'">
-
+			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='P'">Inserisci le righe/colonne</label>
+			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='G'">Gioca</label>
+			<table>
+				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
+			</table>
 			<div ng-show="fase=='G'">
 				<table border style=" user-select: none;" >
 					<tr>
@@ -37,17 +54,19 @@
 					</tr>
 				</table>			
 			</div>
-
 			<div>
 				<table class="boardIndicazioni">
 					<tr>
-					  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'height':'30px','width': getCellaWidth(colonne)}" 
-					  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
+					  <td ng-click="cliccaCella('IND', 0,colonne)" 
+					  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
+					  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'30px','width': getCellaWidth(colonne)}" 
+					  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 					</tr>
 				</table>
 				<table class="board">
 					<tr ng-repeat="righe in getRange(righe)">
-						  <td ng-click="cliccaCella('BOARD',righe,colonne)"
+						  <td ng-click="cliccaCella('BOARD',righe,colonne)" 
+						  ng-mouseenter="evidCell(righe,colonne, true)"  ng-mouseleave="evidCell(righe,colonne, false)"
 						  	ng-style="{'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
 						  	'height':'20px' }"  
 						  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
@@ -56,8 +75,10 @@
 				</table>
 				<table class="boardIndicazioni">
 					<tr>
-					  <td ng-click="cliccaCella('IND', 0,colonne)" ng-style="{'height':'30px','width': getCellaWidth(colonne)}" 
-					  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(righe,colonne)"></td>
+					  <td ng-click="cliccaCella('IND', 0,colonne)" 
+					  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
+					  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'30px','width': getCellaWidth(colonne)}" 
+					  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 					</tr>
 				</table>
 			</div>
@@ -77,7 +98,6 @@
 					</tr>
 				</table>			
 			</div>
-
 
 			<div ng-show="fase=='P'">			
 				<table  style=" user-select: none;text-align:center; border-collapse: collapse;" >
@@ -102,9 +122,11 @@
 			<div ng-show="fase=='P'">			
 				<input ng-hide="id" type=button ng-click="inserisci()" value="INSERISCI"></input>
 			</div>
+			<br>
+			<input type=button ng-click="ricomincia()" value="RICOMINCIA"></input>
+			<input ng-show="id" type=button ng-click="aggiorna()" value="AGGIORNA"></input>
 		</div>
 	<br>
-
 	<!--
 	<textarea rows=10 cols=80>{{board}}</textarea><br>
 	<textarea rows=10 cols=80>{{testoBoard}}</textarea><br>
@@ -113,7 +135,6 @@
 	r:{{righe}}
 	c:{{colonne}}
 	-->
-	
 	
     <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-sanitize.min.js"></script>

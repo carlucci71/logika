@@ -9,35 +9,33 @@ angular.module('myApp', ['ngSanitize'])
           	return result;
           };		    
 	})
-    .controller('JSCrucipixel', ['$scope', '$sce', function($scope, $sce) {
+    .controller('JSCrucipixel', ['$scope', '$sce', '$http', function($scope, $sce, $http) {
 		$scope.inizializza= function(){
 	        $scope.id=null;
 	        $scope.nome='Aprile 23 - 1';
 	        $scope.colonne=5;
 	        $scope.righe=5;
 	        $scope.fase='I';//I -> iniz P -> progetta F -> gioca
-	        /*
-            $scope.stelleSalvate = [];
-	    	$http.get("/logika/stelle").then(function(response) {
+            $scope.crucipixelSalvate = [];
+	    	$http.get("/logika/crucipixel").then(function(response) {
 	          	for (var i=0; i < response.data.length; i++) {
 					el={ 
 						prog: i, 
 						id: response.data[i].id, 
-						zone: response.data[i].zone, 
 						nome: response.data[i].nome,
-						stellePerZona: response.data[i].stellePerZona,
 						board: response.data[i].board,
-						boardGioco: response.data[i].boardGioco,
+						testoBoard: response.data[i].testoBoard,
+						datiColonnaBoard: response.data[i].datiColonnaBoard,
+						datiRigaBoard: response.data[i].datiRigaBoard,
 					 };
-	            	$scope.stelleSalvate.push(el);
+	            	$scope.crucipixelSalvate.push(el);
 	          	}
-		        $scope.stelleSelezionata = null;
+		        $scope.crucipixelSelezionata = null;
 			  
 	        })
 	        .catch(function(error) {
 	            console.log(error);
 	        });
-	        */
 		}
 		$scope.inizializza();
 		$scope.progetta= function(){
@@ -57,7 +55,14 @@ angular.module('myApp', ['ngSanitize'])
 			return 'lightgreen';
 		}
 		$scope.getBgColor= function(righe,colonne){
-			if ($scope.board && (colonne!=0 && colonne!=$scope.colonne+1) ){
+			if (!$scope.board) return;
+			if (colonne==0 || colonne==$scope.colonne+1 ){
+				if ($scope.evidRiga==righe){
+					return 'yellow';
+				}
+				return 'beige';
+			}
+				else {
 				return $scope.getColori($scope.board[righe][colonne-1]);
 			}
 		}
@@ -87,6 +92,8 @@ angular.module('myApp', ['ngSanitize'])
 				}
 			}
 			if ($scope.fase=='G' && tipo=='BOARD' && colonne>0 ){
+				$scope.evidRiga=righe;
+				$scope.evidColonna=colonne;
 				var history={
 					board: $scope.clona($scope.board),
 					testoBoard: $scope.clona($scope.testoBoard)
@@ -103,8 +110,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.board=history.board;
 				$scope.testoBoard=history.testoBoard;
 		}
-		$scope.getIntestazioneBoard= function(righe, colonne){
-			if (righe <0) return;
+		$scope.getIntestazioneBoard= function(colonne){
 			if (colonne==0) {
 				return '';
 			} else {
@@ -159,38 +165,96 @@ angular.module('myApp', ['ngSanitize'])
 			}
 		}
 		$scope.inserisci= function(){
-        	$scope.avviaGioco("I");
-			/*
 	        var body={
-				nome: $scope.nome
+				nome: $scope.nome,
+				board: $scope.board,
+				testoBoard: $scope.testoBoard,
+				datiColonnaBoard: $scope.datiColonnaBoard,
+				datiRigaBoard: $scope.datiRigaBoard
 			};
-        	$http.post("/logika/grattacieli",body).then(function(response) {
-	        	$scope.avviaGioco("I");
+        	$http.post("/logika/crucipixel",body).then(function(response) {
+	        	$scope.avviaGioco();
 	        	$scope.id=response.data.id;
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
                 console.log(error);
             });
-            */
+		}
+		$scope.ricomincia= function(){
+			$scope.inizializza();
+		}
+		$scope.aggiorna= function(){
+	        var body={
+				nome: $scope.nome,
+				board: $scope.board,
+				testoBoard: $scope.testoBoard,
+				datiColonnaBoard: $scope.datiColonnaBoard,
+				datiRigaBoard: $scope.datiRigaBoard
+			};
+        	$http.put("/logika/crucipixel/"+$scope.id, body).then(function(response) {
+				if ($scope.fase=='P'){
+	        		$scope.avviaGioco();
+				}
+				$scope.timeAttuale=response.headers('Time-Attuale');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+		}
+		$scope.cancella= function(id){
+        	$http.delete("/logika/crucipixel/" + id).then(function() {
+				$scope.inizializza();
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+		}
+		$scope.carica= function(daCaricare){
+	        $scope.id=daCaricare.id;
+	        $scope.nome=daCaricare.nome;
+			$scope.board=daCaricare.board;
+			$scope.testoBoard=daCaricare.testoBoard;
+			$scope.datiColonnaBoard=daCaricare.datiColonnaBoard;
+			$scope.datiRigaBoard=daCaricare.datiRigaBoard;
+			$scope.righe=$scope.board.length;
+			$scope.colonne=$scope.board[0].length;
+			$scope.cosaScrivo=[];
+			$scope.cosaScrivo[0]=1;				
+        	$scope.fase='P';
+		}
+		$scope.avviaGioco=function(){
+			$scope.historyBoard=[];
+			/*
+				$scope.board=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
+				$scope.testoBoard=[["A","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""]];
+				$scope.datiColonnaBoard=[[1,2],[1,2,3],[2,7],[1,9,1,2],[14,4],[3,4,2,4,6],[25],[2,14,6],[5,6,3,4],[1,13,2],[2,3,5],[1,2,2,1,6],[1,3,1,1,1],[2,6],[14,1,1,1,1],[14,1,1,1],[2,1,5,1,1],[2,1,1,1,6],[2,1,1,1,1,1],[14,1,1,5],[2,1,1,6,1,1],[2,1,1,1,1,1,1],[2,1,1,1,5],[2,1,6,1,1],[14,5]];
+				$scope.datiRigaBoard=[[1,11],[2,11],[4,2,1,1],[2,2,2,1,1],[5,2,1,1],[2,4,2,1,1],[7,2,1,1],[5,3,2,3,1],[8,2,1,1],[10,2,1,1],[2,6,2,1,1],[11,2,1,1],[9,2,1,1],[5,5,11],[6,3],[12,8],[3,7,2,1,1,1],[15,8],[1,1,1,1],[7,7,1,1],[7,1,1,1,6],[5,7,1,1,1],[5,1,1,1,6],[3,1,1,1,1,1,1],[3,14]];
+				$scope.righe=$scope.board.length;
+				$scope.colonne=$scope.board[0].length;
+			*/
+        	$scope.fase='G';
+        	$scope.mossa=1;
+        	$scope.testoMossa=' ';
+		}
+		$scope.getColorIntestazioneBoard=function(colonne){
+			if ($scope.evidColonna==colonne && colonne>0){
+				return 'yellow';
+			}
+			return 'beige';
+		}
+		$scope.evidCell=function(righe,colonne, accendi){
+			if (accendi){
+				$scope.evidRiga=righe;
+				$scope.evidColonna=colonne;
+			} else {
+				$scope.evidRiga=-1;
+				$scope.evidColonna=-1;
+			}
 		}
 		$scope.getCellaWidth=function(colonne){
 			if (colonne==0 || colonne==$scope.colonne+1) return '100px';
 			return '20px';
-		}
-		$scope.avviaGioco=function(modalitaSaltavaggio){
-			$scope.historyBoard=[];
-			if (true){
-				$scope.board=[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]];
-				$scope.testoBoard=[["A","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""],["","","","","","","","","","","","","","","","","","","","","","","","",""]];
-				$scope.righe=$scope.board.length;
-				$scope.colonne=$scope.board[0].length;
-				$scope.datiColonnaBoard=[[1,2],[1,2,3],[2,7],[1,9,1,2],[14,4],[3,4,2,4,6],[25],[2,14,6],[5,6,3,4],[1,13,2],[2,3,5],[1,2,2,1,6],[1,3,1,1,1],[2,6],[14,1,1,1,1],[14,1,1,1],[2,1,5,1,1],[2,1,1,1,6],[2,1,1,1,1,1],[14,1,1,5],[2,1,1,6,1,1],[2,1,1,1,1,1,1],[2,1,1,1,5],[2,1,6,1,1],[14,5]];
-				$scope.datiRigaBoard=[[1,11],[2,11],[4,2,1,1],[2,2,2,1,1],[5,2,1,1],[2,4,2,1,1],[7,2,1,1],[5,3,2,3,1],[8,2,1,1],[10,2,1,1],[2,6,2,1,1],[11,2,1,1],[9,2,1,1],[5,5,11],[6,3],[12,8],[3,7,2,1,1,1],[15,8],[1,1,1,1],[7,7,1,1],[7,1,1,1,6],[5,7,1,1,1],[5,1,1,1,6],[3,1,1,1,1,1,1],[3,14]];
-			}
-        	$scope.fase='G';
-        	$scope.mossa=1;
-        	$scope.testoMossa=' ';
 		}
 		$scope.impostaTestoMossa=function(){
         	if ($scope.testoMossa==' '){
@@ -304,7 +368,7 @@ angular.module('myApp', ['ngSanitize'])
 				piani: $scope.piani
 			};
         	$http.post("/logika/grattacieli",body).then(function(response) {
-	        	$scope.avviaGioco("I");
+	        	$scope.avviaGioco();
 	        	$scope.id=response.data.id;
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
@@ -320,7 +384,7 @@ angular.module('myApp', ['ngSanitize'])
 			};
         	$http.put("/logika/grattacieli/"+$scope.id, body).then(function(response) {
 				if ($scope.fase=='P'){
-	        		$scope.avviaGioco("A");
+	        		$scope.avviaGioco();
 				}
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
@@ -343,7 +407,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.board=daCaricare.board;
         	$scope.fase='P';
 		}
-		$scope.avviaGioco=function(modalitaSaltavaggio){
+		$scope.avviaGioco=function(){
         	$scope.fase='G';
         	$scope.cosaScrivo=1;
 		}
