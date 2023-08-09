@@ -38,6 +38,7 @@
 			<table>
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
 			</table>
+			<br><br>
 			<div ng-show="fase=='G'">
 				<table border style=" user-select: none;" >
 					<tr>
@@ -98,7 +99,7 @@
 					</tr>
 				</table>			
 			</div>
-
+			<br><br>
 			<div ng-show="fase=='P'">			
 				<table  style=" user-select: none;text-align:center; border-collapse: collapse;" >
 					<tr>
@@ -115,6 +116,10 @@
 						<td style="border:1px solid black; height: 30px;" ng-repeat="caratteri in getRange(cosaScrivo.length)" ng-click="minusCharCosaScrivo(caratteri)">-</td>
 					</tr>
 				</table>
+				<br><br>
+				<input type=text ng-model="valCosaScrivo"></input>
+				<input type=button ng-click="okValCosaScrivo()" value="VAI"></input>
+				<br><br>
 				<label ng-show="fase=='P'">Componi la combinazione e poi clicca sull'intestazione di riga o colonna. <br>
 				Se la singola occorrenza arriva a 0 viene rimossa. <br>
 				Per aggiungere una singola occorrenza cliccare sul +</label>

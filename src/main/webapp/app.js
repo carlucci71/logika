@@ -42,6 +42,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.initBoard();				
 			$scope.cosaScrivo=[];
 			$scope.cosaScrivo[0]=1;				
+			$scope.valCosaScrivo=1;
         	$scope.fase='P';
 		}
 		$scope.getColor= function(righe,colonne){
@@ -152,6 +153,16 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.pushCharCosaScrivo= function(){
 			$scope.cosaScrivo.push(1);
 		}
+		$scope.okValCosaScrivo= function(){
+			$scope.cosaScrivo=[];
+			
+			var numbersArray = $scope.valCosaScrivo.split(' ');
+		    numbersArray = numbersArray.map(function(numString) {
+		      return parseInt(numString); // Converte ogni stringa in un numero intero
+		    });
+			$scope.cosaScrivo=numbersArray;
+			
+		}
 
 
 		$scope.plusCharCosaScrivo= function(carattere){
@@ -221,6 +232,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.colonne=$scope.board[0].length;
 			$scope.cosaScrivo=[];
 			$scope.cosaScrivo[0]=1;				
+			$scope.valCosaScrivo=1;
         	$scope.fase='P';
 		}
 		$scope.avviaGioco=function(){
