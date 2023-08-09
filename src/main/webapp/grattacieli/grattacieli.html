@@ -17,7 +17,7 @@
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
 			<br><br>
 			<div>
-			  <select ng-model="grattacieliSelezionata" ng-options="opzione.nome for opzione in grattacieliSalvate track by opzione.id">
+			  <select ng-model="grattacieliSelezionata" ng-options="'(' + opzione.id + ') ' + opzione.nome for opzione in grattacieliSalvate track by opzione.id">
 			    <option value="">Carica un gioco</option>
 			  </select>
 				<br><br>

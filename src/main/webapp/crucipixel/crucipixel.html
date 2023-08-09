@@ -20,7 +20,7 @@
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
 			<br><br>
 			<div>
-			  <select ng-model="crucipixelSelezionata" ng-options="opzione.nome for opzione in crucipixelSalvate track by opzione.id">
+			  <select ng-model="crucipixelSelezionata" ng-options="'(' + opzione.id + ') ' + opzione.nome for opzione in crucipixelSalvate track by opzione.id">
 			    <option value="">Carica un gioco</option>
 			  </select>
 				<br><br>
@@ -39,22 +39,44 @@
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
 			</table>
 			<br><br>
+			<!-- RIPETERE INIZIO -->
 			<div ng-show="fase=='G'">
-				<table border style=" user-select: none;" >
+				<table style=" user-select: none;" >
 					<tr>
-						  <td style="width: 200px; font-size:20px">Seleziona la mossa</td> 
-						  <td ng-click="impostaValoreMossa()" 
-						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
-						  <td ng-click="impostaTestoMossa()" 
-						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
-						  <td ng-click="undo()" 
-						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
-							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">UNDO</td>
+						<td style="width: 200px; font-size:20px;text-align:center">
+						Seleziona la mossa
+						</td> 
+						<td ng-click="impostaValoreMossa(index)"
+							ng-repeat="index in getRange(4)"  
+							ng-style="{'border':'1px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getColori(index), 'colorX':getColori(mossa)}">
+						</td>
+						<td style="width: 100px;">
+						</td>
+						<td ng-click="impostaTestoMossa()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}</td>
+						<td style='width: 10px'>
+						</td>
+						<td ng-click="undo()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						UNDO
+						</td>
+						<td ng-click="verificami()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						VERIFICA
+						</td>
 					</tr>
 				</table>			
 			</div>
+			<!-- RIPETERE FINE -->
+			<br><br>
 			<div>
 				<table class="boardIndicazioni">
 					<tr>
@@ -83,22 +105,44 @@
 					</tr>
 				</table>
 			</div>
+			<br><br>
+			<!-- RIPETERE INIZIO -->
 			<div ng-show="fase=='G'">
-				<table border style=" user-select: none;" >
+				<table style=" user-select: none;" >
 					<tr>
-						  <td style="width: 200px; font-size:20px">Seleziona la mossa</td> 
-						  <td ng-click="impostaValoreMossa()" 
-						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
-						  <td ng-click="impostaTestoMossa()" 
-						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'colorX':getColori(mossa)}">{{testoMossa}}</td>
-						  <td ng-click="undo()" 
-						  ng-style="{'width': '60px', 'height': '60px', 'text-align': 'center', 'vertical-align': 'middle',
-							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">UNDO</td>
+						<td style="width: 200px; font-size:20px;text-align:center">
+						Seleziona la mossa
+						</td> 
+						<td ng-click="impostaValoreMossa(index)"
+							ng-repeat="index in getRange(4)"  
+							ng-style="{'border':'1px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getColori(index), 'colorX':getColori(mossa)}">
+						</td>
+						<td style="width: 100px;">
+						</td>
+						<td ng-click="impostaTestoMossa()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}</td>
+						<td style='width: 10px'>
+						</td>
+						<td ng-click="undo()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						UNDO
+						</td>
+						<td ng-click="verificami()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						VERIFICA
+						</td>
 					</tr>
 				</table>			
 			</div>
+			<!-- RIPETERE FINE -->
 			<br><br>
 			<div ng-show="fase=='P'">			
 				<table  style=" user-select: none;text-align:center; border-collapse: collapse;" >

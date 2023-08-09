@@ -43,6 +43,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.cosaScrivo=[];
 			$scope.cosaScrivo[0]=1;				
 			$scope.valCosaScrivo=1;
+			$scope.verifica=false;
         	$scope.fase='P';
 		}
 		$scope.getColor= function(righe,colonne){
@@ -107,9 +108,16 @@ angular.module('myApp', ['ngSanitize'])
 			}
 		}
 		$scope.undo= function(){
-				var history=$scope.historyBoard.pop();
-				$scope.board=history.board;
-				$scope.testoBoard=history.testoBoard;
+			    if ($scope.historyBoard){
+					var history=$scope.historyBoard.pop();
+					if (history){
+						$scope.board=history.board;
+						$scope.testoBoard=history.testoBoard;
+					}
+				}
+		}
+		$scope.verificami= function(){
+				$scope.verifica=!$scope.verifica;
 		}
 		$scope.getIntestazioneBoard= function(colonne){
 			if (colonne==0) {
@@ -120,6 +128,9 @@ angular.module('myApp', ['ngSanitize'])
 					var ret="";
 					for (var i=0; i < att.length; i++) {
 						ret=ret + "<br>"+ att[i];
+					}
+					if ($scope.verifica){
+						ret+=$scope.contaRipetizioni($scope.board[colonne-1]);
 					}
 					return  $sce.trustAsHtml(ret);
 				}
@@ -136,10 +147,32 @@ angular.module('myApp', ['ngSanitize'])
 						for (var i=0; i < att.length; i++) {
 							ret=ret + '&nbsp;&nbsp;' + att[i];
 						}
+						if ($scope.verifica){
+							ret+=$scope.contaRipetizioni($scope.board[righe]);
+						}
 						return  $sce.trustAsHtml(ret);
 					}
 				}
 			}
+		}
+		$scope.contaRipetizioni= function(riga){
+			var contaAtt=0;
+			var ret="(";
+			for (var i=0; i < riga.length; i++) {
+				var att=riga[i];
+				if (att==1){
+					contaAtt++;
+				} else {
+					if (contaAtt>0){
+						ret=ret+" " + contaAtt;
+					}
+					contaAtt=0;
+				}
+			}
+			if (contaAtt>0){
+				ret=ret+" " + contaAtt;
+			}
+			return ret+")";
 		}
 		$scope.charCosaScrivo= function(carattere){
 			if ($scope.cosaScrivo){
@@ -233,6 +266,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.cosaScrivo=[];
 			$scope.cosaScrivo[0]=1;				
 			$scope.valCosaScrivo=1;
+			$scope.verifica=false;
         	$scope.fase='P';
 		}
 		$scope.avviaGioco=function(){
@@ -278,11 +312,8 @@ angular.module('myApp', ['ngSanitize'])
 				}
 			}
 		}
-		$scope.impostaValoreMossa=function(){
-        	$scope.mossa=$scope.mossa+1;
-        	if ($scope.mossa==4){
-				$scope.mossa=0;
-			}
+		$scope.impostaValoreMossa=function(index){
+        	$scope.mossa=index;
 		}
 		$scope.initBoard= function(){
 			$scope.board=[];
