@@ -37,6 +37,7 @@
 			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='G'">Gioca</label>
 			<table>
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
+				<tr><td>modalità</td><td><input type=button ng-model="modProgetta" ng-click="modProgetta=!modProgetta"></input></td></tr>
 			</table>
 			<br><br>
 			<!-- RIPETERE INIZIO -->
@@ -99,10 +100,10 @@
 							  <td ng-click="cliccaCella('BOARD',righe,colonne)" 
 							  ng-mouseenter="evidCell(righe,colonne, true)"  ng-mouseleave="evidCell(righe,colonne, false)"
 							  	ng-style="{'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
-							  	'height':'20px' }"  
+							  	'height':'20px', 'vertical-align': 'middle' }"  
 							  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
 							  </td>
-							  <td NOWRAP ng-show="fase=='P'">
+							  <td NOWRAP ng-show="fase=='P' && modProgetta">
 							  	<input style="width: 100px" type=text ng-keypress="$event.keyCode === 13 && okValCosaScrivoRiga(righe)"
 							  	ng-model="valDatiRigaBoard[righe]">
 								<input ng-attr-tabindex="{{20000 + righe}}" type=button ng-click="okValCosaScrivoRiga(righe)" value="OK"></input>
@@ -115,7 +116,7 @@
 						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
 						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'30px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
-						  <tr  ng-show="fase=='P'">
+						  <tr  ng-show="fase=='P'  && modProgetta">
 						  	  <td style="width: 100px"></td>
 							  <td style="width: 50px" ng-repeat="colonne in getRange(colonne)">
 								  	<input style="width: 30px" type=text ng-keypress="$event.keyCode === 13 && okValCosaScrivoColonna(colonne)" 

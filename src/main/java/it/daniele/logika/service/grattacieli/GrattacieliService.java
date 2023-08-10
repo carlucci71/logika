@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import it.daniele.logika.dto.grattacieli.GrattacieliDto;
@@ -40,7 +41,7 @@ public class GrattacieliService {
 		return grattacieliFactory.toResource(grattacieli);
 	}
 	public List<GrattacieliResource> allGrattacieli() {
-		List<Grattacieli> grattacieli = grattacieliRepository.findAll();
+		List<Grattacieli> grattacieli = grattacieliRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 		return grattacieliFactory.toResource(grattacieli);
 	}
 	@Transactional

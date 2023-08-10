@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import it.daniele.logika.dto.stelle.StelleDto;
@@ -47,7 +48,7 @@ public class StelleService {
 	}
 	
 	public List<StelleResource> allStelle() {
-		List<Stelle> stelle = stelleRepository.findAll();
+		List<Stelle> stelle = stelleRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 		return stelleFactory.toResource(stelle);
 	}
 	

@@ -48,6 +48,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.valDatiColonnaBoard=[];
 			$scope.verifica=false;
 			$scope.linea=false;
+			$scope.modProgetta=false;
         	$scope.fase='P';
 		}
 		$scope.getColor= function(righe,colonne){
@@ -139,11 +140,12 @@ angular.module('myApp', ['ngSanitize'])
 			} else {
 				if ($scope.datiColonnaBoard){
 					var att=$scope.datiColonnaBoard[colonne-1];
-					var ret="";
 					var sep="<br>";
+					var ret="<p style='color:black;' >";
 					for (var i=0; i < att.length; i++) {
 						ret=ret + sep+ att[i];
 					}
+					ret=ret + "</p>";
 					if ($scope.verifica){
 						var valori=[];
 						for (var i=0; i < $scope.righe; i++) {
@@ -177,20 +179,20 @@ angular.module('myApp', ['ngSanitize'])
 		}
 		$scope.contaRipetizioni= function(riga, sep){
 			var contaAtt=0;
-			var ret="<p style='color:red; font-weight:bold'>" + sep+sep+sep;
+			var ret="<p style='color:red; height:20px;'>" + sep;
 			for (var i=0; i < riga.length; i++) {
 				var att=riga[i];
 				if (att==1){
 					contaAtt++;
 				} else {
 					if (contaAtt>0){
-						ret=ret+" " + contaAtt + sep;
+						ret=ret+contaAtt + sep;
 					}
 					contaAtt=0;
 				}
 			}
 			if (contaAtt>0){
-				ret=ret+" " + contaAtt + sep;
+				ret=ret+" " + contaAtt;
 			}
 			return ret + "</p>";
 		}
@@ -213,7 +215,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.datiRigaBoard[riga]=$scope.stringToArray($scope.valDatiRigaBoard[riga]);
 		}
 		$scope.okValCosaScrivo= function(){
-			$scope.valCosaScrivo=$scope.stringToArray($scope.valCosaScrivo);
+			$scope.cosaScrivo=$scope.stringToArray($scope.valCosaScrivo);
 		}
 		$scope.stringToArray=function(valore){
 			if (!valore) return [];
@@ -298,6 +300,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.valDatiColonnaBoard=[];
 			$scope.verifica=false;
 			$scope.linea=false;
+			$scope.modProgetta=false;
         	$scope.fase='P';
 		}
 		$scope.avviaGioco=function(){
@@ -330,7 +333,7 @@ angular.module('myApp', ['ngSanitize'])
 		}
 		$scope.getCellaWidth=function(colonne){
 			if (colonne==0 || colonne==$scope.colonne+1) return '100px';
-			if ($scope.fase=='P')  return '50px';
+			if ($scope.fase=='P' && $scope.modProgetta)  return '50px';
 			return '20px';
 		}
 		$scope.impostaTestoMossa=function(){

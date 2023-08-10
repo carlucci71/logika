@@ -24,6 +24,6 @@ create table crucipixel (
         testo_board VARCHAR(4000),
         dati_colonna_board VARCHAR(4000),
         dati_riga_board VARCHAR(4000),
-        history_board VARCHAR(4000),
+        history_board VARCHAR(800000),
         data_ora timestamp DEFAULT CURRENT_TIMESTAMP
 );

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import it.daniele.logika.dto.crucipixel.CrucipixelDto;
@@ -47,7 +48,7 @@ public class CrucipixelService {
 	}
 	
 	public List<CrucipixelResource> allCrucipixel() {
-		List<Crucipixel> crucipixel = crucipixelRepository.findAll();
+		List<Crucipixel> crucipixel = crucipixelRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 		return crucipixelFactory.toResource(crucipixel);
 	}
 	
