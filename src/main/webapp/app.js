@@ -177,7 +177,7 @@ angular.module('myApp', ['ngSanitize'])
 						for (var i=0; i < $scope.righe; i++) {
 							valori.push($scope.board[i][colonne-1]);
 						}
-						ret=$scope.contaRipetizioni(valori, sep);
+						ret=$scope.contaRipetizioni(valori, sep, colonne-1,att);
 					}
 					return  $sce.trustAsHtml(ret);
 				}
@@ -197,31 +197,50 @@ angular.module('myApp', ['ngSanitize'])
 						}
 						ret=ret+"</span>";
 						if ($scope.verifica){
-							ret=$scope.contaRipetizioni($scope.board[righe], sep);
+							ret=$scope.contaRipetizioni($scope.board[righe], sep, righe,att);
 						}
 						return  $sce.trustAsHtml(ret);
 					}
 				}
 			}
 		}
-		$scope.contaRipetizioni= function(riga, sep){
+		$scope.contaRipetizioni= function(elementi, sep, index, daBoard){
 			var contaAtt=0;
-			var ret="<span style='color:red; '>";
-			for (var i=0; i < riga.length; i++) {
-				var att=riga[i];
+			var ret="<span style='color:@@; '>";
+			var contaContaAtt=[];
+			for (var i=0; i < elementi.length; i++) {
+				var att=elementi[i];
 				if (att==1){
 					contaAtt++;
 				} else {
 					if (contaAtt>0){
+						contaContaAtt.push(contaAtt);
 						ret=ret+sep+contaAtt;
 					}
 					contaAtt=0;
 				}
 			}
 			if (contaAtt>0){
+				contaContaAtt.push(contaAtt);
 				ret=ret + sep + contaAtt;
 			}
 			ret=ret;
+			var isOk=true;
+			if (contaContaAtt.length!=daBoard.length){
+				isOk=false;
+			} else {
+				for (var i=0; i < contaContaAtt.length; i++) {
+					if (contaContaAtt[i]!=daBoard[i]){
+						isOk=false;
+					}
+				}
+			}
+			if (isOk){
+				ret=ret.replace("@@","green");
+			} else {
+				ret=ret.replace("@@","red");
+			}
+			//console.log(sep + "->" + contaContaAtt + "/" + index + "+++" + daBoard);
 			return ret + "</span>";
 		}
 		$scope.charCosaScrivo= function(carattere){
