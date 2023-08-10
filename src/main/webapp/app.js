@@ -347,6 +347,7 @@ angular.module('myApp', ['ngSanitize'])
 			}
 		}
 		$scope.impostaValoreMossa=function(index){
+			$scope.testoMossa=' ';
         	$scope.mossa=index;
 		}
 		$scope.initBoard= function(){
