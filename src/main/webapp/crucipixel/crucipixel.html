@@ -46,6 +46,7 @@
    	        &nbsp;&nbsp;
 			<table>
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
+				<tr><td>data aggiornamento</td><td><label>{{dataOra}}</label></td></tr>
 				<tr ng-show="fase=='P'"><td>modalità</td><td><input type=button ng-model="modProgetta" ng-click="modProgetta=!modProgetta"></input></td></tr>
 			</table>
 			<!-- RIPETERE INIZIO -->
@@ -99,7 +100,7 @@
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
 						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
-						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'30px','width': getCellaWidth(colonne)}" 
+						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 						</tr>
 					</table>
@@ -122,7 +123,7 @@
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
 						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
-						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'30px','width': getCellaWidth(colonne)}" 
+						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 						  <tr  ng-show="fase=='P'  && modProgetta">
 						  	  <td style="width: 100px"></td>

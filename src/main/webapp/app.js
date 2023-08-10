@@ -27,6 +27,7 @@ angular.module('myApp', ['ngSanitize'])
 						testoBoard: response.data[i].testoBoard,
 						datiColonnaBoard: response.data[i].datiColonnaBoard,
 						historyBoard: response.data[i].historyBoard,
+						dataOra: response.data[i].dataOra,
 						datiRigaBoard: response.data[i].datiRigaBoard,
 					 };
 	            	$scope.crucipixelSalvate.push(el);
@@ -113,6 +114,7 @@ angular.module('myApp', ['ngSanitize'])
 							$scope.testoBoard[i][colonne-1]=$scope.testoMossa;
 						}
 					}
+				$scope.linea='';
 				} if ($scope.linea=='L'){
 					for (var i=0; i < $scope.colonne; i++) {
 						if ($scope.board[righe][i]==0){
@@ -120,6 +122,7 @@ angular.module('myApp', ['ngSanitize'])
 							$scope.testoBoard[righe][i]=$scope.testoMossa;
 						}
 					}
+				$scope.linea='';
 				} 
 				else {
 					$scope.board[righe][colonne-1]=$scope.mossa;
@@ -164,17 +167,17 @@ angular.module('myApp', ['ngSanitize'])
 				if ($scope.datiColonnaBoard){
 					var att=$scope.datiColonnaBoard[colonne-1];
 					var sep="<br>";
-					var ret="<p style='color:black;' >";
+					var ret="<span style='color:black;' >";
 					for (var i=0; i < att.length; i++) {
 						ret=ret + sep+ att[i];
 					}
-					ret=ret + "</p>";
+					ret=ret + "</span>";
 					if ($scope.verifica){
 						var valori=[];
 						for (var i=0; i < $scope.righe; i++) {
 							valori.push($scope.board[i][colonne-1]);
 						}
-						ret+=$scope.contaRipetizioni(valori, sep);
+						ret=$scope.contaRipetizioni(valori, sep);
 					}
 					return  $sce.trustAsHtml(ret);
 				}
@@ -188,12 +191,13 @@ angular.module('myApp', ['ngSanitize'])
 					if ($scope.datiRigaBoard){
 						var att=$scope.datiRigaBoard[righe];
 						var sep="&nbsp;&nbsp;";
-						var ret="";
+						var ret="<span  style='color:black; '>";
 						for (var i=0; i < att.length; i++) {
 							ret=ret + sep + att[i];
 						}
+						ret=ret+"</span>";
 						if ($scope.verifica){
-							ret+=$scope.contaRipetizioni($scope.board[righe], sep);
+							ret=$scope.contaRipetizioni($scope.board[righe], sep);
 						}
 						return  $sce.trustAsHtml(ret);
 					}
@@ -202,22 +206,23 @@ angular.module('myApp', ['ngSanitize'])
 		}
 		$scope.contaRipetizioni= function(riga, sep){
 			var contaAtt=0;
-			var ret="<p style='color:red; height:20px;'>" + sep;
+			var ret="<span style='color:red; '>";
 			for (var i=0; i < riga.length; i++) {
 				var att=riga[i];
 				if (att==1){
 					contaAtt++;
 				} else {
 					if (contaAtt>0){
-						ret=ret+contaAtt + sep;
+						ret=ret+sep+contaAtt;
 					}
 					contaAtt=0;
 				}
 			}
 			if (contaAtt>0){
-				ret=ret+" " + contaAtt;
+				ret=ret + sep + contaAtt;
 			}
-			return ret + "</p>";
+			ret=ret;
+			return ret + "</span>";
 		}
 		$scope.charCosaScrivo= function(carattere){
 			if ($scope.cosaScrivo){
@@ -270,6 +275,7 @@ angular.module('myApp', ['ngSanitize'])
         	$http.post("/logika/crucipixel",body).then(function(response) {
 	        	$scope.avviaGioco();
 	        	$scope.id=response.data.id;
+				$scope.dataOra=response.data.dataOra;
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
@@ -289,6 +295,7 @@ angular.module('myApp', ['ngSanitize'])
 				historyBoard: $scope.historyBoard
 			};
         	$http.put("/logika/crucipixel/"+$scope.id, body).then(function(response) {
+				$scope.dataOra=response.data.dataOra;
 				if ($scope.fase=='P'){
 	        		$scope.avviaGioco();
 				}
@@ -319,6 +326,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.righe=$scope.board.length;
 			$scope.colonne=$scope.board[0].length;
 			$scope.historyBoard=daCaricare.historyBoard;
+			$scope.dataOra=daCaricare.dataOra;
 			$scope.cosaScrivo=[];
 			$scope.cosaScrivo[0]=1;				
 			$scope.valCosaScrivo=1;

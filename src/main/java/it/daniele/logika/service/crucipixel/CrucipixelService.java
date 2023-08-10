@@ -1,5 +1,6 @@
 package it.daniele.logika.service.crucipixel;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -27,16 +28,12 @@ public class CrucipixelService {
 	}
 	
 	@Transactional
-	public CrucipixelResource salva(CrucipixelDto crucipixelDto) {
+	public CrucipixelResource salva(CrucipixelDto crucipixelDto, Long id) {
 		Crucipixel crucipixel = crucipixelFactory.toModel(crucipixelDto);
-		crucipixel = crucipixelRepository.save(crucipixel);
-		return crucipixelFactory.toResource(crucipixel);
-	}
-
-	@Transactional
-	public CrucipixelResource aggiorna(CrucipixelDto crucipixelDto, Long id) {
-		Crucipixel crucipixel = crucipixelFactory.toModel(crucipixelDto);
-		crucipixel.setId(id);
+		if (id!=null) {
+			crucipixel.setId(id);
+		}
+		crucipixel.setDataOra(new Timestamp(System.currentTimeMillis()));
 		crucipixel = crucipixelRepository.save(crucipixel);
 		return crucipixelFactory.toResource(crucipixel);
 	}

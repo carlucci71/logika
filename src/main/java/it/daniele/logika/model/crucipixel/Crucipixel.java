@@ -1,5 +1,7 @@
 package it.daniele.logika.model.crucipixel;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,5 +33,7 @@ public class Crucipixel	 {
 	 private String datiRigaBoard;
 	 @Column(columnDefinition = "TEXT")
 	 private String historyBoard;
+	 @Column(name = "data_ora")
+	 private Timestamp dataOra;
 	
 }

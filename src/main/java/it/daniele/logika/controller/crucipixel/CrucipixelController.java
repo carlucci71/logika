@@ -32,7 +32,7 @@ public class CrucipixelController {
 	
 	@PostMapping()
 	public ResponseEntity<CrucipixelResource> salvaCrucipixel(@RequestBody CrucipixelDto crucipixelDto) {
-		CrucipixelResource salva = crucipixelService.salva(crucipixelDto);
+		CrucipixelResource salva = crucipixelService.salva(crucipixelDto, null);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		return ResponseEntity
@@ -43,7 +43,7 @@ public class CrucipixelController {
 
 	@PutMapping("{id}")
 	public ResponseEntity<CrucipixelResource> aggiornaCrucipixel(@RequestBody CrucipixelDto crucipixelDto, @PathVariable Long id) {
-		CrucipixelResource salva = crucipixelService.aggiorna(crucipixelDto, id); 
+		CrucipixelResource salva = crucipixelService.salva(crucipixelDto, id); 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		return ResponseEntity

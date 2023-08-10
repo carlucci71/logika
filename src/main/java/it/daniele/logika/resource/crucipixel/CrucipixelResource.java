@@ -1,5 +1,6 @@
 package it.daniele.logika.resource.crucipixel;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Data;
@@ -13,5 +14,6 @@ public class CrucipixelResource {
 	private List datiColonnaBoard;
 	private List datiRigaBoard;
 	private List historyBoard;
+	private Timestamp dataOra;
 	
 }
