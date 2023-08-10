@@ -47,7 +47,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.valDatiRigaBoard=[];
 			$scope.valDatiColonnaBoard=[];
 			$scope.verifica=false;
-			$scope.linea=false;
+			$scope.linea='';
 			$scope.modProgetta=false;
         	$scope.fase='P';
 		}
@@ -106,14 +106,22 @@ angular.module('myApp', ['ngSanitize'])
 					testoBoard: $scope.clona($scope.testoBoard)
 				}
 				$scope.historyBoard.push(history);
-				if ($scope.linea){
+				if ($scope.linea=='C'){
 					for (var i=0; i < $scope.righe; i++) {
 						if ($scope.board[i][colonne-1]==0){
 							$scope.board[i][colonne-1]=$scope.mossa;
 							$scope.testoBoard[i][colonne-1]=$scope.testoMossa;
 						}
 					}
-				} else {
+				} if ($scope.linea=='L'){
+					for (var i=0; i < $scope.colonne; i++) {
+						if ($scope.board[righe][i]==0){
+							$scope.board[righe][i]=$scope.mossa;
+							$scope.testoBoard[righe][i]=$scope.testoMossa;
+						}
+					}
+				} 
+				else {
 					$scope.board[righe][colonne-1]=$scope.mossa;
 					$scope.testoBoard[righe][colonne-1]=$scope.testoMossa;
 				}
@@ -131,8 +139,23 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.verificami= function(){
 				$scope.verifica=!$scope.verifica;
 		}
+		$scope.testoAllLinea= function(){
+				if ($scope.linea==''){
+					return "Singola cella";
+				} else if ($scope.linea=='L'){
+					return "Tutta la riga";
+				} else {
+					return "Tutta la colonna";
+				}
+		}
 		$scope.allLine= function(){
-				$scope.linea=!$scope.linea;
+				if ($scope.linea==''){
+					$scope.linea='L';
+				} else if ($scope.linea=='L'){
+					$scope.linea='C';
+				} else {
+					$scope.linea='';
+				}
 		}
 		$scope.getIntestazioneBoard= function(colonne){
 			if (colonne==0) {
@@ -276,12 +299,15 @@ angular.module('myApp', ['ngSanitize'])
             });
 		}
 		$scope.cancella= function(id){
-        	$http.delete("/logika/crucipixel/" + id).then(function() {
-				$scope.inizializza();
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+			var result = confirm("Sei sicuro di voler cancellare l'id'" +id +"?");
+			if (result) {
+	        	$http.delete("/logika/crucipixel/" + id).then(function() {
+					$scope.inizializza();
+	            })
+	            .catch(function(error) {
+	                console.log(error);
+	            });
+			}
 		}
 		$scope.carica= function(daCaricare){
 	        $scope.id=daCaricare.id;
@@ -299,7 +325,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.valDatiRigaBoard=[];
 			$scope.valDatiColonnaBoard=[];
 			$scope.verifica=false;
-			$scope.linea=false;
+			$scope.linea='';
 			$scope.modProgetta=false;
         	$scope.fase='P';
 		}

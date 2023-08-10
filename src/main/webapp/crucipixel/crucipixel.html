@@ -20,26 +20,34 @@
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
 			<br><br>
 			<div>
-			  <select ng-model="crucipixelSelezionata" ng-options="'(' + opzione.id + ') ' + opzione.nome for opzione in crucipixelSalvate track by opzione.id">
+			  <select ng-model="crucipixelSelezionata" ng-change="carica(crucipixelSalvate[crucipixelSelezionata.prog])" 
+			  ng-options="'(' + opzione.id + ') ' + opzione.nome for opzione in crucipixelSalvate track by opzione.id">
 			    <option value="">Carica un gioco</option>
 			  </select>
 				<br><br>
 				  <div ng-show="crucipixelSalvate[crucipixelSelezionata.prog]">
 		    	      <input type=button ng-click="carica(crucipixelSalvate[crucipixelSelezionata.prog])" value="CARICA"></input>
-		    	      <input type=button ng-click="cancella(crucipixelSalvate[crucipixelSelezionata.prog].id)" value="CANCELLA"></input>
 				</div>
 			</div>
 
 			<img src="./crucipixel.png"></img>
 		</div>
-		<div ng-show="fase=='P' || fase=='G'">
+		<span ng-show="fase=='P' || fase=='G'">
 			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='P'">Inserisci le righe/colonne</label>
 			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='G'">Gioca</label>
+			<br>
+			<input type=button ng-click="ricomincia()" value="RICOMINCIA"></input>
+   	        &nbsp;&nbsp;
+			<input ng-show="fase=='P' && !id" type=button ng-click="inserisci()" value="INSERISCI"></input>
+   	        &nbsp;&nbsp;
+			<input ng-show="id" type=button ng-click="aggiorna()" value="AGGIORNA"></input>
+   	        &nbsp;&nbsp;
+   	        <input ng-show="fase=='P' && id" type=button ng-click="cancella(id)" value="CANCELLA"></input>
+   	        &nbsp;&nbsp;
 			<table>
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
-				<tr><td>modalità</td><td><input type=button ng-model="modProgetta" ng-click="modProgetta=!modProgetta"></input></td></tr>
+				<tr ng-show="fase=='P'"><td>modalità</td><td><input type=button ng-model="modProgetta" ng-click="modProgetta=!modProgetta"></input></td></tr>
 			</table>
-			<br><br>
 			<!-- RIPETERE INIZIO -->
 			<div ng-show="fase=='G'" >
 				<table style=" user-select: none;" >
@@ -74,7 +82,7 @@
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						TUTTA LA RIGA ({{linea}})
+						{{testoAllLinea()}}
 						</td>
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
@@ -164,7 +172,7 @@
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						TUTTA LA RIGA ({{linea}})
+						{{testoAllLinea()}}
 						</td>
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
@@ -200,12 +208,14 @@
 				Se la singola occorrenza arriva a 0 viene rimossa. <br>
 				Per aggiungere una singola occorrenza cliccare sul +</label>
 			</div>
-			<div ng-show="fase=='P'">			
-				<input ng-hide="id" type=button ng-click="inserisci()" value="INSERISCI"></input>
-			</div>
-			<br>
 			<input type=button ng-click="ricomincia()" value="RICOMINCIA"></input>
+   	        &nbsp;&nbsp;
+			<input ng-show="fase=='P' && !id" type=button ng-click="inserisci()" value="INSERISCI"></input>
+   	        &nbsp;&nbsp;
 			<input ng-show="id" type=button ng-click="aggiorna()" value="AGGIORNA"></input>
+   	        &nbsp;&nbsp;
+   	        <input ng-show="fase=='P' && id" type=button ng-click="cancella(id)" value="CANCELLA"></input>
+   	        &nbsp;&nbsp;
 		</div>
 	<br>
 	<!--
