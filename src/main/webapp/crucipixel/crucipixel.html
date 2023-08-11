@@ -69,6 +69,16 @@
 						<td style="width: 200px; font-size:20px;text-align:left">
 						Comandi
 						</td> 
+						<td ng-click="scatta()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						FOTO ({{historyPhoto}})
+						<td ng-click="ripristinaFoto()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						RIPRISTINA
 						<td ng-click="undo()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
@@ -159,6 +169,16 @@
 						<td style="width: 200px; font-size:20px;text-align:left">
 						Comandi
 						</td> 
+						<td ng-click="scatta()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						FOTO ({{historyPhoto}})
+						<td ng-click="ripristinaFoto()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						RIPRISTINA
 						<td ng-click="undo()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
@@ -169,7 +189,7 @@
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						VERIFICA ({{verifica}})
+						VERIFICA {{testoVerifica()}}
 						</td>
 						<td ng-click="allLine()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 

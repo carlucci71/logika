@@ -25,6 +25,7 @@ angular.module('myApp', ['ngSanitize'])
 						nome: response.data[i].nome,
 						board: response.data[i].board,
 						testoBoard: response.data[i].testoBoard,
+						historyPhoto: response.data[i].historyPhoto,
 						datiColonnaBoard: response.data[i].datiColonnaBoard,
 						historyBoard: response.data[i].historyBoard,
 						dataOra: response.data[i].dataOra,
@@ -129,6 +130,21 @@ angular.module('myApp', ['ngSanitize'])
 					$scope.testoBoard[righe][colonne-1]=$scope.testoMossa;
 				}
 			}
+		}
+		$scope.scatta= function(){
+			$scope.historyPhoto=$scope.historyBoard.length;
+		}
+		$scope.ripristinaFoto= function(){
+			    if ($scope.historyBoard){
+					var quante=$scope.historyBoard.length-$scope.historyPhoto;
+					for (var i=0; i < quante; i++) {
+						var history=$scope.historyBoard.pop();
+						if (history){
+							$scope.board=history.board;
+							$scope.testoBoard=history.testoBoard;
+						}
+					}
+				}
 		}
 		$scope.undo= function(){
 			    if ($scope.historyBoard){
@@ -342,6 +358,7 @@ angular.module('myApp', ['ngSanitize'])
 				nome: $scope.nome,
 				board: $scope.board,
 				testoBoard: $scope.testoBoard,
+				historyPhoto: $scope.historyPhoto,
 				datiColonnaBoard: $scope.datiColonnaBoard,
 				datiRigaBoard: $scope.datiRigaBoard,
 				historyBoard: $scope.historyBoard
@@ -364,6 +381,7 @@ angular.module('myApp', ['ngSanitize'])
 				nome: $scope.nome,
 				board: $scope.board,
 				testoBoard: $scope.testoBoard,
+				historyPhoto: $scope.historyPhoto,
 				datiColonnaBoard: $scope.datiColonnaBoard,
 				datiRigaBoard: $scope.datiRigaBoard,
 				historyBoard: $scope.historyBoard
@@ -396,6 +414,7 @@ angular.module('myApp', ['ngSanitize'])
 		        $scope.nome=daCaricare.nome;
 				$scope.board=daCaricare.board;
 				$scope.testoBoard=daCaricare.testoBoard;
+				$scope.historyPhoto=daCaricare.historyPhoto;
 				$scope.datiColonnaBoard=daCaricare.datiColonnaBoard;
 				$scope.datiRigaBoard=daCaricare.datiRigaBoard;
 				$scope.righe=$scope.board.length;

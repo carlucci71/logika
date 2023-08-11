@@ -9,6 +9,7 @@ import lombok.Data;
 public class CrucipixelResource {
 	private Long id;
 	private String nome;
+	private int historyPhoto;
 	private List board;
 	private List testoBoard;
 	private List datiColonnaBoard;
