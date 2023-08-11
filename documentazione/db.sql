@@ -21,6 +21,7 @@ create table crucipixel (
         id serial primary key,
         nome VARCHAR(400),
         history_photo numeric,
+        note VARCHAR(4000),
         board VARCHAR(4000),
         testo_board VARCHAR(4000),
         dati_colonna_board VARCHAR(4000),

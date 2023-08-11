@@ -23,6 +23,7 @@ public class Crucipixel	 {
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private Long id;	
 	 private String nome;
+	 private String note;
 	 @Column(columnDefinition = "TEXT")
 	 private String board;
 	 @Column(columnDefinition = "TEXT")

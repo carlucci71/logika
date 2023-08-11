@@ -26,6 +26,7 @@ angular.module('myApp', ['ngSanitize'])
 						board: response.data[i].board,
 						testoBoard: response.data[i].testoBoard,
 						historyPhoto: response.data[i].historyPhoto,
+						note: response.data[i].note,
 						datiColonnaBoard: response.data[i].datiColonnaBoard,
 						historyBoard: response.data[i].historyBoard,
 						dataOra: response.data[i].dataOra,
@@ -359,6 +360,7 @@ angular.module('myApp', ['ngSanitize'])
 				board: $scope.board,
 				testoBoard: $scope.testoBoard,
 				historyPhoto: $scope.historyPhoto,
+				note: $scope.note,
 				datiColonnaBoard: $scope.datiColonnaBoard,
 				datiRigaBoard: $scope.datiRigaBoard,
 				historyBoard: $scope.historyBoard
@@ -382,6 +384,7 @@ angular.module('myApp', ['ngSanitize'])
 				board: $scope.board,
 				testoBoard: $scope.testoBoard,
 				historyPhoto: $scope.historyPhoto,
+				note: $scope.note,
 				datiColonnaBoard: $scope.datiColonnaBoard,
 				datiRigaBoard: $scope.datiRigaBoard,
 				historyBoard: $scope.historyBoard
@@ -415,6 +418,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.board=daCaricare.board;
 				$scope.testoBoard=daCaricare.testoBoard;
 				$scope.historyPhoto=daCaricare.historyPhoto;
+				$scope.note=daCaricare.note;
 				$scope.datiColonnaBoard=daCaricare.datiColonnaBoard;
 				$scope.datiRigaBoard=daCaricare.datiRigaBoard;
 				$scope.righe=$scope.board.length;
@@ -451,14 +455,15 @@ angular.module('myApp', ['ngSanitize'])
 			}
 			return 'beige';
 		}
-		$scope.evidCell=function(righe,colonne, accendi){
-			if (accendi){
+		$scope.evidCell=function(righe,colonne){
 				$scope.evidRiga=righe;
 				$scope.evidColonna=colonne;
-			} else {
-				$scope.evidRiga=-1;
-				$scope.evidColonna=-1;
-			}
+		}
+		$scope.getCellaAlign=function(colonne){
+			if (colonne==0) return 'right';
+			if (colonne==$scope.colonne+1) return 'left';
+//			if ($scope.fase=='P' && $scope.modProgetta)  return '50px';
+			return 'center';
 		}
 		$scope.getCellaWidth=function(colonne){
 			if (colonne==0 || colonne==$scope.colonne+1) return '100px';
@@ -492,6 +497,7 @@ angular.module('myApp', ['ngSanitize'])
 			}
 			$scope.historyBoard=[];
 			$scope.historyPhoto=0;
+			$scope.note='';
 			$scope.datiColonnaBoard=[];
             for (var c=0; c < $scope.colonne; c++) {
 	            $scope.datiColonnaBoard[c]=[];

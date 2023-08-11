@@ -50,6 +50,7 @@
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
 				<tr><td>data aggiornamento</td><td><label>{{dataOra}}</label></td></tr>
 				<tr ng-show="fase=='P'"><td>modalità</td><td><input type=button ng-model="modProgetta" ng-click="modProgetta=!modProgetta"></input></td></tr>
+				<tr><td>note</td><td><textarea ng-model=note  rows=5 cols=50></textarea></td></tr>
 			</table>
 			<!-- RIPETERE INIZIO -->
 			<div ng-show="fase=='G'" >
@@ -63,6 +64,11 @@
 							ng-style="{'border':'1px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getColori(index), 'colorX':getColori(mossa)}">
+						</td>
+						<td ng-click="impostaTestoMossa()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}
 						</td>
 						</tr>
 						<tr>
@@ -97,11 +103,6 @@
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
 						{{testoAllLinea()}}
 						</td>
-						<td ng-click="impostaTestoMossa()" 
-							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
-							'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}
-						</td>
 					</tr>
 				</table>			
 			</div>
@@ -111,7 +112,7 @@
 					<table class="boardIndicazioni">
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
-						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
+						  ng-mouseenter="evidCell(-1,colonne, true)"  
 						  ng-style="{'vertical-align': 'bottom','background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 						</tr>
@@ -119,9 +120,9 @@
 					<table class="board">
 						<tr ng-repeat="righe in getRange(righe)">
 							  <td ng-click="cliccaCella('BOARD',righe,colonne)" 
-							  ng-mouseenter="evidCell(righe,colonne, true)"  ng-mouseleave="evidCell(righe,colonne, false)"
+							  ng-mouseenter="evidCell(righe,colonne, true)"  
 							  	ng-style="{'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
-							  	'height':'20px', 'vertical-align': 'middle' }"  
+							  	'height':'20px', 'vertical-align': 'middle', 'text-align': getCellaAlign(colonne) }"  
 							  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
 							  </td>
 							  <td NOWRAP ng-show="fase=='P' && modProgetta">
@@ -134,7 +135,7 @@
 					<table class="boardIndicazioni">
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
-						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
+						  ng-mouseenter="evidCell(-1,colonne, true)"  
 						  ng-style="{'vertical-align': 'top','background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 						  <tr  ng-show="fase=='P'  && modProgetta">
@@ -164,6 +165,11 @@
 							'vertical-align': 'middle',
 							'background-color': getColori(index), 'colorX':getColori(mossa)}">
 						</td>
+						<td ng-click="impostaTestoMossa()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}
+						</td>
 						</tr>
 						<tr>
 						<td style="width: 200px; font-size:20px;text-align:left">
@@ -196,11 +202,6 @@
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
 						{{testoAllLinea()}}
-						</td>
-						<td ng-click="impostaTestoMossa()" 
-							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
-							'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}
 						</td>
 					</tr>
 				</table>			
