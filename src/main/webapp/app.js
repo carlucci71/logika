@@ -64,6 +64,13 @@ angular.module('myApp', ['ngSanitize'])
 			if (valore==1) return 'black';
 			return 'lightgreen';
 		}
+		$scope.getBorderEvid= function(righe,colonne){
+			if (!$scope.board) return;
+			if (colonne==$scope.evidColonna || righe==$scope.evidRiga){
+					return '1px solid red';
+			}
+			return 'bbb';
+		}
 		$scope.getBgColor= function(righe,colonne){
 			if (!$scope.board) return;
 			if (colonne==0 || colonne==$scope.colonne+1 ){

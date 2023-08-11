@@ -120,7 +120,8 @@
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
 						  ng-mouseenter="evidCell(-1,colonne, true)"  
-						  ng-style="{'vertical-align': 'bottom','background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
+						  ng-style="{'vertical-align': 'bottom','background-color': getColorIntestazioneBoard(colonne), 
+						  'height':'130px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne,'P')"></td>
 						</tr>
 					</table>
@@ -128,7 +129,8 @@
 						<tr ng-repeat="righe in getRange(righe)">
 							  <td ng-click="cliccaCella('BOARD',righe,colonne)" 
 							  ng-mouseenter="evidCell(righe,colonne, true)"  
-							  	ng-style="{'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
+							  	ng-style="{'border': getBorderEvid(righe,colonne),
+							  	 'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
 							  	'height':'20px', 'vertical-align': 'middle', 'text-align': getCellaAlign(colonne) }"  
 							  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
 							  </td>
