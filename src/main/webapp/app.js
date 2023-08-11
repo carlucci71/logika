@@ -156,10 +156,10 @@ angular.module('myApp', ['ngSanitize'])
 					}
 				}
 		}
-		$scope.verificami= function(){
-			if($scope.verifica==''){
+		$scope.verificami= function(tipo){
+			if($scope.verifica=='' && tipo==1){
 				$scope.verifica='S';
-			} else if($scope.verifica=='S'){
+			} else if($scope.verifica=='' && tipo==2){
 				$scope.verifica='T';
 			} else {
 				$scope.verifica='';
@@ -171,7 +171,7 @@ angular.module('myApp', ['ngSanitize'])
 				} else if ($scope.verifica=='S'){
 					return "somma";
 				} else {
-					return "";
+					return "selez.";
 				}
 		}
 		$scope.testoAllLinea= function(){
@@ -192,7 +192,7 @@ angular.module('myApp', ['ngSanitize'])
 					$scope.linea='';
 				}
 		}
-		$scope.getIntestazioneBoard= function(colonne){
+		$scope.getIntestazioneBoard= function(colonne, primoUltimo){
 			if (colonne==0) {
 				return '';
 			} else {
@@ -207,7 +207,7 @@ angular.module('myApp', ['ngSanitize'])
 						ret=ret + att[i];
 					}
 					ret=ret + "</span>";
-					if ($scope.verifica!=''){
+					if ($scope.verifica!='' && primoUltimo=='U'){
 						var valori=[];
 						for (var i=0; i < $scope.righe; i++) {
 							valori.push($scope.board[i][colonne-1]);
@@ -234,7 +234,7 @@ angular.module('myApp', ['ngSanitize'])
 							ret=ret + att[i];
 						}
 						ret=ret+"</span>";
-						if ($scope.verifica!=''){
+						if ($scope.verifica!='' && colonne==$scope.colonne+1){
 							ret=$scope.contaRipetizioni($scope.board[righe], sep, att, $scope.colonne);
 						}
 						return  $sce.trustAsHtml(ret);
@@ -248,7 +248,7 @@ angular.module('myApp', ['ngSanitize'])
 				sommaDaBoard=sommaDaBoard+daBoard[i]+1;
 			}
 			sommaDaBoard--;
-			var ret="<span>";
+			var ret="<span style='color:blue'>";
 			ret=ret + sommaDaBoard + sep;
 			ret=ret + "(" + (tot-sommaDaBoard) + ")" + sep;
 			var check="";

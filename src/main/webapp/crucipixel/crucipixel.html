@@ -65,6 +65,7 @@
 							'vertical-align': 'middle',
 							'background-color': getColori(index), 'colorX':getColori(mossa)}">
 						</td>
+						<td></td>
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
@@ -79,23 +80,29 @@
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						FOTO ({{historyPhoto}})
+						Foto ({{historyPhoto}})
 						<td ng-click="ripristinaFoto()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						RIPRISTINA
+						Reset
 						<td ng-click="undo()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						UNDO ({{historyBoard.length}})
+						Undo ({{historyBoard.length}})
 						</td>
-						<td ng-click="verificami()" 
+						<td ng-click="verificami(1)" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						VERIFICA {{testoVerifica()}}
+						Verifica {{testoVerifica()}}
+						</td>
+						<td ng-click="verificami(2)" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						Verifica {{testoVerifica()}}
 						</td>
 						<td ng-click="allLine()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
@@ -114,7 +121,7 @@
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
 						  ng-mouseenter="evidCell(-1,colonne, true)"  
 						  ng-style="{'vertical-align': 'bottom','background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
-						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
+						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne,'P')"></td>
 						</tr>
 					</table>
 					<table class="board">
@@ -137,7 +144,7 @@
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
 						  ng-mouseenter="evidCell(-1,colonne, true)"  
 						  ng-style="{'vertical-align': 'top','background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
-						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
+						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne,'U')"></td>
 						  <tr  ng-show="fase=='P'  && modProgetta">
 						  	  <td style="width: 100px"></td>
 							  <td style="width: 50px" ng-repeat="colonne in getRange(colonne)">
@@ -165,6 +172,7 @@
 							'vertical-align': 'middle',
 							'background-color': getColori(index), 'colorX':getColori(mossa)}">
 						</td>
+						<td></td>
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
@@ -179,23 +187,29 @@
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						FOTO ({{historyPhoto}})
+						Foto ({{historyPhoto}})
 						<td ng-click="ripristinaFoto()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '30px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						RIPRISTINA
+						Reset
 						<td ng-click="undo()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						UNDO ({{historyBoard.length}})
+						Undo ({{historyBoard.length}})
 						</td>
-						<td ng-click="verificami()" 
+						<td ng-click="verificami(1)" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						VERIFICA {{testoVerifica()}}
+						Verifica {{testoVerifica()}}
+						</td>
+						<td ng-click="verificami(2)" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						Verifica {{testoVerifica()}}
 						</td>
 						<td ng-click="allLine()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
