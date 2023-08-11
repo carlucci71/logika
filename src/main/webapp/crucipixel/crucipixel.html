@@ -24,10 +24,12 @@
 			  ng-options="'(' + opzione.id + ') ' + opzione.nome for opzione in crucipixelSalvate track by opzione.id">
 			    <option value="">Carica un gioco</option>
 			  </select>
+			  <!--
 				<br><br>
 				  <div ng-show="crucipixelSalvate[crucipixelSelezionata.prog]">
 		    	      <input type=button ng-click="carica(crucipixelSalvate[crucipixelSelezionata.prog])" value="CARICA"></input>
 				</div>
+			  -->
 			</div>
 
 			<img src="./crucipixel.png"></img>
@@ -77,7 +79,7 @@
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						VERIFICA ({{verifica}})
+						VERIFICA {{testoVerifica()}}
 						</td>
 						<td ng-click="allLine()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 

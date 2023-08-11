@@ -47,7 +47,7 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.valCosaScrivo=1;
 			$scope.valDatiRigaBoard=[];
 			$scope.valDatiColonnaBoard=[];
-			$scope.verifica=false;
+			$scope.verifica='';
 			$scope.linea='';
 			$scope.modProgetta=false;
         	$scope.fase='P';
@@ -140,7 +140,22 @@ angular.module('myApp', ['ngSanitize'])
 				}
 		}
 		$scope.verificami= function(){
-				$scope.verifica=!$scope.verifica;
+			if($scope.verifica==''){
+				$scope.verifica='S';
+			} else if($scope.verifica=='S'){
+				$scope.verifica='T';
+			} else {
+				$scope.verifica='';
+			}
+		}
+		$scope.testoVerifica= function(){
+				if ($scope.verifica==''){
+					return "NO";
+				} else if ($scope.verifica=='S'){
+					return "somma";
+				} else {
+					return "";
+				}
 		}
 		$scope.testoAllLinea= function(){
 				if ($scope.linea==''){
@@ -172,12 +187,12 @@ angular.module('myApp', ['ngSanitize'])
 						ret=ret + sep+ att[i];
 					}
 					ret=ret + "</span>";
-					if ($scope.verifica){
+					if ($scope.verifica!=''){
 						var valori=[];
 						for (var i=0; i < $scope.righe; i++) {
 							valori.push($scope.board[i][colonne-1]);
 						}
-						ret=$scope.contaRipetizioni(valori, sep, colonne-1,att);
+						ret=$scope.contaRipetizioni(valori, sep, att);
 					}
 					return  $sce.trustAsHtml(ret);
 				}
@@ -196,15 +211,25 @@ angular.module('myApp', ['ngSanitize'])
 							ret=ret + sep + att[i];
 						}
 						ret=ret+"</span>";
-						if ($scope.verifica){
-							ret=$scope.contaRipetizioni($scope.board[righe], sep, righe,att);
+						if ($scope.verifica!=''){
+							ret=$scope.contaRipetizioni($scope.board[righe], sep, att);
 						}
 						return  $sce.trustAsHtml(ret);
 					}
 				}
 			}
 		}
-		$scope.contaRipetizioni= function(elementi, sep, index, daBoard){
+		$scope.sommaDaIntestazione= function(daBoard){
+			var sommaDaBoard=0;
+			for (var i=0; i < daBoard.length; i++) {
+				sommaDaBoard=sommaDaBoard+daBoard[i]+1;
+			}
+			return "<span  >" + (sommaDaBoard-1) + "</span>";
+		}
+		$scope.contaRipetizioni= function(elementi, sep, daBoard){
+			if ($scope.verifica=='S'){
+				return $scope.sommaDaIntestazione(daBoard);
+			}
 			var contaAtt=0;
 			var ret="<span style='color:@@; '>";
 			var contaContaAtt=[];
@@ -240,7 +265,6 @@ angular.module('myApp', ['ngSanitize'])
 			} else {
 				ret=ret.replace("@@","red");
 			}
-			//console.log(sep + "->" + contaContaAtt + "/" + index + "+++" + daBoard);
 			return ret + "</span>";
 		}
 		$scope.charCosaScrivo= function(carattere){
@@ -336,25 +360,27 @@ angular.module('myApp', ['ngSanitize'])
 			}
 		}
 		$scope.carica= function(daCaricare){
-	        $scope.id=daCaricare.id;
-	        $scope.nome=daCaricare.nome;
-			$scope.board=daCaricare.board;
-			$scope.testoBoard=daCaricare.testoBoard;
-			$scope.datiColonnaBoard=daCaricare.datiColonnaBoard;
-			$scope.datiRigaBoard=daCaricare.datiRigaBoard;
-			$scope.righe=$scope.board.length;
-			$scope.colonne=$scope.board[0].length;
-			$scope.historyBoard=daCaricare.historyBoard;
-			$scope.dataOra=daCaricare.dataOra;
-			$scope.cosaScrivo=[];
-			$scope.cosaScrivo[0]=1;				
-			$scope.valCosaScrivo=1;
-			$scope.valDatiRigaBoard=[];
-			$scope.valDatiColonnaBoard=[];
-			$scope.verifica=false;
-			$scope.linea='';
-			$scope.modProgetta=false;
-        	$scope.fase='P';
+			if (daCaricare){
+		        $scope.id=daCaricare.id;
+		        $scope.nome=daCaricare.nome;
+				$scope.board=daCaricare.board;
+				$scope.testoBoard=daCaricare.testoBoard;
+				$scope.datiColonnaBoard=daCaricare.datiColonnaBoard;
+				$scope.datiRigaBoard=daCaricare.datiRigaBoard;
+				$scope.righe=$scope.board.length;
+				$scope.colonne=$scope.board[0].length;
+				$scope.historyBoard=daCaricare.historyBoard;
+				$scope.dataOra=daCaricare.dataOra;
+				$scope.cosaScrivo=[];
+				$scope.cosaScrivo[0]=1;				
+				$scope.valCosaScrivo=1;
+				$scope.valDatiRigaBoard=[];
+				$scope.valDatiColonnaBoard=[];
+				$scope.verifica='';
+				$scope.linea='';
+				$scope.modProgetta=false;
+	        	$scope.fase='P';
+	        }
 		}
 		$scope.avviaGioco=function(){
 			/*
