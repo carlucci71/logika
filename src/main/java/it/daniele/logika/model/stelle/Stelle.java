@@ -1,5 +1,7 @@
 package it.daniele.logika.model.stelle;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,5 +29,7 @@ public class Stelle	 {
 	 private String board;
 	 @Column(columnDefinition = "TEXT")
 	 private String boardGioco;
+	 @Column(name = "data_ora")
+	 private Timestamp dataOra;
 	
 }

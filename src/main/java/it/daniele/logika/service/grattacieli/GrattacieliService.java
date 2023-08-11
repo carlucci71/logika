@@ -1,5 +1,6 @@
 package it.daniele.logika.service.grattacieli;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -27,16 +28,12 @@ public class GrattacieliService {
 	}
 	
 	@Transactional
-	public GrattacieliResource salva(GrattacieliDto grattacieliDto) {
+	public GrattacieliResource salva(GrattacieliDto grattacieliDto, Long id) {
 		Grattacieli grattacieli = grattacieliFactory.toModel(grattacieliDto);
-		grattacieli = grattacieliRepository.save(grattacieli);
-		return grattacieliFactory.toResource(grattacieli);
-	}
-
-	@Transactional
-	public GrattacieliResource aggiorna(GrattacieliDto grattacieliDto, Long id) {
-		Grattacieli grattacieli = grattacieliFactory.toModel(grattacieliDto);
-		grattacieli.setId(id);
+		if (id != null) {
+			grattacieli.setId(id);
+		}
+		grattacieli.setDataOra(new Timestamp(System.currentTimeMillis()));
 		grattacieli = grattacieliRepository.save(grattacieli);
 		return grattacieliFactory.toResource(grattacieli);
 	}

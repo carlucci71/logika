@@ -28,7 +28,7 @@ public class GrattacieliController {
 	
 	@PostMapping()
 	public ResponseEntity<GrattacieliResource> salvaGrattacieli(@RequestBody GrattacieliDto grattacieliDto) {
-		GrattacieliResource salva = grattacieliService.salva(grattacieliDto);
+		GrattacieliResource salva = grattacieliService.salva(grattacieliDto, null);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		return ResponseEntity
@@ -38,7 +38,7 @@ public class GrattacieliController {
 	}
 	@PutMapping("{id}")
 	public ResponseEntity<GrattacieliResource> aggiornaGrattacieli(@RequestBody GrattacieliDto grattacieliDto, @PathVariable Long id) {
-		GrattacieliResource salva = grattacieliService.aggiorna(grattacieliDto, id); 
+		GrattacieliResource salva = grattacieliService.salva(grattacieliDto, id); 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		return ResponseEntity

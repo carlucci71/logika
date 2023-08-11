@@ -32,7 +32,7 @@ public class StelleController {
 	
 	@PostMapping()
 	public ResponseEntity<StelleResource> salvaStelle(@RequestBody StelleDto stelleDto) {
-		StelleResource salva = stelleService.salva(stelleDto);
+		StelleResource salva = stelleService.salva(stelleDto, null);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		return ResponseEntity
@@ -43,7 +43,7 @@ public class StelleController {
 
 	@PutMapping("{id}")
 	public ResponseEntity<StelleResource> aggiornaStelle(@RequestBody StelleDto stelleDto, @PathVariable Long id) {
-		StelleResource salva = stelleService.aggiorna(stelleDto, id); 
+		StelleResource salva = stelleService.salva(stelleDto, id); 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		return ResponseEntity

@@ -1,5 +1,7 @@
 package it.daniele.logika.model.grattacieli;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,5 +26,7 @@ public class Grattacieli	 {
 	 private String nome;
 	 @Column(columnDefinition = "TEXT")
 	 private String board;
+	 @Column(name = "data_ora")
+	 private Timestamp dataOra;
 	
 }

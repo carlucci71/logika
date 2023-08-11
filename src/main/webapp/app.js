@@ -192,7 +192,7 @@ angular.module('myApp', ['ngSanitize'])
 						for (var i=0; i < $scope.righe; i++) {
 							valori.push($scope.board[i][colonne-1]);
 						}
-						ret=$scope.contaRipetizioni(valori, sep, att);
+						ret=$scope.contaRipetizioni(valori, sep, att, $scope.righe);
 					}
 					return  $sce.trustAsHtml(ret);
 				}
@@ -212,23 +212,39 @@ angular.module('myApp', ['ngSanitize'])
 						}
 						ret=ret+"</span>";
 						if ($scope.verifica!=''){
-							ret=$scope.contaRipetizioni($scope.board[righe], sep, att);
+							ret=$scope.contaRipetizioni($scope.board[righe], sep, att, $scope.colonne);
 						}
 						return  $sce.trustAsHtml(ret);
 					}
 				}
 			}
 		}
-		$scope.sommaDaIntestazione= function(daBoard){
+		$scope.sommaDaIntestazione= function(daBoard, tot, sep){
 			var sommaDaBoard=0;
 			for (var i=0; i < daBoard.length; i++) {
 				sommaDaBoard=sommaDaBoard+daBoard[i]+1;
 			}
-			return "<span  >" + (sommaDaBoard-1) + "</span>";
+			sommaDaBoard--;
+			var ret="<span>";
+			ret=ret + sommaDaBoard + sep;
+			ret=ret + "(" + (tot-sommaDaBoard) + ")" + sep;
+			var check="";
+			if ((tot-sommaDaBoard)<daBoard[0]){
+				check="*";
+			}
+			ret=ret + sep + daBoard[0] + check + sep;
+			check="";
+			if ((tot-sommaDaBoard)<daBoard[daBoard.length-1]){
+				check="*";
+			}
+			ret=ret + sep + daBoard[daBoard.length-1] + check;
+			ret=ret + "</span>";
+			return ret;
+			
 		}
-		$scope.contaRipetizioni= function(elementi, sep, daBoard){
+		$scope.contaRipetizioni= function(elementi, sep, daBoard, tot){
 			if ($scope.verifica=='S'){
-				return $scope.sommaDaIntestazione(daBoard);
+				return $scope.sommaDaIntestazione(daBoard,tot, sep);
 			}
 			var contaAtt=0;
 			var ret="<span style='color:@@; '>";
@@ -485,6 +501,7 @@ angular.module('myApp', ['ngSanitize'])
 						id: response.data[i].id, 
 						piani: response.data[i].piani, 
 						nome: response.data[i].nome,
+						dataOra: response.data[i].dataOra,
 						board: response.data[i].board
 					 };
 	            	$scope.grattacieliSalvate.push(el);
@@ -527,6 +544,7 @@ angular.module('myApp', ['ngSanitize'])
 			};
         	$http.post("/logika/grattacieli",body).then(function(response) {
 	        	$scope.avviaGioco();
+				$scope.dataOra=response.data.dataOra;
 	        	$scope.id=response.data.id;
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
@@ -541,6 +559,7 @@ angular.module('myApp', ['ngSanitize'])
 				piani: $scope.piani
 			};
         	$http.put("/logika/grattacieli/"+$scope.id, body).then(function(response) {
+				$scope.dataOra=response.data.dataOra;
 				if ($scope.fase=='P'){
 	        		$scope.avviaGioco();
 				}
@@ -551,19 +570,25 @@ angular.module('myApp', ['ngSanitize'])
             });
 		}
 		$scope.cancella= function(id){
-        	$http.delete("/logika/grattacieli/" + id).then(function() {
-				$scope.inizializza();
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+			var result = confirm("Sei sicuro di voler cancellare l'id'" +id +"?");
+			if (result) {
+	        	$http.delete("/logika/grattacieli/" + id).then(function() {
+					$scope.inizializza();
+	            })
+	            .catch(function(error) {
+	                console.log(error);
+	            });
+	        }
 		}
 		$scope.carica= function(daCaricare){
-	        $scope.id=daCaricare.id;
-	        $scope.nome=daCaricare.nome;
-	        $scope.piani=daCaricare.piani;
-			$scope.board=daCaricare.board;
-        	$scope.fase='P';
+			if (daCaricare){
+				$scope.dataOra=daCaricare.dataOra;
+		        $scope.id=daCaricare.id;
+		        $scope.nome=daCaricare.nome;
+		        $scope.piani=daCaricare.piani;
+				$scope.board=daCaricare.board;
+	        	$scope.fase='P';
+	        }
 		}
 		$scope.avviaGioco=function(){
         	$scope.fase='G';
@@ -673,7 +698,8 @@ angular.module('myApp', ['ngSanitize'])
 						nome: response.data[i].nome,
 						stellePerZona: response.data[i].stellePerZona,
 						board: response.data[i].board,
-						boardGioco: response.data[i].boardGioco,
+						dataOra: response.data[i].dataOra,
+						boardGioco: response.data[i].boardGioco
 					 };
 	            	$scope.stelleSalvate.push(el);
 	          	}
@@ -689,27 +715,33 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.inizializza();
 
 		$scope.carica= function(daCaricare){
-	        $scope.id=daCaricare.id;
-	        $scope.nome=daCaricare.nome;
-	        $scope.righe=0;
-	        $scope.colonne=0;
-	        $scope.stellePerZona=daCaricare.stellePerZona;
-			$scope.zoneColore=daCaricare.zone;
-			$scope.colora=1;
-			$scope.board=daCaricare.board;
-			$scope.boardGioco=daCaricare.boardGioco;
-        	$scope.fase='P';
-        	$scope.piani=daCaricare.board.length;
+			if (daCaricare){
+				$scope.dataOra=daCaricare.dataOra;
+		        $scope.id=daCaricare.id;
+		        $scope.nome=daCaricare.nome;
+		        $scope.righe=0;
+		        $scope.colonne=0;
+		        $scope.stellePerZona=daCaricare.stellePerZona;
+				$scope.zoneColore=daCaricare.zone;
+				$scope.colora=1;
+				$scope.board=daCaricare.board;
+				$scope.boardGioco=daCaricare.boardGioco;
+	        	$scope.fase='P';
+	        	$scope.piani=daCaricare.board.length;
+	        }
 		}
 
 
 		$scope.cancella= function(id){
-        	$http.delete("/logika/stelle/" + id).then(function() {
-				$scope.inizializza();
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+			var result = confirm("Sei sicuro di voler cancellare l'id'" +id +"?");
+			if (result) {
+	        	$http.delete("/logika/stelle/" + id).then(function() {
+					$scope.inizializza();
+	            })
+	            .catch(function(error) {
+	                console.log(error);
+	            });
+	         }
 		}
 
 		$scope.progetta= function(){
@@ -819,6 +851,7 @@ angular.module('myApp', ['ngSanitize'])
 			};
         	$http.post("/logika/stelle",body).then(function(response) {
 	        	$scope.avviaGioco("I");
+				$scope.dataOra=response.data.dataOra;
 	        	$scope.id=response.data.id;
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
@@ -835,6 +868,7 @@ angular.module('myApp', ['ngSanitize'])
 				stellePerZona: $scope.stellePerZona
 			};
         	$http.put("/logika/stelle/"+$scope.id, body).then(function(response) {
+				$scope.dataOra=response.data.dataOra;
 				if ($scope.fase=='P'){
 	        		$scope.avviaGioco("A");
 				}

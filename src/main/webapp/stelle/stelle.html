@@ -19,14 +19,17 @@
 			<input type=button ng-click="progetta()" value="PROGETTA"></input>
 			<br><br>
 			<div>
-			  <select ng-model="stelleSelezionata" ng-options="'(' + opzione.id + ') ' + opzione.nome for opzione in stelleSalvate track by opzione.id">
+			  <select ng-model="stelleSelezionata" ng-change="carica(stelleSalvate[stelleSelezionata.prog])" 
+			  ng-options="'(' + opzione.id + ') ' + opzione.nome for opzione in stelleSalvate track by opzione.id">
 			    <option value="">Carica un gioco</option>
 			  </select>
+			  <!--
 				<br><br>
 				  <div ng-show="stelleSalvate[stelleSelezionata.prog]">
 		    	      <input type=button ng-click="carica(stelleSalvate[stelleSelezionata.prog])" value="CARICA"></input>
 		    	      <input type=button ng-click="cancella(stelleSalvate[stelleSelezionata.prog].id)" value="CANCELLA"></input>
 				</div>
+				-->
 			</div>
 
 			<img src="./stelle.png"></img>
@@ -35,10 +38,20 @@
 		<div ng-show="fase=='P' || fase=='G'">
 			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='P'">Inserisci le zone colorate</label>
 			<label style="font-size: 20px;font-weight: bold;" ng-show="fase=='G'">Gioca</label>
+			<br>
+			<input type=button ng-click="ricomincia()" value="RICOMINCIA"></input>
+   	        &nbsp;&nbsp;
+			<input ng-show="fase=='P' && !id" type=button ng-click="inserisci()" value="INSERISCI"></input>
+   	        &nbsp;&nbsp;
+			<input ng-show="id" type=button ng-click="aggiorna()" value="AGGIORNA"></input>
+   	        &nbsp;&nbsp;
+   	        <input ng-show="fase=='P' && id" type=button ng-click="cancella(id)" value="CANCELLA"></input>
+   	        &nbsp;&nbsp;
 			<table>
 				<tr ng-show="fase=='P'"><td>zone colori</td><td><input type=number ng-model="zoneColore"></input></td></tr>
 				<tr><td>stelle</td><td><input type=number ng-model="stellePerZona"></input></td></tr>
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
+				<tr><td>data aggiornamento</td><td><label>{{dataOra}}</label></td></tr>
 			</table>
 			<table border style=" user-select: none;" >
 				<tr ng-repeat="righe in getRange(board.length)">
@@ -61,12 +74,14 @@
 				<label ng-show="fase=='G'">Scegli il valore da inserire e poi clicca sulla tabella. 
 				Se la cella contiene un valore dubbio questo verrà aggiunto, altrimenti rimosso solo se non è l'unico.</label>
 			</div>
-			<div ng-show="fase=='P'">			
-				<input ng-hide="id" type=button ng-click="inserisci()" value="INSERISCI"></input>
-			</div>
-			<br>
 			<input type=button ng-click="ricomincia()" value="RICOMINCIA"></input>
+   	        &nbsp;&nbsp;
+			<input ng-show="fase=='P' && !id" type=button ng-click="inserisci()" value="INSERISCI"></input>
+   	        &nbsp;&nbsp;
 			<input ng-show="id" type=button ng-click="aggiorna()" value="AGGIORNA"></input>
+   	        &nbsp;&nbsp;
+   	        <input ng-show="fase=='P' && id" type=button ng-click="cancella(id)" value="CANCELLA"></input>
+   	        &nbsp;&nbsp;
 		</div>
     <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.8.2/angular-sanitize.min.js"></script>

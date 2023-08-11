@@ -1,5 +1,6 @@
 package it.daniele.logika.resource.grattacieli;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Data;
@@ -10,5 +11,6 @@ public class GrattacieliResource {
 	private Integer piani;	
 	private String nome;
 	private List board;
+	private Timestamp dataOra;
 
 }

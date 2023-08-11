@@ -1,5 +1,6 @@
 package it.daniele.logika.resource.stelle;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Data;
@@ -12,5 +13,6 @@ public class StelleResource {
 	private List board;
 	private List boardGioco;
 	private Integer zone;
+	private Timestamp dataOra;
 	
 }

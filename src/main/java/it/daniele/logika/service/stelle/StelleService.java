@@ -1,5 +1,6 @@
 package it.daniele.logika.service.stelle;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -26,17 +27,14 @@ public class StelleService {
 		this.stelleRepository=stelleRepository;
 	}
 	
-	@Transactional
-	public StelleResource salva(StelleDto stelleDto) {
-		Stelle stelle = stelleFactory.toModel(stelleDto);
-		stelle = stelleRepository.save(stelle);
-		return stelleFactory.toResource(stelle);
-	}
 
 	@Transactional
-	public StelleResource aggiorna(StelleDto stelleDto, Long id) {
+	public StelleResource salva(StelleDto stelleDto, Long id) {
 		Stelle stelle = stelleFactory.toModel(stelleDto);
-		stelle.setId(id);
+		if (id != null) {
+			stelle.setId(id);
+		}
+		stelle.setDataOra(new Timestamp(System.currentTimeMillis()));
 		stelle = stelleRepository.save(stelle);
 		return stelleFactory.toResource(stelle);
 	}
