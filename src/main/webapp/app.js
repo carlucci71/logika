@@ -184,7 +184,10 @@ angular.module('myApp', ['ngSanitize'])
 					var sep="<br>";
 					var ret="<span style='color:black;' >";
 					for (var i=0; i < att.length; i++) {
-						ret=ret + sep+ att[i];
+						if (i>0){
+							ret=ret + sep;
+						}
+						ret=ret + att[i];
 					}
 					ret=ret + "</span>";
 					if ($scope.verifica!=''){
@@ -208,7 +211,10 @@ angular.module('myApp', ['ngSanitize'])
 						var sep="&nbsp;&nbsp;";
 						var ret="<span  style='color:black; '>";
 						for (var i=0; i < att.length; i++) {
-							ret=ret + sep + att[i];
+							if (i>0){
+								ret=ret + sep;
+							}
+							ret=ret + att[i];
 						}
 						ret=ret+"</span>";
 						if ($scope.verifica!=''){
@@ -249,6 +255,7 @@ angular.module('myApp', ['ngSanitize'])
 			var contaAtt=0;
 			var ret="<span style='color:@@; '>";
 			var contaContaAtt=[];
+			var contaVoci=0;
 			for (var i=0; i < elementi.length; i++) {
 				var att=elementi[i];
 				if (att==1){
@@ -256,14 +263,22 @@ angular.module('myApp', ['ngSanitize'])
 				} else {
 					if (contaAtt>0){
 						contaContaAtt.push(contaAtt);
-						ret=ret+sep+contaAtt;
+						if (contaVoci>0){
+							ret=ret+sep;
+						}
+						contaVoci++;
+						ret=ret+contaAtt;
 					}
 					contaAtt=0;
 				}
 			}
 			if (contaAtt>0){
 				contaContaAtt.push(contaAtt);
-				ret=ret + sep + contaAtt;
+				if (contaVoci>0){
+					ret=ret+sep;
+				}
+				contaVoci++;
+				ret=ret+contaAtt;
 			}
 			ret=ret;
 			var isOk=true;
@@ -457,6 +472,7 @@ angular.module('myApp', ['ngSanitize'])
 			  }
 			}
 			$scope.historyBoard=[];
+			$scope.historyPhoto=0;
 			$scope.datiColonnaBoard=[];
             for (var c=0; c < $scope.colonne; c++) {
 	            $scope.datiColonnaBoard[c]=[];

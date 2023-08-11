@@ -102,7 +102,7 @@
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
 						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
-						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
+						  ng-style="{'vertical-align': 'bottom','background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 						</tr>
 					</table>
@@ -125,7 +125,7 @@
 						<tr>
 						  <td ng-click="cliccaCella('IND', 0,colonne)" 
 						  ng-mouseenter="evidCell(-1,colonne, true)"  ng-mouseleave="evidCell(-1,colonne, false)"
-						  ng-style="{'background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
+						  ng-style="{'vertical-align': 'top','background-color': getColorIntestazioneBoard(colonne), 'height':'130px','width': getCellaWidth(colonne)}" 
 						  ng-repeat="colonne in getRange(colonne+1)" ng-bind-html="getIntestazioneBoard(colonne)"></td>
 						  <tr  ng-show="fase=='P'  && modProgetta">
 						  	  <td style="width: 100px"></td>
