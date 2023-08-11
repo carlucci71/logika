@@ -402,6 +402,8 @@ angular.module('myApp', ['ngSanitize'])
 	        		$scope.avviaGioco();
 				}
 				$scope.timeAttuale=response.headers('Time-Attuale');
+				$scope.evidColonna=-1;
+				$scope.evidRiga=-1;
             })
             .catch(function(error) {
                 console.log(error);
