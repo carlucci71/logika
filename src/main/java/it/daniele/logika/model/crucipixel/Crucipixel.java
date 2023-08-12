@@ -34,6 +34,8 @@ public class Crucipixel	 {
 	 private String datiRigaBoard;
 	 @Column(columnDefinition = "TEXT")
 	 private String historyBoard;
+	 @Column(columnDefinition = "TEXT")
+	 private String historyRedo;
 	 @Column(name = "data_ora")
 	 private Timestamp dataOra;
      private String historyPhoto;

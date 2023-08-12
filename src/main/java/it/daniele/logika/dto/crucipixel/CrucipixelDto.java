@@ -13,5 +13,6 @@ public class CrucipixelDto {
 	private List datiColonnaBoard;
 	private List datiRigaBoard;
 	private List historyBoard;
+	private List historyRedo;
 	private Integer[] historyPhoto;
 }

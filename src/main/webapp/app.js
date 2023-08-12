@@ -29,6 +29,7 @@ angular.module('myApp', ['ngSanitize'])
 						note: response.data[i].note,
 						datiColonnaBoard: response.data[i].datiColonnaBoard,
 						historyBoard: response.data[i].historyBoard,
+						historyRedo: response.data[i].historyRedo,
 						dataOra: response.data[i].dataOra,
 						datiRigaBoard: response.data[i].datiRigaBoard,
 					 };
@@ -118,6 +119,7 @@ angular.module('myApp', ['ngSanitize'])
 					testoBoard: $scope.clona($scope.testoBoard)
 				}
 				$scope.historyBoard.push(history);
+				$scope.historyRedo=[];
 				if ($scope.linea=='C'){
 					for (var i=0; i < $scope.righe; i++) {
 						if ($scope.board[i][colonne-1]==0){
@@ -157,11 +159,30 @@ angular.module('myApp', ['ngSanitize'])
 				}
 		}
 		$scope.undo= function(){
+		        var historyRedo={
+					board: $scope.board,
+					testoBoard: $scope.testoBoard
+				};
+				$scope.historyRedo.push(historyRedo);
 			    if ($scope.historyBoard){
 					var history=$scope.historyBoard.pop();
 					if (history){
 						$scope.board=history.board;
 						$scope.testoBoard=history.testoBoard;
+					}
+				}
+		}
+		$scope.redo= function(){
+			    if ($scope.historyRedo && $scope.historyRedo.length>0){
+			        var history={
+						board: $scope.board,
+						testoBoard: $scope.testoBoard
+					};
+					$scope.historyBoard.push(history);
+					var historyR=$scope.historyRedo.pop();
+					if (historyR){
+						$scope.board=historyR.board;
+						$scope.testoBoard=historyR.testoBoard;
 					}
 				}
 		}
@@ -418,7 +439,8 @@ angular.module('myApp', ['ngSanitize'])
 				note: $scope.note,
 				datiColonnaBoard: $scope.datiColonnaBoard,
 				datiRigaBoard: $scope.datiRigaBoard,
-				historyBoard: $scope.historyBoard
+				historyBoard: $scope.historyBoard,
+				historyRedo: $scope.historyRedo
 			};
         	$http.post("/logika/crucipixel",body).then(function(response) {
 	        	$scope.avviaGioco();
@@ -442,7 +464,8 @@ angular.module('myApp', ['ngSanitize'])
 				note: $scope.note,
 				datiColonnaBoard: $scope.datiColonnaBoard,
 				datiRigaBoard: $scope.datiRigaBoard,
-				historyBoard: $scope.historyBoard
+				historyBoard: $scope.historyBoard,
+				historyRedo: $scope.historyRedo
 			};
 			var ok=true;
 			if ($scope.board.length!=$scope.righe){
@@ -494,6 +517,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.righe=$scope.board.length;
 				$scope.colonne=$scope.board[0].length;
 				$scope.historyBoard=daCaricare.historyBoard;
+				$scope.historyRedo=daCaricare.historyRedo;
 				$scope.dataOra=daCaricare.dataOra;
 				$scope.cosaScrivo=[];
 				$scope.cosaScrivo[0]=1;				
@@ -567,6 +591,7 @@ angular.module('myApp', ['ngSanitize'])
 			  }
 			}
 			$scope.historyBoard=[];
+			$scope.historyRedo=[];
 			$scope.historyPhoto=[];
 			$scope.note='';
 			$scope.datiColonnaBoard=[];

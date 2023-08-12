@@ -67,7 +67,7 @@
 							'vertical-align': 'middle',
 							'background-color': getColori(index), 'colorX':getColori(mossa)}">
 						</td>
-						<td></td>
+						<td></td><td></td>
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
@@ -93,6 +93,12 @@
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
 						Undo ({{historyBoard.length}})
+						</td>
+						<td ng-click="redo()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						Redo ({{historyRedo.length}})
 						</td>
 						<td ng-click="isVerifica=!isVerifica" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
@@ -176,7 +182,7 @@
 							'vertical-align': 'middle',
 							'background-color': getColori(index), 'colorX':getColori(mossa)}">
 						</td>
-						<td></td>
+						<td></td><td></td>
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
@@ -203,17 +209,23 @@
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
 						Undo ({{historyBoard.length}})
 						</td>
+						<td ng-click="redo()" 
+							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
+							'vertical-align': 'middle',
+							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
+						Redo ({{historyRedo.length}})
+						</td>
 						<td ng-click="isVerifica=!isVerifica" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						{{verificaAccesa()}}
+						Verifica {{isVerifica}}
 						</td>
 						<td ng-click="verificami()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
 							'background-color': getCoxlori(mossa), 'colorX':getColori(mossa)}">
-						Verifica {{isVerifica}}
+						Verifica {{testoVerifica()}}
 						</td>
 						<td ng-click="allLine()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
