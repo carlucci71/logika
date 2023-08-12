@@ -10,7 +10,7 @@ public class CrucipixelResource {
 	private Long id;
 	private String nome;
 	private String note;
-	private int historyPhoto;
+	private Integer[] historyPhoto;
 	private List board;
 	private List testoBoard;
 	private List datiColonnaBoard;

@@ -141,11 +141,11 @@ angular.module('myApp', ['ngSanitize'])
 			}
 		}
 		$scope.scatta= function(){
-			$scope.historyPhoto=$scope.historyBoard.length;
+			$scope.historyPhoto.push($scope.historyBoard.length);
 		}
-		$scope.ripristinaFoto= function(){
+		$scope.ripristinaPhoto= function(){
 			    if ($scope.historyBoard){
-					var quante=$scope.historyBoard.length-$scope.historyPhoto;
+					var quante=$scope.historyBoard.length-$scope.historyPhoto.pop();
 					for (var i=0; i < quante; i++) {
 						var history=$scope.historyBoard.pop();
 						if (history){
@@ -522,7 +522,7 @@ angular.module('myApp', ['ngSanitize'])
 			  }
 			}
 			$scope.historyBoard=[];
-			$scope.historyPhoto=0;
+			$scope.historyPhoto=[];
 			$scope.note='';
 			$scope.datiColonnaBoard=[];
             for (var c=0; c < $scope.colonne; c++) {

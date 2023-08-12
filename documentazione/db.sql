@@ -20,7 +20,7 @@ create table grattacieli (
 create table crucipixel (
         id serial primary key,
         nome VARCHAR(400),
-        history_photo numeric,
+        history_photo VARCHAR(4000),
         note VARCHAR(4000),
         board VARCHAR(4000),
         testo_board VARCHAR(4000),

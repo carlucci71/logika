@@ -36,6 +36,6 @@ public class Crucipixel	 {
 	 private String historyBoard;
 	 @Column(name = "data_ora")
 	 private Timestamp dataOra;
-     private int historyPhoto;
+     private String historyPhoto;
 	
 }
