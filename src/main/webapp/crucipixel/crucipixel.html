@@ -49,7 +49,9 @@
 			<table>
 				<tr><td>nome ({{id}})</td><td><input type=text ng-model="nome"></input></td></tr>
 				<tr><td>data aggiornamento</td><td><label>{{dataOra}}</label></td></tr>
-				<tr ng-show="fase=='P'"><td>modalità</td><td><input type=button ng-model="modProgetta" ng-click="modProgetta=!modProgetta"></input></td></tr>
+				<tr ng-show="fase=='P'"><td>modalità</td><td>
+					<input type=button ng-model="modProgetta" ng-click="modProgetta=!modProgetta"></input>
+				</td></tr>
 				<tr><td>note</td><td><textarea ng-model=note  rows=5 cols=50></textarea></td></tr>
 			</table>
 			<!-- RIPETERE INIZIO -->
@@ -69,7 +71,7 @@
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}
+							'background-color': getColori(mossa), 'color': 'orange'}">{{testoMossa}}
 						</td>
 						</tr>
 						<tr>
@@ -129,7 +131,7 @@
 						<tr ng-repeat="righe in getRange(righe)">
 							  <td ng-click="cliccaCella('BOARD',righe,colonne)" 
 							  ng-mouseenter="evidCell(righe,colonne, true)"  
-							  	ng-style="{'border': getBorderEvid(righe,colonne),
+							  	ng-style="{'border': getBorderEvid(righe,colonne), 'color': 'orange',
 							  	 'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
 							  	'height':'20px', 'vertical-align': 'middle', 'text-align': getCellaAlign(colonne) }"  
 							  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
@@ -178,7 +180,7 @@
 						<td ng-click="impostaTestoMossa()" 
 							ng-style="{'border':'3px solid black', 'width': '60px', 'height': '60px', 'text-align': 'center', 
 							'vertical-align': 'middle',
-							'background-color': getColori(mossa), 'color':geXtColori(mossa)}">{{testoMossa}}
+							'background-color': getColori(mossa), 'color': 'orange'}">{{testoMossa}}
 						</td>
 						</tr>
 						<tr>

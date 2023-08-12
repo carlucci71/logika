@@ -167,17 +167,23 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.verificami= function(tipo){
 			if (tipo==1){
 				if($scope.verifica==''){
-					$scope.verifica='S1';
+					$scope.verifica='S1_P';
 				} else {
 					$scope.verifica='';
 				}
 			} else {
 				if($scope.verifica==''){
-					$scope.verifica='S1';
-				} else if($scope.verifica=='S1'){
-					$scope.verifica='S2';
-				} else if($scope.verifica=='S2'){
-					$scope.verifica='T';
+					$scope.verifica='S1_P';
+				} else if($scope.verifica=='S1_P'){
+					$scope.verifica='S1_U';
+				} else if($scope.verifica=='S1_U'){
+					$scope.verifica='S2_P';
+				} else if($scope.verifica=='S2_P'){
+					$scope.verifica='S2_U';
+				} else if($scope.verifica=='S2_U'){
+					$scope.verifica='T_P';
+				} else if($scope.verifica=='T_P'){
+					$scope.verifica='T_U';
 				} else {
 					$scope.verifica='';
 				} 
@@ -187,12 +193,18 @@ angular.module('myApp', ['ngSanitize'])
 		$scope.testoVerifica= function(){
 				if ($scope.verifica==''){
 					return "NO";
-				} else if ($scope.verifica=='S1'){
-					return "somma";
-				} else if ($scope.verifica=='S2'){
-					return "somma grigi";
-				} else if ($scope.verifica=='T'){
-					return "totali";
+				} else if ($scope.verifica=='S1_U'){
+					return "somma U";
+				} else if ($scope.verifica=='S1_P'){
+					return "somma P";
+				} else if ($scope.verifica=='S2_U'){
+					return "somma grigi U";
+				} else if ($scope.verifica=='S2_P'){
+					return "somma grigi P";
+				} else if ($scope.verifica=='T_P'){
+					return "totali P";
+				} else if ($scope.verifica=='T_U'){
+					return "totali U";
 				}  
 				else {
 					return "";
@@ -231,7 +243,14 @@ angular.module('myApp', ['ngSanitize'])
 						ret=ret + att[i];
 					}
 					ret=ret + "</span>";
-					if ($scope.verifica!='' && primoUltimo=='U'){
+					var isRigaIntestazione=true;
+					if (primoUltimo=='U' && ($scope.verifica=='T_U' || $scope.verifica=='S1_U' || $scope.verifica=='S2_U')){
+						isRigaIntestazione=false;
+					}
+					if (primoUltimo=='P' && ($scope.verifica=='T_P' || $scope.verifica=='S1_P' || $scope.verifica=='S2_P')){
+						isRigaIntestazione=false;
+					}
+					if ($scope.verifica!='' && isRigaIntestazione){
 						var valori=[];
 						var testi=[];
 						for (var i=0; i < $scope.righe; i++) {
@@ -260,7 +279,14 @@ angular.module('myApp', ['ngSanitize'])
 							ret=ret + att[i];
 						}
 						ret=ret+"</span>";
-						if ($scope.verifica!='' && colonne==$scope.colonne+1){
+						var isColonnaIntestazione=true;
+						if (colonne==$scope.colonne+1 && ($scope.verifica=='T_U' || $scope.verifica=='S1_U' || $scope.verifica=='S2_U')){
+							isColonnaIntestazione=false;
+						}
+						if (colonne==0 && ($scope.verifica=='T_P' || $scope.verifica=='S1_P' || $scope.verifica=='S2_P')){
+							isColonnaIntestazione=false;
+						}
+						if ($scope.verifica!='' && isColonnaIntestazione){
 							ret=$scope.contaRipetizioni($scope.testoBoard[righe],$scope.board[righe], sep, att, $scope.colonne);
 						}
 						return  $sce.trustAsHtml(ret);
@@ -292,7 +318,7 @@ angular.module('myApp', ['ngSanitize'])
 			
 		}
 		$scope.contaRipetizioni= function(testi,elementi, sep, daBoard, tot){
-			if ($scope.verifica=='T'){
+			if ($scope.verifica=='T_P' || $scope.verifica=='T_U'){
 				return $scope.sommaDaIntestazione(daBoard,tot, sep);
 			}
 			var contaAtt=0;
@@ -307,7 +333,7 @@ angular.module('myApp', ['ngSanitize'])
 				if (grigiSommati.indexOf(attTesto)>-1){
 					skippaGrigio=true;
 				}
-				if ((att==1) || ($scope.verifica=='S2' && att==3)){
+				if ((att==1) || ($scope.verifica.indexOf('S2') >-1 && att==3)){
 					if (att==3 && skippaGrigio){
 						grigiSommati.pop(attTesto);
 					}
@@ -336,6 +362,9 @@ angular.module('myApp', ['ngSanitize'])
 				}
 				contaVoci++;
 				ret=ret+contaAtt;
+			}
+			if (grigiSommati && grigiSommati.length >0){
+					ret=ret+sep + "*";
 			}
 			ret=ret;
 			var isOk=true;
@@ -429,18 +458,31 @@ angular.module('myApp', ['ngSanitize'])
 				datiRigaBoard: $scope.datiRigaBoard,
 				historyBoard: $scope.historyBoard
 			};
-        	$http.put("/logika/crucipixel/"+$scope.id, body).then(function(response) {
-				$scope.dataOra=response.data.dataOra;
-				if ($scope.fase=='P'){
-	        		$scope.avviaGioco();
+			var ok=true;
+			if ($scope.board.length!=$scope.righe){
+				alert("Errore!");
+				ok=false;
+			}
+			for (var r=0; r < $scope.righe; r++) {
+				if ($scope.board[r].length!=$scope.colonne){
+					alert("Errore2!");
+					ok=false;
 				}
-				$scope.timeAttuale=response.headers('Time-Attuale');
-				$scope.evidColonna=-1;
-				$scope.evidRiga=-1;
-            })
-            .catch(function(error) {
-                console.log(error);
-            });
+			}
+			if (ok){
+	        	$http.put("/logika/crucipixel/"+$scope.id, body).then(function(response) {
+					$scope.dataOra=response.data.dataOra;
+					if ($scope.fase=='P'){
+		        		$scope.avviaGioco();
+					}
+					$scope.timeAttuale=response.headers('Time-Attuale');
+					$scope.evidColonna=-1;
+					$scope.evidRiga=-1;
+	            })
+	            .catch(function(error) {
+	                console.log(error);
+	            });
+			}			
 		}
 		$scope.cancella= function(id){
 			var result = confirm("Sei sicuro di voler cancellare l'id'" +id +"?");
@@ -489,7 +531,7 @@ angular.module('myApp', ['ngSanitize'])
 			*/
         	$scope.fase='G';
         	$scope.mossa=1;
-        	$scope.testoMossa=' ';
+        	$scope.testoMossa='';
 		}
 		$scope.getColorIntestazioneBoard=function(colonne){
 			if ($scope.evidColonna==colonne && colonne>0){
@@ -513,17 +555,17 @@ angular.module('myApp', ['ngSanitize'])
 			return '20px';
 		}
 		$scope.impostaTestoMossa=function(){
-        	if ($scope.testoMossa==' '){
+        	if ($scope.testoMossa==''){
 				$scope.testoMossa='A';
 			} else {
 	        	$scope.testoMossa=String.fromCharCode($scope.testoMossa.charCodeAt(0)+1);
 	        	if ($scope.testoMossa=='F'){
-					$scope.testoMossa=' ';
+					$scope.testoMossa='';
 				}
 			}
 		}
 		$scope.impostaValoreMossa=function(index){
-			$scope.testoMossa=' ';
+			$scope.testoMossa='';
         	$scope.mossa=index;
 		}
 		$scope.initBoard= function(){
