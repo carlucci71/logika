@@ -233,10 +233,12 @@ angular.module('myApp', ['ngSanitize'])
 					ret=ret + "</span>";
 					if ($scope.verifica!='' && primoUltimo=='U'){
 						var valori=[];
+						var testi=[];
 						for (var i=0; i < $scope.righe; i++) {
 							valori.push($scope.board[i][colonne-1]);
+							testi.push($scope.testoBoard[i][colonne-1]);
 						}
-						ret=$scope.contaRipetizioni(valori, sep, att, $scope.righe);
+						ret=$scope.contaRipetizioni(testi, valori, sep, att, $scope.righe);
 					}
 					return  $sce.trustAsHtml(ret);
 				}
@@ -259,7 +261,7 @@ angular.module('myApp', ['ngSanitize'])
 						}
 						ret=ret+"</span>";
 						if ($scope.verifica!='' && colonne==$scope.colonne+1){
-							ret=$scope.contaRipetizioni($scope.board[righe], sep, att, $scope.colonne);
+							ret=$scope.contaRipetizioni($scope.testoBoard[righe],$scope.board[righe], sep, att, $scope.colonne);
 						}
 						return  $sce.trustAsHtml(ret);
 					}
@@ -289,7 +291,7 @@ angular.module('myApp', ['ngSanitize'])
 			return ret;
 			
 		}
-		$scope.contaRipetizioni= function(elementi, sep, daBoard, tot){
+		$scope.contaRipetizioni= function(testi,elementi, sep, daBoard, tot){
 			if ($scope.verifica=='T'){
 				return $scope.sommaDaIntestazione(daBoard,tot, sep);
 			}
@@ -297,10 +299,24 @@ angular.module('myApp', ['ngSanitize'])
 			var ret="<span style='color:@@; '>";
 			var contaContaAtt=[];
 			var contaVoci=0;
+			var grigiSommati=[];
 			for (var i=0; i < elementi.length; i++) {
 				var att=elementi[i];
+				var attTesto=testi[i];
+				var skippaGrigio=false;
+				if (grigiSommati.indexOf(attTesto)>-1){
+					skippaGrigio=true;
+				}
 				if ((att==1) || ($scope.verifica=='S2' && att==3)){
-					contaAtt++;
+					if (att==3 && skippaGrigio){
+						grigiSommati.pop(attTesto);
+					}
+					else if (att==3 && !skippaGrigio){
+						grigiSommati.push(attTesto);
+						contaAtt++;
+					} else {
+						contaAtt++;
+					}
 				} else {
 					if (contaAtt>0){
 						contaContaAtt.push(contaAtt);
