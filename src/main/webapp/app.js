@@ -49,7 +49,8 @@ angular.module('myApp', ['ngSanitize'])
 			$scope.valCosaScrivo=1;
 			$scope.valDatiRigaBoard=[];
 			$scope.valDatiColonnaBoard=[];
-			$scope.verifica='';
+			$scope.verifica='S1_P';
+			$scope.isVerifica=false;
 			$scope.linea='';
 			$scope.modProgetta=false;
         	$scope.fase='P';
@@ -164,36 +165,23 @@ angular.module('myApp', ['ngSanitize'])
 					}
 				}
 		}
-		$scope.verificami= function(tipo){
-			if (tipo==1){
-				if($scope.verifica==''){
-					$scope.verifica='S1_P';
-				} else {
-					$scope.verifica='';
-				}
-			} else {
-				if($scope.verifica==''){
-					$scope.verifica='S1_P';
-				} else if($scope.verifica=='S1_P'){
-					$scope.verifica='S1_U';
-				} else if($scope.verifica=='S1_U'){
-					$scope.verifica='S2_P';
-				} else if($scope.verifica=='S2_P'){
-					$scope.verifica='S2_U';
-				} else if($scope.verifica=='S2_U'){
-					$scope.verifica='T_P';
-				} else if($scope.verifica=='T_P'){
-					$scope.verifica='T_U';
-				} else {
-					$scope.verifica='';
-				} 
-			}
-			
+		$scope.verificami= function(){
+			if($scope.verifica=='S1_P'){
+				$scope.verifica='S1_U';
+			} else if($scope.verifica=='S1_U'){
+				$scope.verifica='S2_P';
+			} else if($scope.verifica=='S2_P'){
+				$scope.verifica='S2_U';
+			} else if($scope.verifica=='S2_U'){
+				$scope.verifica='T_P';
+			} else if($scope.verifica=='T_P'){
+				$scope.verifica='T_U';
+			} else if($scope.verifica=='T_U'){
+				$scope.verifica='S1_P';
+			} 
 		}
 		$scope.testoVerifica= function(){
-				if ($scope.verifica==''){
-					return "NO";
-				} else if ($scope.verifica=='S1_U'){
+				if ($scope.verifica=='S1_U'){
 					return "somma U";
 				} else if ($scope.verifica=='S1_P'){
 					return "somma P";
@@ -206,9 +194,7 @@ angular.module('myApp', ['ngSanitize'])
 				} else if ($scope.verifica=='T_U'){
 					return "totali U";
 				}  
-				else {
-					return "";
-				}
+				return "";
 		}
 		$scope.testoAllLinea= function(){
 				if ($scope.linea==''){
@@ -250,7 +236,7 @@ angular.module('myApp', ['ngSanitize'])
 					if (primoUltimo=='P' && ($scope.verifica=='T_P' || $scope.verifica=='S1_P' || $scope.verifica=='S2_P')){
 						isRigaIntestazione=false;
 					}
-					if ($scope.verifica!='' && isRigaIntestazione){
+					if ($scope.isVerifica && isRigaIntestazione){
 						var valori=[];
 						var testi=[];
 						for (var i=0; i < $scope.righe; i++) {
@@ -286,7 +272,7 @@ angular.module('myApp', ['ngSanitize'])
 						if (colonne==0 && ($scope.verifica=='T_P' || $scope.verifica=='S1_P' || $scope.verifica=='S2_P')){
 							isColonnaIntestazione=false;
 						}
-						if ($scope.verifica!='' && isColonnaIntestazione){
+						if ($scope.isVerifica && isColonnaIntestazione){
 							ret=$scope.contaRipetizioni($scope.testoBoard[righe],$scope.board[righe], sep, att, $scope.colonne);
 						}
 						return  $sce.trustAsHtml(ret);
@@ -514,7 +500,8 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.valCosaScrivo=1;
 				$scope.valDatiRigaBoard=[];
 				$scope.valDatiColonnaBoard=[];
-				$scope.verifica='';
+				$scope.verifica='S1_P';
+				$scope.isVerifica=false;
 				$scope.linea='';
 				$scope.modProgetta=false;
 	        	$scope.fase='P';
