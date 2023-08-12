@@ -66,6 +66,7 @@ angular.module('myApp', ['ngSanitize'])
 		}
 		$scope.getBorderEvid= function(righe,colonne){
 			if (!$scope.board) return;
+			if (colonne==0 || colonne==$scope.colonne+1) return;
 			if (colonne==$scope.evidColonna || righe==$scope.evidRiga){
 					return '1px solid red';
 			}
@@ -164,21 +165,37 @@ angular.module('myApp', ['ngSanitize'])
 				}
 		}
 		$scope.verificami= function(tipo){
-			if($scope.verifica=='' && tipo==1){
-				$scope.verifica='S';
-			} else if($scope.verifica=='' && tipo==2){
-				$scope.verifica='T';
+			if (tipo==1){
+				if($scope.verifica==''){
+					$scope.verifica='S1';
+				} else {
+					$scope.verifica='';
+				}
 			} else {
-				$scope.verifica='';
+				if($scope.verifica==''){
+					$scope.verifica='S1';
+				} else if($scope.verifica=='S1'){
+					$scope.verifica='S2';
+				} else if($scope.verifica=='S2'){
+					$scope.verifica='T';
+				} else {
+					$scope.verifica='';
+				} 
 			}
+			
 		}
 		$scope.testoVerifica= function(){
 				if ($scope.verifica==''){
 					return "NO";
-				} else if ($scope.verifica=='S'){
+				} else if ($scope.verifica=='S1'){
 					return "somma";
-				} else {
-					return "selez.";
+				} else if ($scope.verifica=='S2'){
+					return "somma grigi";
+				} else if ($scope.verifica=='T'){
+					return "totali";
+				}  
+				else {
+					return "";
 				}
 		}
 		$scope.testoAllLinea= function(){
@@ -273,7 +290,7 @@ angular.module('myApp', ['ngSanitize'])
 			
 		}
 		$scope.contaRipetizioni= function(elementi, sep, daBoard, tot){
-			if ($scope.verifica=='S'){
+			if ($scope.verifica=='T'){
 				return $scope.sommaDaIntestazione(daBoard,tot, sep);
 			}
 			var contaAtt=0;
@@ -282,7 +299,7 @@ angular.module('myApp', ['ngSanitize'])
 			var contaVoci=0;
 			for (var i=0; i < elementi.length; i++) {
 				var att=elementi[i];
-				if (att==1){
+				if ((att==1) || ($scope.verifica=='S2' && att==3)){
 					contaAtt++;
 				} else {
 					if (contaAtt>0){
