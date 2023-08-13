@@ -66,13 +66,44 @@ angular.module('myApp', ['ngSanitize'])
 			if (valore==1) return 'black';
 			return 'lightgreen';
 		}
-		$scope.getBorderEvid= function(righe,colonne){
+		$scope.getBorderEvid= function(righe,colonne, tipo){
 			if (!$scope.board) return;
-			if (colonne==0 || colonne==$scope.colonne+1) return;
-			if (colonne==$scope.evidColonna || righe==$scope.evidRiga){
-					return '1px solid red';
+			if (colonne==0 && tipo=='T' || colonne==$scope.colonne+1 && tipo=='T'){
+					if(righe%5==0 && tipo=='T'){
+						return '3px solid black';
+					}
+					else {
+						return '1px solid black';
+					}
 			}
-			return 'bbb';
+			if (colonne==0 || colonne==$scope.colonne+1) return;
+			if (colonne!=$scope.evidColonna && righe!=$scope.evidRiga){
+				if (righe%5==4 && tipo=='B' || righe%5==0 && tipo=='T' || colonne%5==1 && tipo=='L'|| colonne%5==0 && tipo=='R'){
+ 					ret='3px solid black';
+				}
+				else {
+					ret= '1px solid black';
+				}
+			}
+			if (colonne==$scope.evidColonna || righe==$scope.evidRiga){
+				var ret;
+				if (colonne==$scope.evidColonna && (tipo=='T' || tipo=='B')){
+					
+				}
+				else if (righe==$scope.evidRiga && (tipo=='L' || tipo=='R')){
+					
+				}
+				else if (righe%5==4 && tipo=='B' || righe%5==0 && tipo=='T' || colonne%5==1 && tipo=='L'|| colonne%5==0 && tipo=='R'){
+ 					ret='3px solid yellow';
+				}
+				else {
+					ret= '1px solid yellow';
+				}
+				return ret;
+			}
+/*
+				*/
+			return ret;
 		}
 		$scope.getBgColor= function(righe,colonne){
 			if (!$scope.board) return;
@@ -551,6 +582,8 @@ angular.module('myApp', ['ngSanitize'])
 			return 'beige';
 		}
 		$scope.evidCell=function(righe,colonne){
+			$scope.eR=righe;
+			$scope.eC=colonne;
 				$scope.evidRiga=righe;
 				$scope.evidColonna=colonne;
 		}

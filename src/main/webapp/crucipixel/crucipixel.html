@@ -137,7 +137,13 @@
 						<tr ng-repeat="righe in getRange(righe)">
 							  <td ng-click="cliccaCella('BOARD',righe,colonne)" 
 							  ng-mouseenter="evidCell(righe,colonne, true)"  
-							  	ng-style="{'border': getBorderEvid(righe,colonne), 'color': 'orange',
+							  	ng-style="{'color': 'orange',
+							  	
+								'border-top': getBorderEvid(righe,colonne,'T'),
+								'border-bottom': getBorderEvid(righe,colonne,'B'),
+							  	'border-right': getBorderEvid(righe,colonne,'R'),
+							  	'border-left': getBorderEvid(righe,colonne,'L'), 
+							  	
 							  	 'background-color': getBgColor(righe,colonne), 'width': getCellaWidth(colonne),
 							  	'height':'20px', 'vertical-align': 'middle', 'text-align': getCellaAlign(colonne) }"  
 							  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
@@ -168,6 +174,7 @@
 						</tr>
 					</table>
 			</div>
+			-{{eR}}+{{eC}}
 			<br><br>
 			<!-- RIPETERE INIZIO --> 
 			<div ng-show="fase=='G'" >

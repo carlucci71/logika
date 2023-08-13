@@ -7,7 +7,8 @@ table.board {
   user-select: none;
 }
 table.board th, table.board td {
-  border: 1px solid black;
+  Xborder-top: 1px solid black;
+  Xborder-bottom: none;
   border-right: none;
   width: 30px; 
   height: 30px; 
