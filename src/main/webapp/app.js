@@ -111,7 +111,7 @@ angular.module('myApp', ['ngSanitize'])
 					}
 				}
 			}
-			if ($scope.fase=='G' && tipo=='BOARD' && colonne>0 ){
+			if ($scope.fase=='G' && tipo=='BOARD' && colonne>0 && colonne<$scope.colonne+1){
 				$scope.evidRiga=righe;
 				$scope.evidColonna=colonne;
 				var history={
