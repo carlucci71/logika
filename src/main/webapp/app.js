@@ -39,7 +39,7 @@ angular.module('myApp', ['ngSanitize'])
 			  
 	        })
 	        .catch(function(error) {
-	            console.log(error);
+	            alert(error);
 	        });
 		}
 		$scope.inizializza();
@@ -449,7 +449,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
-                console.log(error);
+                alert(error);
             });
 		}
 		$scope.ricomincia= function(){
@@ -489,7 +489,7 @@ angular.module('myApp', ['ngSanitize'])
 					$scope.evidRiga=-1;
 	            })
 	            .catch(function(error) {
-	                console.log(error);
+	                alert(error);
 	            });
 			}			
 		}
@@ -500,7 +500,7 @@ angular.module('myApp', ['ngSanitize'])
 					$scope.inizializza();
 	            })
 	            .catch(function(error) {
-	                console.log(error);
+	                alert(error);
 	            });
 			}
 		}
@@ -647,7 +647,7 @@ angular.module('myApp', ['ngSanitize'])
 			  
 	        })
 	        .catch(function(error) {
-	            console.log(error);
+	            alert(error);
 	        });
 		}
 		$scope.inizializza();
@@ -686,7 +686,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
-                console.log(error);
+                alert(error);
             });
 		}
 		$scope.aggiorna= function(){
@@ -703,7 +703,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
-                console.log(error);
+                alert(error);
             });
 		}
 		$scope.cancella= function(id){
@@ -713,7 +713,7 @@ angular.module('myApp', ['ngSanitize'])
 					$scope.inizializza();
 	            })
 	            .catch(function(error) {
-	                console.log(error);
+	                alert(error);
 	            });
 	        }
 		}
@@ -844,7 +844,7 @@ angular.module('myApp', ['ngSanitize'])
 			  
 	        })
 	        .catch(function(error) {
-	            console.log(error);
+	            alert(error);
 	        });
 		}
 
@@ -876,7 +876,7 @@ angular.module('myApp', ['ngSanitize'])
 					$scope.inizializza();
 	            })
 	            .catch(function(error) {
-	                console.log(error);
+	                alert(error);
 	            });
 	         }
 		}
@@ -993,7 +993,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
-                console.log(error);
+                alert(error);
             });
 		}
 		$scope.aggiorna= function(){
@@ -1012,7 +1012,7 @@ angular.module('myApp', ['ngSanitize'])
 				$scope.timeAttuale=response.headers('Time-Attuale');
             })
             .catch(function(error) {
-                console.log(error);
+                alert(error);
             });
 		}
 		$scope.avviaGioco=function(modalitaSaltavaggio){
@@ -1043,7 +1043,7 @@ angular.module('myApp', ['ngSanitize'])
 	            $scope.retVai=response.data;
             })
             .catch(function(error) {
-                console.log(error);
+                alert(error);
             });
 		}
 					

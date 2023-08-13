@@ -20,13 +20,13 @@ create table grattacieli (
 create table crucipixel (
         id serial primary key,
         nome VARCHAR(400),
-        history_photo VARCHAR(4000),
-        note VARCHAR(4000),
-        board VARCHAR(4000),
-        testo_board VARCHAR(4000),
-        dati_colonna_board VARCHAR(4000),
-        dati_riga_board VARCHAR(4000),
+        history_photo VARCHAR(40001),
+        note VARCHAR(40002),
+        board VARCHAR(40003),
+        testo_board VARCHAR(40004),
+        dati_colonna_board VARCHAR(40005),
+        dati_riga_board VARCHAR(40006),
         history_board VARCHAR(10300000),
-        history_redo VARCHAR(4000),
+        history_redo VARCHAR(40007),
         data_ora timestamp DEFAULT CURRENT_TIMESTAMP
 );
