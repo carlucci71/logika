@@ -149,7 +149,7 @@
 							  	ng-repeat="colonne in getRange(colonne+2)" ng-bind-html="getCellaBoard(righe,colonne)">
 							  </td>
 							  <td NOWRAP ng-show="fase=='P' && modProgetta">
-							  	<input style="width: 100px" type=text ng-keypress="$event.keyCode === 13 && okValCosaScrivoRiga(righe)"
+							  	<input style="width: 100px" type=text ng-keydown="handleKeyDown($event, righe, 'R')"
 							  	ng-model="valDatiRigaBoard[righe]">
 								<input ng-attr-tabindex="{{20000 + righe}}" type=button ng-click="okValCosaScrivoRiga(righe)" value="OK"></input>
 							  </td>
@@ -164,7 +164,7 @@
 						  <tr  ng-show="fase=='P'  && modProgetta">
 						  	  <td style="width: 100px"></td>
 							  <td style="width: 50px" ng-repeat="colonne in getRange(colonne)">
-								  	<input style="width: 30px" type=text ng-keypress="$event.keyCode === 13 && okValCosaScrivoColonna(colonne)" 
+								  	<input style="width: 30px" type=text  ng-keydown="handleKeyDown($event, colonne, 'C')" 
 								  	ng-model="valDatiColonnaBoard[colonne]">
 								  	<br>
 									<input ng-attr-tabindex="{{10000 + colonne}}" type=button ng-click="okValCosaScrivoColonna(colonne)" value="OK"></input>
@@ -174,7 +174,6 @@
 						</tr>
 					</table>
 			</div>
-			-{{eR}}+{{eC}}
 			<br><br>
 			<!-- RIPETERE INIZIO --> 
 			<div ng-show="fase=='G'" >
