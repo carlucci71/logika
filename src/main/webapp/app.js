@@ -17,7 +17,7 @@ angular.module('myApp', ['ngSanitize'])
 	        $scope.righe=5;
 	        $scope.fase='I';//I -> iniz P -> progetta F -> gioca
             $scope.crucipixelSalvate = [];
-	    	$http.get("/logika/crucipixel").then(function(response) {
+	    	$http.get("/logika/crucipixel?complete=false").then(function(response) {
 	          	for (var i=0; i < response.data.length; i++) {
 					el={ 
 						prog: i, 
@@ -550,29 +550,39 @@ angular.module('myApp', ['ngSanitize'])
 		}
 		$scope.carica= function(daCaricare){
 			if (daCaricare){
-		        $scope.id=daCaricare.id;
-		        $scope.nome=daCaricare.nome;
-				$scope.board=daCaricare.board;
-				$scope.testoBoard=daCaricare.testoBoard;
-				$scope.historyPhoto=daCaricare.historyPhoto;
-				$scope.note=daCaricare.note;
-				$scope.datiColonnaBoard=daCaricare.datiColonnaBoard;
-				$scope.datiRigaBoard=daCaricare.datiRigaBoard;
-				$scope.righe=$scope.board.length;
-				$scope.colonne=$scope.board[0].length;
-				$scope.historyBoard=daCaricare.historyBoard;
-				$scope.historyRedo=daCaricare.historyRedo;
-				$scope.dataOra=daCaricare.dataOra;
-				$scope.cosaScrivo=[];
-				$scope.cosaScrivo[0]=1;				
-				$scope.valCosaScrivo=1;
-				$scope.valDatiRigaBoard=[];
-				$scope.valDatiColonnaBoard=[];
-				$scope.verifica='S1_P';
-				$scope.isVerifica=false;
-				$scope.linea='';
-				$scope.modProgetta=false;
-	        	$scope.fase='P';
+				
+				$http.get("/logika/crucipixel/"+daCaricare.id).then(function(response) {
+			        $scope.id=response.data.id;
+			        $scope.nome=response.data.nome;
+					$scope.board=response.data.board;
+					$scope.testoBoard=response.data.testoBoard;
+					$scope.historyPhoto=response.data.historyPhoto;
+					$scope.note=response.data.note;
+					$scope.datiColonnaBoard=response.data.datiColonnaBoard;
+					$scope.datiRigaBoard=response.data.datiRigaBoard;
+					$scope.righe=$scope.board.length;
+					$scope.colonne=$scope.board[0].length;
+					$scope.historyBoard=response.data.historyBoard;
+					$scope.historyRedo=response.data.historyRedo;
+					$scope.dataOra=response.data.dataOra;
+					$scope.cosaScrivo=[];
+					$scope.cosaScrivo[0]=1;				
+					$scope.valCosaScrivo=1;
+					$scope.valDatiRigaBoard=[];
+					$scope.valDatiColonnaBoard=[];
+					$scope.verifica='S1_P';
+					$scope.isVerifica=false;
+					$scope.linea='';
+					$scope.modProgetta=false;
+		        	$scope.fase='P';
+			  
+	        })
+	        .catch(function(error) {
+	            alert(error);
+	        });
+
+				
+				
 	        }
 		}
 		$scope.avviaGioco=function(){

@@ -2,6 +2,7 @@ package it.daniele.logika.controller.crucipixel;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.daniele.logika.dto.crucipixel.CrucipixelDto;
@@ -64,9 +66,20 @@ public class CrucipixelController {
 				.build();
 	}
 	
+	@GetMapping("{id}")
+	public ResponseEntity<CrucipixelResource> getCrucipixel(@PathVariable Long id) {
+		CrucipixelResource crucipixelResource = crucipixelService.leggi(id); 
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Time-Attuale", LocalDateTime.now().toString());
+		return ResponseEntity
+				.ok()
+				.headers(headers)
+				.body(crucipixelResource);
+	}
+	
 	@GetMapping()
-	public ResponseEntity<List<CrucipixelResource>> allCrucipixel() {
-		List<CrucipixelResource> crucipixel = crucipixelService.allCrucipixel();
+	public ResponseEntity<List<CrucipixelResource>> allCrucipixel(@RequestParam(required = false) Optional<Boolean> complete) {
+		List<CrucipixelResource> crucipixel = crucipixelService.allCrucipixel(complete.orElse(true));
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Time-Attuale", LocalDateTime.now().toString());
 		return ResponseEntity

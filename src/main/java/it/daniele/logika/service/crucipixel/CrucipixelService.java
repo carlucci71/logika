@@ -43,9 +43,19 @@ public class CrucipixelService {
 	public void cancella(Long id) {
 		crucipixelRepository.deleteById(id);
 	}
+
+	public CrucipixelResource leggi(Long id) {
+		return crucipixelFactory.toResource(crucipixelRepository.findById(id).get());
+	}
 	
-	public List<CrucipixelResource> allCrucipixel() {
-		List<Crucipixel> crucipixel = crucipixelRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+	public List<CrucipixelResource> allCrucipixel(boolean complete) {
+		List<Crucipixel> crucipixel;
+		if (complete) {
+			crucipixel = crucipixelRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+		} else {
+			crucipixel = crucipixelRepository.idNomeFromCrucipixel();
+		}
+		
 		return crucipixelFactory.toResource(crucipixel);
 	}
 	

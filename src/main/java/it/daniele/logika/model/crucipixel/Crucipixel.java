@@ -39,5 +39,12 @@ public class Crucipixel	 {
 	 @Column(name = "data_ora")
 	 private Timestamp dataOra;
      private String historyPhoto;
+	public Crucipixel(Long id, String nome) {
+		super();
+		this.id = id;
+		this.nome = nome;
+	}
 	
+     
+     
 }
